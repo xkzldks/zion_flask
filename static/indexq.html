@@ -1,0 +1,326 @@
+{% extends "base2.html" %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="ZXing for JS">
+
+  <title>ZXing TypeScript | Decoding from camera stream</title>
+  <script src="js/notify.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/notify.min.css">
+  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
+
+  <style type="text/css">
+        .buttons {
+      min-height: 200px;
+    }
+    #toast {
+      position: fixed;
+      min-width: 150px;
+      bottom: 50px;
+      right: 10px;
+      text-align: right;
+    }
+
+    #toast .toastWrap {
+      margin: 6px 0 0;
+      padding: 18px 0 15px;
+      display: none;
+    }
+
+    .toast {
+      border: 1px solid #F1D031;
+      color: #444;
+      background: #FFFFA3;
+      box-shadow: 0 2px 3px #999;
+      padding: 18px 20px 15px 8px;
+      text-align: left;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      font-family: arial;
+      font-size: 13px;
+      white-space: pre;
+      position: relative;
+    }
+
+    #toast b {
+      display: block;
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      width: 12px;
+      height: 12px;
+      font: normal 12px/1 Arial, sans-serif;
+      text-align: right;
+      cursor: pointer;
+      text-shadow: #FFF 0 1px 0;
+    }
+
+    #toast b:before {
+      content: "\2716";
+    }
+
+    .timerWrap {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      overflow: hidden;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+    }
+
+    .timer {
+      display: block;
+      height: 4px;
+      width: 0;
+      background-color: #F1D031;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div style="display : flex;display : flex;flex-wrap: wrap;flex-direction: row;justify-content: space-evenly;align-content: stretch;" class = "container">
+    <main class="wrapper" style="padding-top:2em">
+
+    <section class="container" id="demo-content">
+      <div>
+        <video id="video" width="380" height="400" style="border: 1px solid gray"></video>
+      </div>
+
+      <div style="display : flex;justify-content: space-evenly;">
+        <a class="btn btn-outline-info" id="startButton">Start</a>
+        <a class="btn btn-outline-info" id="resetButton">Reset</a>
+      </div>
+
+      <div id="sourceSelectPanel" style="display:none">
+        <label for="sourceSelect">카메라변환:</label>
+        <select id="sourceSelect" style="max-width:400px">
+        </select>
+      </div>
+
+      <div style="display: table">
+        <label for="decoding-style"> Decoding Style:</label>
+        <select id="decoding-style" size="1">
+          <option value="continuously">Decode continuously</option>
+          <option value="once">Decode once</option>
+
+        </select>
+      </div>
+
+      <label>Result:</label>
+      <pre><div id="result"></div></pre>
+
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <p>ZXing TypeScript Demo. Licensed under the <a target="_blank" href="https://github.com/zxing-js/library#license" title="MIT">MIT</a>.</p>
+
+      </section>
+    </footer>
+
+  </main>
+</div>
+<div class="buttons">
+  <button onclick="toast('이럴수가!!')">토스트 1</button>
+  <button onclick="toast('저럴수가!!', 1000)">토스트 2</button>
+  <button onclick="toast('그럴수가!!', '고정')">토스트 3</button>
+</div>
+<div id="toast"></div>
+
+<!--  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>-->
+  <script type="text/javascript" src="\static\index.min.js"></script>
+  <script type="text/javascript">
+
+    function decodeOnce(codeReader, selectedDeviceId) {
+      codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+        console.log(result)
+        alert(result.text);
+        document.getElementById('result').textContent = result.text
+        $.ajax({
+                    type: "GET",
+                    url: "/qrChul",
+                    data: {result : result},
+                    success: function (response) {
+                        let auth = response['msg']
+                        console.log(auth);
+                        if(response['False'] == 'False'){
+                            alert("로그인이 필요한 서비스입니다.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['False'] == 'Auth'){
+                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else{
+                          alert(response['msg']);
+                        }
+                    }
+                })
+      }).catch((err) => {
+        console.error(err)
+        document.getElementById('result').textContent = err
+      })
+    }
+
+    function decodeContinuously(codeReader, selectedDeviceId) {
+      codeReader.decodeFromInputVideoDeviceContinuously(selectedDeviceId, 'video', (result, err) => {
+        if (result) {
+          // properly decoded qr code
+          alert(result.text);
+          console.log('Found QR code!', result)
+          document.getElementById('result').textContent = result.text
+          $.ajax({
+                    type: "GET",
+                    url: "/qrChul",
+                    data: {result : result},
+                    success: function (response) {
+                        let auth = response['msg']
+                        console.log(auth);
+                        if(response['False'] == 'False'){
+                            alert("로그인이 필요한 서비스입니다.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['False'] == 'Auth'){
+                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else{
+                          alert(response['msg']);
+                        }
+                    }
+                })
+        }
+
+        if (err) {
+          // As long as this error belongs into one of the following categories
+          // the code reader is going to continue as excepted. Any other error
+          // will stop the decoding loop.
+          //
+          // Excepted Exceptions:
+          //
+          //  - NotFoundException
+          //  - ChecksumException
+          //  - FormatException
+
+          if (err instanceof ZXing.NotFoundException) {
+            console.log('No QR code found.')
+          }
+
+          if (err instanceof ZXing.ChecksumException) {
+            console.log('A code was found, but it\'s read value was not valid.')
+          }
+
+          if (err instanceof ZXing.FormatException) {
+            console.log('A code was found, but it was in a invalid format.')
+          }
+        }
+      })
+    }
+
+    window.addEventListener('load', function () {
+      let selectedDeviceId;
+      const codeReader = new ZXing.BrowserQRCodeReader()
+      console.log('ZXing code reader initialized')
+
+      codeReader.getVideoInputDevices() //카메라변환
+        .then((videoInputDevices) => {
+          const sourceSelect = document.getElementById('sourceSelect')
+          selectedDeviceId = videoInputDevices[0].deviceId
+          if (videoInputDevices.length >= 1) {
+            videoInputDevices.forEach((element) => {
+              const sourceOption = document.createElement('option')
+              sourceOption.text = element.label
+              sourceOption.value = element.deviceId
+              sourceSelect.appendChild(sourceOption)
+            })
+
+            sourceSelect.onchange = () => {
+              selectedDeviceId = sourceSelect.value;
+            };
+
+            const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+            sourceSelectPanel.style.display = 'block'
+          }
+
+          document.getElementById('startButton').addEventListener('click', () => {
+            //찍힘
+            const decodingStyle = document.getElementById('decoding-style').value;
+
+            if (decodingStyle == "once") {
+              decodeOnce(codeReader, selectedDeviceId);
+            } else {
+              decodeContinuously(codeReader, selectedDeviceId);
+            }
+
+            console.log(`Started decode from camera with id ${selectedDeviceId}`)
+          })
+
+          document.getElementById('resetButton').addEventListener('click', () => {
+            //리셋
+            codeReader.reset()
+            document.getElementById('result').textContent = '';
+            console.log('Reset.')
+          })
+
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    })
+
+    function fillWidth(elem, timer, limit) {
+	if (!timer) { timer = 3000; }
+	if (!limit) { limit = 100; }
+	var width = 1;
+	var id = setInterval(frame, timer / 100);
+		function frame() {
+		if (width >= limit) {
+			clearInterval(id);
+		} else {
+			width++;
+			elem.style.width = width + '%';
+		}
+	}
+};
+
+      function toast(msg, timer) {
+          if (!timer) { timer = 3000; }
+          var $elem = $("<div class='toastWrap'><span class='toast'>" + msg + "<b></b><div class='timerWrap'><div class='timer'></div></div></span></div>");
+          $("#toast").append($elem); //top = prepend, bottom = append
+          $elem.slideToggle(100, function() {
+              $('.timerWrap', this).first().outerWidth($elem.find('.toast').first().outerWidth() - 10);
+              if (!isNaN(timer)) {
+                  fillWidth($elem.find('.timer').first()[0], timer);
+                  setTimeout(function() {
+                      $elem.fadeOut(function() {
+                          $(this).remove();
+                      });
+                  }, timer);
+              }
+          });
+      }
+
+      $("#toast").on("click", "b", function() {
+          $(this).closest('.toastWrap').remove();
+      })
+
+  </script>
+
+</body>
+
+</html>
+{% endblock %}
