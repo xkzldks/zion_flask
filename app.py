@@ -1467,5 +1467,5 @@ def qrChul():
 
 if __name__ == '__main__':
     app.secret_key = "123"
-    print(app.secret_key)
+    print("끼아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",app.secret_key)
     app.run('0.0.0.0', debug=True)
