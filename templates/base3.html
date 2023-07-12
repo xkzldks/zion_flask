@@ -143,7 +143,7 @@ input[id="menuicon"]:checked + ul + div {left:0;}
                 <br>
                   <p style="color : #e9e9e9;"> 로그인계정 : {{ session['username'] }} </p>
                 <br>
-                <a href="{{ url_for('account/logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
+                <a href="{{ url_for('account.logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
                 <br>
                 <br>
               {% else %}
@@ -154,9 +154,9 @@ input[id="menuicon"]:checked + ul + div {left:0;}
                       시온 청년부
                   </a>
                 <br>
-                  <a href="{{ url_for('account/login') }}" class="nav-link">로그인</a>
+                  <a href="{{ url_for('account.login') }}" class="nav-link">로그인</a>
                 <br>
-                  <a href="{{ url_for('account/register')}}" class="nav-link">회원가입</a>
+                  <a href="{{ url_for('account.register')}}" class="nav-link">회원가입</a>
                 <br>
                 <br>
               {% endif %}
@@ -198,15 +198,15 @@ input[id="menuicon"]:checked + ul + div {left:0;}
               <img alt="" src="/static/image/icon2.png" width="24px" height="24px">
               시온 청년부
           </a>
-          <a href="{{ url_for('account/logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
+          <a href="{{ url_for('account.logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
       {% else %}
 
           <a class ="nav-link" href="/" aria-label="Product" style="color: white">
               <img alt="" src="/static/image/icon2.png" width="24px" height="24px">
               시온 청년부
           </a>
-          <a href="{{ url_for('account/login') }}" class="nav-link">로그인</a>
-          <a href="{{ url_for('account/register')}}" class="nav-link">회원가입</a>
+          <a href="{{ url_for('account.login') }}" class="nav-link">로그인</a>
+          <a href="{{ url_for('account.register')}}" class="nav-link">회원가입</a>
       {% endif %}
     </div>
 
