@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block content %}
+<HEAD>
+
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js" integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/qrcode.js"></script>
+<title> 시온 출석 | 카카오</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/css">
+    #qrcode {
+			width : 300px;
+			height : 300px;
+			margin : 0 auto;
+			padding : 0;
+			border : 1px solid #000000;
+			background-color : #ffffff;
+
+			/* 컨테이너 배치 정렬 실시 */
+			float : top;
+			position : relative;
+			top : 10%;
+			left : 0%;
+
+			/* 마우스 커서 스타일 정의 */
+			cursor : default;
+
+			/* 스크롤 자동 지정 */
+			overflow : auto;
+		}
+
+</script>
+<script>
+    window.Kakao.init('72db65b6d86e4425a2df57b5168cf24a');
+    function requestUserInfo() {
+        Kakao.API.request({
+          url: '/v2/user/me',
+        })
+          .then(function(res) {
+            alert(JSON.stringify(res));
+          })
+          .catch(function(err) {
+            alert(
+              'failed to request user information: ' + JSON.stringify(err)
+            );
+          });
+      }
+    function kakaoLogin() {
+        window.Kakao.Auth.login({
+            scope: 'profile_nickname, gender, birthday', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+            success: function(response) {
+                console.log(response) // 로그인 성공하면 받아오는 데이터
+                window.Kakao.API.request({ // 사용자 정보 가져오기
+                    url: '/v2/user/me',
+                    success: (res) => {
+                        document.querySelector("#kakaoBtn").removeAttribute('href');
+                        const kakao_account = res.kakao_account;
+
+                        var name = kakao_account['profile']['nickname']
+                        var gender = kakao_account['gender']
+                        var birthday = kakao_account['birthday']
+
+                        if(confirm(name + "\n본명이 맞습니까?") == false){
+                           name = prompt("본명을 적어주세요"+"");
+                        }
+
+                        alert(name+"님 환영합니다")
+                        document.getElementById("test").innerHTML += "해당접속 : " + name;
+<!--                        console.log(name, gender, birthday)-->
+                        console.log(kakao_account);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/qr",
+                            data: {name : name, gender : gender, birthday : birthday},
+                            success: function (response) {
+                            if (response['msg'] != "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."){
+                                var qr = response['msg'];
+                                var qr2 = response['qr2'];
+                                alert("해당 qr코드를 단말기가 인식할 수 있도록 해주세요.");
+
+                                TimerStart();
+
+                                var qrcode = new QRCode(document.getElementById("qrCode"), {
+                                    text: qr2
+                                });
+                                }
+                            else{
+                                alert("명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다.")
+                                window.location.reload();
+                            }
+                            }
+                        })
+                    }
+                });
+                // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
+            },
+            fail: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+<script>
+  function loginWithKakao() {
+    Kakao.Auth.authorize({
+      redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
+      state: 'userme',
+    });
+  }
+
+
+  // 아래는 데모를 위한 UI 코드입니다.
+  displayToken()
+  function displayToken() {
+    var token = getCookie('authorize-access-token');
+
+    if(token) {
+      Kakao.Auth.setAccessToken(token);
+      document.querySelector('#token-result').innerText = 'login success, ready to request API';
+      document.querySelector('button.api-btn').style.visibility = 'visible';
+    }
+  }
+
+  function getCookie(name) {
+    var parts = document.cookie.split(name + '=');
+    if (parts.length === 2) { return parts[1].split(';')[0]; }
+  }
+</script>
+<script language="JavaScript">
+
+		var SetTime = 130;
+		function msg_time() {
+
+			m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";	// 남은 시간 계산
+
+			var msg = "현재 남은 시간은 <font color='red'>" + m + "</font> 입니다.";
+
+			document.all.ViewTimer.innerHTML = msg;		// div 영역에 보여줌
+
+			SetTime--;					// 1초씩 감소
+
+			if (SetTime < 0) {			// 시간이 종료 되었으면..
+				clearInterval(tid);		// 타이머 해제
+				alert("이 창은 만료되었습니다.");
+				window.location.reload();
+			}
+
+		}
+        function TimerStart(){
+            tid=setInterval('msg_time()',1000)
+         };
+
+	</script>
+<body>
+<br>
+    <div style="display : flex;position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);min-width: 320px;text-align: center;flex-direction: column;flex-wrap: wrap;align-content: center;" >
+    <!--    <button class="api-btn" onclick="requestUserInfo()" >사용자 정보 가져오기</button>-->
+        <div id="test"></div>
+        <div id="qrCode"></div>
+        <div id="ViewTimer"></div>
+        <a id = "kakaoBtn" style = "" href="javascript:kakaoLogin();"><img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오계정 로그인"/></a>
+        <p style="text-align : center; font-size : 11px;"><br>처음버튼을 누르면 정보제공 동의창이 나옵니다. <br> 정보제공 동의를 하셔야 서비스 이용이 가능합니다. <br> 세션이 만료되어 qr가 사라진 경우 버튼을 한번더 눌러주세요. </p>
+    </div>
+
+    <p id="token-result"></p>
+
+</body>
+
+{% endblock %}

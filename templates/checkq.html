@@ -1,0 +1,290 @@
+{% extends "base2.html" %}
+{% block content %}
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="ZXing for JS">
+<style>
+	button{
+		font-size : 5em;
+	}
+</style>
+  <title>시온 출석 | 출석카메라</title>
+  <script src="js/notify.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <link rel="stylesheet" href="css/notify.min.css">
+
+  <link rel="stylesheet preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+  <link rel="stylesheet preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
+
+
+</head>
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/css">
+.myButtonEtc {
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#4d384d;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                margin: auto;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #ffffff;
+            }
+            .myButtonEtc:hover {
+                background:linear-gradient(to bottom, #f2e4f2 5%, #fffcff 100%);
+                background-color:#f2e4f2;
+            }
+            .myButtonEtc:active {
+                position:relative;
+                top:1px;
+            }
+</script>
+<script type="text/javascript">
+    toastr.options = {
+			  "closeButton": false,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": true,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "100",
+			  "hideDuration": "1000",
+			  "timeOut": "1500",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
+  </script>
+<div style="" class = "container">
+  <br>
+  <a class= "btn btn-outline-info"  onclick="history.back()"> 뒤로가기 </a>
+    <main class="wrapper" style="padding-top:2em">
+    <section class="container" id="demo-content">
+      <div>
+        <video id="video" width="90%" height="50%" style="border: 1px solid gray"></video>
+      </div>
+
+      <div style="display : flex;justify-content: space-evenly;">
+        <a class="btn btn-outline-info" id="startButton">Start</a>
+        <a class="btn btn-outline-info" id="resetButton">Reset</a>
+      </div>
+
+      <div id="sourceSelectPanel" style="display:none">
+        <label for="sourceSelect">카메라변환:</label>
+        <select id="sourceSelect" style="max-width:400px">
+        </select>
+      </div>
+
+      <div style="display: table">
+        <label for="decoding-style"> Decoding Style:</label>
+        <select id="decoding-style" size="1">
+          <option value="continuously">Decode continuously</option>
+          <option value="once">Decode once</option>
+
+        </select>
+      </div>
+
+      <label>Result:</label>
+      <pre><div id="result"></div></pre>
+
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <p>ZXing TypeScript Demo. Licensed under the <a target="_blank" href="https://github.com/zxing-js/library#license" title="MIT">MIT</a>.</p>
+        <p>※ qr출석서비스는 카메라허용이 필요합니다.</p>
+      </section>
+    </footer>
+
+  </main>
+</div>
+
+<!--  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>-->
+  <script type="text/javascript" src="\static\index.min.js"></script>
+  <script type="text/javascript">
+
+    function decodeOnce(codeReader, selectedDeviceId) {
+      codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+        console.log(result)
+        document.getElementById('result').textContent = result.text
+            $.ajax({
+                    type: "POST",
+                    url: "/qrChul",
+                    data: {title_give:result.text},
+                    success: function (response) {
+                        let auth = response['msg']
+                        console.log(auth);
+                        if(response['False'] == 'False'){
+                            alert("로그인이 필요한 서비스입니다.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['False'] == 'Auth'){
+                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['msg'] == '추가안됨'){
+                            toastr.warning('중복출석불가');
+                        }
+                        else{
+                            toastr.success('출석완료!');
+                        }
+                    }
+                })
+      }).catch((err) => {
+        console.error(err)
+        toastr.error('서기에게 문의바람');
+        document.getElementById('result').textContent = err
+      })
+    }
+
+    function decodeContinuously(codeReader, selectedDeviceId) {
+      codeReader.decodeFromInputVideoDeviceContinuously(selectedDeviceId, 'video', (result, err) => {
+        if (result) {
+          // properly decoded qr code
+          console.log('Found QR code!', result)
+          document.getElementById('result').textContent = result.text
+          $.ajax({
+                    type: "POST",
+                    url: "/qrChul",
+                    data: {title_give:result.text},
+                    success: function (response) {
+                        let auth = response['msg']
+                        console.log(auth);
+                        if(response['False'] == 'False'){
+                            alert("로그인이 필요한 서비스입니다.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['False'] == 'Auth'){
+                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                        else if(response['msg'] == '추가안됨'){
+                            toastr.warning('출석불가, 중복 또는 잘못된 코드입니다.');
+                            var audio = new Audio('static/sound/f.mp3');
+                            audio.loop = false;
+                            audio.volume = 0.5;
+                            audio.play();
+                        }
+                        else{
+                            toastr.success('출석완료!');
+                            var audio = new Audio('static/sound/suc.mp3');
+                            audio.loop = false;
+                            audio.volume = 0.5;
+                            audio.play();
+                        }
+                    }
+                })
+        }
+
+        if (err) {
+          // As long as this error belongs into one of the following categories
+          // the code reader is going to continue as excepted. Any other error
+          // will stop the decoding loop.
+          //
+          // Excepted Exceptions:
+          //
+          //  - NotFoundException
+          //  - ChecksumException
+          //  - FormatException
+
+          if (err instanceof ZXing.NotFoundException) {
+              <!--          qr찾는중-->
+          }
+
+          if (err instanceof ZXing.ChecksumException) {
+            console.log('A code was found, but it\'s read value was not valid.')
+            toastr.info('인식하는 중입니다...');
+          }
+
+          if (err instanceof ZXing.FormatException) {
+            console.log('A code was found, but it was in a invalid format.')
+            toastr.info('인식하는 중입니다...');
+          }
+        }
+      })
+    }
+
+    window.addEventListener('load', function () {
+      let selectedDeviceId;
+      const codeReader = new ZXing.BrowserQRCodeReader()
+      console.log('ZXing code reader initialized')
+
+      codeReader.getVideoInputDevices() //카메라변환
+        .then((videoInputDevices) => {
+          const sourceSelect = document.getElementById('sourceSelect')
+          selectedDeviceId = videoInputDevices[0].deviceId
+          if (videoInputDevices.length >= 1) {
+            videoInputDevices.forEach((element) => {
+              const sourceOption = document.createElement('option')
+              sourceOption.text = element.label
+              sourceOption.value = element.deviceId
+              sourceSelect.appendChild(sourceOption)
+            })
+
+            sourceSelect.onchange = () => {
+              selectedDeviceId = sourceSelect.value;
+            };
+
+            const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+            sourceSelectPanel.style.display = 'block'
+          }
+
+          document.getElementById('startButton').addEventListener('click', () => {
+            //찍힘
+            const decodingStyle = document.getElementById('decoding-style').value;
+
+            if (decodingStyle == "once") {
+              decodeOnce(codeReader, selectedDeviceId);
+            } else {
+              decodeContinuously(codeReader, selectedDeviceId);
+            }
+
+            console.log(`Started decode from camera with id ${selectedDeviceId}`)
+          })
+
+          document.getElementById('resetButton').addEventListener('click', () => {
+            //리셋
+            codeReader.reset()
+            document.getElementById('result').textContent = '';
+            console.log('Reset.')
+          })
+
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>{% endblock %}

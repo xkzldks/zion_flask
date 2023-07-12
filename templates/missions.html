@@ -1,0 +1,404 @@
+{% extends "base2.html" %}
+{% block content %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 선교팀</title>
+</head>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-color:#93a1a1;border-spacing:0;}
+.tg td{background-color:#fdf6e3;border-color:#93a1a1;border-style:solid;border-width:1px;color:#002b36;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#657b83;border-color:#93a1a1;border-style:solid;border-width:1px;color:#fdf6e3;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-2bhk{background-color:#eee8d5;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-ezbu{background-color:#eee8d5;border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.myButtonEtc {
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#4d384d;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                margin: auto;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #ffffff;
+            }
+.flx{
+    display : flex;
+    justify-content: space-between;
+}
+
+table#tDate th:first-child,
+    table#tDate td:first-child { position: sticky; left: 0; }
+    table#tDate th:nth-child(2),
+    table#tDate td:nth-child(2) { position: sticky; left: 183px; }
+
+#csvtable th{
+    position: sticky;
+    top: 0px;
+}
+body {
+        color: #666;
+        font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+        }
+        table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        }
+        th,
+        td {
+        padding: 6px 15px;
+        }
+        th {
+        background: #42444e;
+        color: #fff;
+        text-align: left;
+        }
+        tr:first-child th:first-child {
+<!--        border-top-left-radius: 6px;-->
+        }
+        tr:first-child th:last-child {
+<!--        border-top-right-radius: 6px;-->
+        }
+        td {
+<!--        border-bottom: 1px solid #c6c9cc;-->
+        }
+        td:first-child {
+<!--        border-left: 1px solid #c6c9cc;-->
+        }
+        tr:nth-child(even) td {
+        background: #eaeaed;
+        }
+        tr:last-child td:first-child {
+<!--        border-bottom-left-radius: 6px;-->
+        }
+        tr:last-child td:last-child {
+<!--        border-bottom-right-radius: 6px;-->
+        }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        createCheckBox();
+        showReview();
+    });
+    function whoIs(element){
+            if(element.이름 === String(etv)){
+                return true;
+            }
+        }
+    function getCheckboxInfo(event)  {
+        etv = event.target.value;
+        document.getElementById('textManagePeople').value = event.target.value;
+<!--        $("#textAddPeopleGroup").val(event.target.name).trigger('change');-->
+        console.log(dbP);
+        const peoInfo = dbP.find(whoIs);
+        console.log(peoInfo);
+        if (peoInfo.성별[0] == '남'){
+            $("input:radio[name='sSelect']:radio[value='남']").prop('checked', true);
+        }
+        else{
+            $("input:radio[name='sSelect']:radio[value='여']").prop('checked', true);
+        }
+        document.getElementById('textManagePeopleInfo').value = peoInfo.선교헌금[0];
+        document.getElementById('textManagePeopleAge').value = peoInfo.나이[0];
+    }
+    function createCheckBox(){
+            $.ajax({
+                  type: "GET",
+                  url: "/getDB",
+                  data: {},
+                  success: function (response) {
+                      dbP = response['dbP']
+                      let dbG = response['dbG']
+                      console.log(dbP);
+                      console.log(dbG);
+                      document.getElementById("txtPanelGroupSet").innerHTML = "";
+                      var t = "<div style ='text-align : center';>시온전체명단</div>";
+                      document.getElementById("txtPanelGroupSet").innerHTML += t;
+
+                      for(let i = 0; i < dbG.length; i++){
+                         var txt = "<span style='line-height:20%'><br></span><div class = 'item' id ="+dbG[i]['조 이름']+">&nbsp;"+dbG[i]['조 이름']+"<br></div>"
+                         document.getElementById("txtPanelGroupSet").innerHTML += txt;
+                      }
+                      console.log(dbP.length);
+                      for(let n = 0; n < dbP.length; n++){
+                         var txt = "<label><button class='item' onclick='getCheckboxInfo(event)' id =  "+dbP[n]['이름']+" name = '" + dbP[n]['조']+ "'  value = '" + dbP[n]['이름'] + "'>&nbsp;"+dbP[n]['이름']+ "&nbsp;</label>";
+                         document.getElementById(dbP[n]['조']).innerHTML += txt;
+                      }
+                  }
+
+              })
+           }
+    function missionSave(){
+        if((confirm("이름 : " +$('#textManagePeople').val()  + "\n선교헌금 : "+ $('#textManagePeopleInfo').val()+"\n인원정보를 변경하시겠습니까?")) == true){
+            let name = $('#textManagePeople').val();
+            let info = $('#textManagePeopleInfo').val();
+            if ((name != "") && (info != "")) {
+                $.ajax({
+                          type: "POST",
+                          url: "/missionSave",
+                          data: {name : name, info : info},
+                          success: function (response) {
+                                    if(response['False'] == 'False'){
+                                        alert("로그인이 필요한 서비스입니다.");
+                                        document.getElementById('result').innerText = ""
+                                        result = ""
+                                    }
+                                    else if(response['False'] == 'Auth'){
+                                        alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                        document.getElementById('result').innerText = ""
+                                        result = ""
+                                    }
+                                    else{
+                                        alert(response['msg']);
+                                        window.location.reload();
+                                    }
+                                }
+                })
+            }
+            else{
+                alert("선교헌금작정내용을 확인해주세요");
+            }
+           }
+   }
+   let people = [];
+   let result = '';
+   let list = [];
+   mis = [];
+   function getCheckboxValue(){
+        let name = people;
+        m = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+        for(let i = 0; i < name.length; i++){
+            let c = 'input[name='+ name[i]['이름']+']:checked';
+            const s = document.querySelectorAll(c);
+            result += name[i]['이름'] + ' ';
+            s.forEach((el) => {
+                        result += el.value +' ';
+            });
+<!--            list.push( + result);-->
+<!--            list.push(result);-->
+<!--            mis.push(list);-->
+        }
+        $.ajax({
+                type: "POST",
+                url: "/missionM",
+                data: {mis:result},
+                success: function (response) {
+                    if(response['False'] == 'False'){
+                                alert("로그인이 필요한 서비스입니다.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                }
+            })
+        mis = [];
+        result = ''
+    }
+
+    function showReview() {
+                $.ajax({
+                    type: "GET",
+                    url: "/mission",
+                    data: {},
+                    success: function (response) {
+                        people = response['all_reviews']
+                        mM = response['mM'].split(' ');
+                        console.log(people);
+                        for (let i = 0; i < people.length; i++){
+                            console.log(i);
+                            let name = people[i]['이름']
+                            let mission =  people[i]['선교헌금']
+                            let temp_html = "<tr>"+
+                                                "<td class = 'tdz' style= 'text-align : center;'>"+name+"</td>"+
+                                                "<td class = 'tdz' style='text-align : center;'>"+mission+"원</td>"+
+                                            "</tr>"
+                            $('#reviews-box').append(temp_html)
+                        }
+                        getTDate();
+                        for (let i = 0; i < people.length; i++){
+                            console.log(i);
+                            let name = people[i]['이름'];
+                            let temp_html = "<tr>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'>"+name+"</td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"1월 type = 'checkbox' name = "+name+" value = 1월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"2월 type = 'checkbox' name = "+name+" value = 2월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"3월 type = 'checkbox' name = "+name+" value = 3월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"4월 type = 'checkbox' name = "+name+" value = 4월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"5월 type = 'checkbox' name = "+name+" value = 5월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"6월 type = 'checkbox' name = "+name+" value = 6월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"7월 type = 'checkbox' name = "+name+" value = 7월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"8월 type = 'checkbox' name = "+name+" value = 8월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"9월 type = 'checkbox' name = "+name+" value = 9월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"10월 type = 'checkbox' name = "+name+" value = 10월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"11월 type = 'checkbox' name = "+name+" value = 11월></label></td>"+
+                                                    "<td class = 'tdz' style= 'text-align : center;'><label> "+"<input id = "+name+"12월 type = 'checkbox' name = "+name+" value = 12월></label></td>"+
+                                                "</tr>"
+
+                            $('#tChul').append(temp_html)
+                        }
+                        for(let i = 0; i < mM.length; i++){
+                            try{
+                                document.getElementById(mM[i]).checked = true;
+                            }catch(e){
+                            }
+                      }
+                    }
+                })
+            }
+        function reset(){
+        if(confirm("초기화하시겠습니까?") == true){
+                $.ajax({
+                        type: "GET",
+                        url: "/resetM",
+                        data: {},
+                        success: function (response) {
+                            if(response['False'] == 'False'){
+                                alert("로그인이 필요한 서비스입니다.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        }
+                })
+            }
+        }
+        function getTDate(){
+            $.ajax({
+                    type: "GET",
+                    url: "/getMissionDate",
+                    data: {},
+                    success: function (response) {
+                        let date = response['date']
+                        if (date.length != 0){
+                            for (let i = 0; i < date.length; i++){
+                                 var txt = "<th style = 'z-index: 1;'>"+date[i]+"</th>"
+                                 document.getElementById("tDate").innerHTML += txt;
+                            }
+                        }
+                        else{
+                            var txt = "<h3>데이터가 부족합니다</h3>"
+                            document.getElementById("tDate").innerHTML += txt;
+                        }
+                    }
+                })
+        }
+</script>
+<body>
+<div class="container" style="display : flex;flex-direction: column;">
+<br>
+    <h1 style="text-align : center;">
+        <script>
+            date = new Date().toLocaleDateString();
+            document.write(date);
+        </script>
+    선교작정내역
+    </h1>
+
+    <div style="text-align : right;">
+                <span id="clock" style="color:gray;">clock</span>
+                <span id="apm" style="color:gray;"  >ampm</span>
+    </div>
+    <div style = "display : none;">
+    <div style="flex-wrap: wrap; border: 3px solid black; border-radius: 10px;justify-content: center;" id = "resultCheckbox">
+        <div class="p4" style="display: flex;flex-direction: column;align-items: stretch;">
+            <div><p>&nbsp&nbsp&nbsp※ 하단 체크박스명단에서 선택가능합니다.</p>
+                <div>&nbsp&nbsp&nbsp이름 : <input style="width : 60%" id= "textManagePeople" type="text" placeholder="이름" maxlength="6"disabled></div>
+                <div>&nbsp&nbsp&nbsp나이 : <input disabled style="width : 20%" id= "textManagePeopleAge" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="숫자" maxlength="2"></div>
+<!--                <div>&nbsp&nbsp&nbsp조  : <select id ="textAddPeopleGroup"></select></div>-->
+                <div>&nbsp&nbsp&nbsp성별 : <label><input type="radio" name="sSelect" id="radioMan" value="남" disabled> 남</label>
+                <label><input type="radio" name="sSelect" id="radioGirl" value="여" disabled> 여</label></div>
+            </div>
+            <div>&nbsp&nbsp&nbsp선교헌금 : <input style="width : 70%; text-align : left; display : nowrap;" id= "textManagePeopleInfo" type="number" maxlength="50" placeholder="선교헌금" size="20" min = "0"></div>
+            <button class="myButtonEtc" onclick="missionSave()">선교헌금작정</button>
+            <p style="white-space : wrap; word-break: keep-all;">&nbsp&nbsp※ DB변경시 자동 새로고침으로 체크된 인원이 초기화됩니다.</p>
+<!--            <div style="display : flex; margin-top : auto; text-align : center;flex-direction: row; align-items: stretch; line-height:50%; justify-content: space-between;">-->
+<!--                <a href="#" style="width : 100%; height : 135%;" class= "myButtonCGroup" onclick="insertPeopleDB()">추가</a><br>-->
+<!--                <a href="#" style="width : 100%; height : 135%;" class= "myButtonMGroup" onclick="replacePeopleDB()">변경</a><br>-->
+<!--                <a href="#" style="width : 100%; height : 135%;" class= "myButtonDGroup" onclick="deletePeopleDB()">삭제</a>-->
+<!--            </div>-->
+        </div>
+    </div>
+    <div style="display : none;">
+        <div style="display : flex;flex-direction: column;align-content: center;flex-wrap: wrap;" >
+        <label>이름 : <input type="text"></label>
+        <div>
+            <label>성별&nbsp;:&nbsp;</label>
+            <label>남 <input type="radio" name = "s" value="남" id = "남" checked >&nbsp;</label>
+            <label>여 <input type="radio" name = "s" value="여" id = "여" ></label>
+        </div>
+        <label>선교작정헌금 : <input type="number" min = "0"></label>
+        </div>
+        <button class="myButtonEtc" style="margin-left : 67%;" onclick="">인원추가</button>
+
+    </div>
+    <div>
+        <a href=#none id="showInfo" onclick="if(hideInfo.style.display=='none') {hideInfo.style.display='';showInfo.innerText='▲ 접기'} else {hideInfo.style.display='none';showInfo.innerText='▶ 명단추가'}">▶ 명단추가</a>
+        <div id="hideInfo" style="display: none">
+            <div id = 'txtPanelGroupSet' style="outline-style: dotted;"></div>
+        </div>
+    </div>
+
+    <a href=#none id="showList" onclick="if(hideList.style.display=='none') {hideList.style.display='';showList.innerText='▲ 접기'} else {hideList.style.display='none';showList.innerText='▶ 작정명단'}">▶ 작정명단</a>
+        <div id="hideList" style="display: none">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table">
+                <thead class = "thz" style="background-color : #ffd8d8; position: sticky; top: 0px;">
+                <tr>
+                    <th class = "thz" style="text-align : center; width : 20%;" id = "td1" scope="col">이름</th>
+                    <th class = "thz" style="text-align : center; width : 20%;" id = "td2" scope="col">작정헌금</th>
+                </tr>
+                </thead>
+                <tbody class="tdz" id="reviews-box">
+                </tbody>
+            </table>
+        </div>
+
+
+<div style="overflow: auto; white-space:nowrap; border-collapse:collapse; display : none; ">
+        <table border="0" cellspacing="0" cellpadding="0" id = 'csvtable' style="white-space: nowrap; border: 0px; border-collapse: collapse;">
+          <thead>
+            <tr id = 'tDate'>
+              <th style="z-index: 3;" >이름/월별헌금내역</th>
+            </tr>
+          </thead>
+          <tbody id = 'tChul'>
+          </tbody>
+        </table>
+    </div>
+</div>
+    <div style="display : none;">
+        <button class="myButtonEtc" style="" onclick="getCheckboxValue()">저장</button>
+        <button class="myButtonEtc" style="" onclick="reset()">초기화</button>
+        <label><a style="font-size : 32px; text-align : center;" type="url" target='_blank' href="https://docs.google.com/spreadsheets/d/1KHoYpPp5ENUY9UFQZp7KbfWWEs9TqO8u/edit#gid=282813588">선교헌금-구글드라이브</a></label>
+    </div>
+</div>
+<div style="display : flex;justify-content: center;background-color: currentcolor;"><iframe src="https://docs.google.com/spreadsheets/d/1KHoYpPp5ENUY9UFQZp7KbfWWEs9TqO8u/edit#gid=163121050" style="width : 97%;height : 750px;display : flex;justify-content: flex-start;align-content: center;align-items: baseline;"></iframe></div>
+</body>
+</html>
+{% endblock %}

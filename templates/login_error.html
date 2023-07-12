@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% if session['logged_in'] %}
+<p>You're logged in already!</p>
+{% else %}
+<h2>Login</h2>
+<hr width="100%" color="black"/>
+<p>아이디 혹은 비밀번호를 확인해주세요.</p>
+<input type="button" value="BACK" onClick="history.go(-1)">
+<hr width="100%" color="black"/>
+{% endif %}
+{% endblock %}
+<style type="text/css">
+            * {
+                font-family: "Do Hyeon", sans-serif;
+            }
+            .h1 {
+                position: fixed
+                left: 20px;
+                top: 50px;
+                font-family: "Do Hyeon", sans-serif
+            }
+             h2 {
+                position: fixed
+                left: 50px;
+                top: 50px;
+
+            }
+            .div{
+                position: fixed
+                left:20px;
+                top:50px;
+            }
+    </style>
