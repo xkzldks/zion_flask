@@ -1,0 +1,576 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 그래프</title>
+
+    <script>
+        (function( $ ) {
+            $(function() {
+                function animated_contents() {
+                    $(".zt-skill-bar > div ").each(function (i) {
+                        var $this  = $(this),
+                            skills = $this.data('width');
+                        $this.css({'width' : skills + '%'});
+                    });
+                }
+
+            if(jQuery().appear) {
+                $('.zt-skill-bar').appear().on('appear', function() {
+                    animated_contents();
+                });
+            } else {
+                animated_contents();
+            }
+        });
+    }(jQuery));
+    </script>
+
+    <script type="text/javascript">
+    chul = '';
+    date = new Date().toLocaleDateString();
+    //다운로드 하이퍼링크에 클릭 이벤트 발생시 saveCSV 함수를 호출하도록 이벤트 리스너를 추가
+    document.addEventListener('DOMContentLoaded', function(){
+      document.getElementById('download').addEventListener('click', function(){
+        saveCSV('data.csv'); // CSV파일 다운로드 함수 호출
+        return false;
+      })
+    });
+
+    //CSV 생성 함수
+    function saveCSV(fileName){
+        //CSV 문자열 생성
+        let downLink = document.getElementById('download');
+        const BOM = "\uFEFF";
+        let csv = ''; //CSV최종 문자열을 저장하는 변수
+        csv = BOM +csv
+        let rows = document.querySelectorAll("#csvtable tr"); // 테이블에서 행 요소들을 모두 선택
+
+        //행단위 루핑
+        for (var i = 0; i < rows.length; i++) {
+            let cells = rows[i].querySelectorAll("td, th");
+            let row = [];
+            //행의 셀 값을 배열로 얻기
+            cells.forEach(function(cell){
+              row.push(cell.innerHTML);
+            });
+
+            csv += row.join(',') + (i != rows.length-1 ? '\n':''); // 배열을 문자열+줄바꿈으로 변환
+        }
+
+        //CSV 파일 저장
+        csvFile = new Blob([csv], {type: "text/csv"}); // 생성한 CSV 문자열을 Blob 데이터로 생성
+        downLink.href = window.URL.createObjectURL(csvFile); // Blob 데이터를 URL 객체로 감싸 다운로드 하이퍼링크에 붙임.
+        downLink.download = fileName; // 인자로 받은 다운로드 파일명을 지정
+    }
+    $(function(){
+          $(".fold-table tr.view").on("click", function(){
+            if($(this).hasClass("open")) {
+              $(this).removeClass("open").next(".fold").removeClass("open");
+            } else {
+              $(".fold-table tr.view").removeClass("open").next(".fold").removeClass("open");
+              $(this).addClass("open").next(".fold").addClass("open");
+            }
+          });
+        });
+        $(document).ready(function () {
+            google.load('visualization', '1', {packages: ['corechart']});
+            getAttendanceGraph();
+            getTDate();
+            getTChul();
+<!--            document.getElementById('endDay').value = new Date().toISOString().substring(0, 10);;-->
+        });
+
+        function getTChul(){
+            $.ajax({
+                    type: "GET",
+                    url: "/getTChul",
+                    data: {},
+                    success: function (response) {
+                        chul = response['chul']
+                        console.log(chul);
+                        console.log(chul.length);
+                           for( let i = 0; i < chul.length; i++){
+                               txt = ''
+                               for(let k = 0; k <chul[i].length; k++){
+                                    if(k == 0){
+                                        txt += "<tr><td style = 'color : #fff;background: #42444e; position: sticky; z-index: 0; left: 0px;'>"+chul[i][k]+"</td>"
+                                    }
+                                    else if(k == chul[i].length){
+                                        txt += "<td class = 'tdz'>"+chul[i][k]+"</td><tr>"
+                                    }
+                                    else{
+                                        txt += "<td class = 'tdz'>"+chul[i][k]+"</td>"
+                                    }
+
+                               }document.getElementById("tChul").innerHTML += txt;
+
+                           }
+
+                    }
+                })
+        }
+        function getTDate(){
+            $.ajax({
+                    type: "GET",
+                    url: "/getTDate",
+                    data: {},
+                    success: function (response) {
+                        let date = response['date']
+                        if (date.length != 0){
+                            for (let i = 0; i < date.length; i++){
+                                 var txt = "<th style = 'z-index: 1;'>"+date[i]+"</th>"
+                                 document.getElementById("tDate").innerHTML += txt;
+                            }
+
+                        }
+                        else{
+                            var txt = "<h3>데이터가 부족합니다</h3>"
+                            document.getElementById("tDate").innerHTML += txt;
+                        }
+                    }
+                })
+        }
+        function weekCount(today) {
+          var year = dt.getFullYear();
+          var countDay = new Date(year,0,1);
+          var week = 1;
+          while(today>countDay){
+            countDay.setDate(countDay.getDate()+ 1);
+            var countNum = countDay.getDay();
+            if(countNum == 0){
+              week++;
+            }
+          }
+          return week;
+        }
+        var dt = new Date();
+        console.log(weekCount(dt));
+        var dateTxt = weekCount(dt);
+        console.log(dateTxt);
+<!--        document.getElementById("datePanel").innerHTML += dateTxt;-->
+
+        function setCalStartDB(){
+            $.ajax({
+                    type: "POST",
+                    url: "/calStartDB",
+                    data: {},
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+        }
+
+        function getAttendanceGraph() {
+            document.getElementById("graphPanel").innerHTML = "";
+                       $.ajax({
+                            type: "GET",
+                            url: "/getAttendanceGraph",
+                            data: {},
+                            success: function (response) {
+                                let chul = response['chul']
+                                for (let i = 0; i < chul.length; i++){
+                                    if (chul.length != 0){
+                                        if ((chul[i][1]/52*100).toFixed(1)> 70){
+                                            var txt = "<div class='zt-skill-bar'><div data-width='"+chul[i][1]+"' style = 'white-space : nowrap; width:"+(chul[i][1]/52*100)+"%;'>"+(i+1)+". "+chul[i][0]+" | "+chul[i][1]+"일 | "+(chul[i][1]/52*100).toFixed(1)+"%</div></div>"
+                                            document.getElementById("graphPanel").innerHTML += txt;
+                                        }
+                                        else{
+                                            var txt = "<div class='xt-skill-bar'><div data-width='"+chul[i][1]+"' style = 'white-space : nowrap; width:"+(chul[i][1]/52*100)+"%;'>"+(i+1)+". "+chul[i][0]+" | "+chul[i][1]+"일 | "+(chul[i][1]/52*100).toFixed(1)+"%</div></div>"
+                                            document.getElementById("graphPanel").innerHTML += txt;
+                                        }
+                                    }
+                                    else{
+                                        var txt = "<h3>데이터가 부족합니다</h3>"
+                                        document.getElementById("graphPanel").innerHTML += txt;
+                                    }
+                                }
+                            }
+                        })
+                    }
+        function getGroupGraph() {
+            document.getElementById("graphPanel").innerHTML = "";
+                    $.ajax({
+                            type: "GET",
+                            url: "/getGroupGraph",
+                            data: {},
+                            success: function (response) {
+                                let chul = response['chul']
+                                console.log(chul);
+                                document.getElementById('graphPanel').style.width = '100%';
+                                document.getElementById('graphPanel').style.height = '150%';
+                                var data = google.visualization.arrayToDataTable(chul);
+                                console.log(data);
+                                var options = {
+                                    title : '월별 조 출석현황',
+                                    vAxis: {title: "인원 수"},
+                                    hAxis: {title: "월"},
+                                    seriesType: "bars",
+                                    series: {5: {type: "line"}}
+                                    };
+                                var chart = new google.visualization.ComboChart(document.getElementById('graphPanel'));
+                                chart.draw(data, options);
+                            }
+                        })
+
+            }
+
+        function setStartDB(){
+               const day = document.querySelector("#startDay").value
+               console.log(day);
+        }
+        $(window).scroll(function(){
+             $(".csvtable").css("left",0-$(this).scrollLeft());
+            })
+    </script>
+    <style type="text/css">
+    .tdz{
+         z-index: -3;
+    }
+    table {
+        font-size: 100%;
+    }
+    .zt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(185, 185, 185);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .zt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .zt-skill-bar div {
+        background-color:  #0f8a42c2;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .zt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : 11px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .zt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .xt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(185, 185, 185);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .xt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .xt-skill-bar div {
+        background-color:  #529cce;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .xt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : -30px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .xt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .myButtonCGroup{
+        box-shadow:inset 0px 1px 0px 0px #97c4fe;
+        background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+        background-color:#3d94f6;
+        border-radius:6px;
+        border:1px solid #337fed;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:10px;
+        font-weight:bold;
+        padding:2px 8px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #1570cd;
+    }
+    .myButtonCGroup:hover {
+        background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+        background-color:#1e62d0;
+    }
+    .myButtonCGroup:active {
+        position:relative;
+        top:1px;
+    }
+    body {
+        color: #666;
+        font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+        }
+        table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        }
+        th,
+        td {
+        padding: 6px 15px;
+        }
+        th {
+        background: #42444e;
+        color: #fff;
+        text-align: left;
+        }
+        tr:first-child th:first-child {
+<!--        border-top-left-radius: 6px;-->
+        }
+        tr:first-child th:last-child {
+<!--        border-top-right-radius: 6px;-->
+        }
+        td {
+<!--        border-bottom: 1px solid #c6c9cc;-->
+        }
+        td:first-child {
+<!--        border-left: 1px solid #c6c9cc;-->
+        }
+        tr:nth-child(even) td {
+        background: #eaeaed;
+        }
+        tr:last-child td:first-child {
+<!--        border-bottom-left-radius: 6px;-->
+        }
+        tr:last-child td:last-child {
+<!--        border-bottom-right-radius: 6px;-->
+        }
+
+    #csvtable th{
+        position: sticky;
+        top: 0px;
+    }
+    table#tDate th:first-child,
+    table#tDate td:first-child { position: sticky; left: 0; }
+    table#tDate th:nth-child(2),
+    table#tDate td:nth-child(2) { position: sticky; left: 183px; }
+
+    .myButtonEtc {
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#4d384d;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                margin: auto;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #ffffff;
+            }
+            .myButtonEtc:hover {
+                background:linear-gradient(to bottom, #f2e4f2 5%, #fffcff 100%);
+                background-color:#f2e4f2;
+            }
+            .myButtonEtc:active {
+                position:relative;
+                top:1px;
+            }
+             .flx{
+                display : flex;
+                justify-content: space-between;
+            }
+    </style>
+</head>
+<body>
+
+<div class = 'container'><br>
+
+    <div class="zt-span6 last"></div>
+
+    <div style="display:inline;">
+        <div style="text-align : right">
+            <span id="clock" style="color:gray;">clock</span>
+            <span id="apm" style="color:gray;"  >ampm</span>
+        </div>
+        <div style="text-align : center;" id = "daemoon_font">
+            <img  src="/static/image/icon2.png"  width ="24px" height ="24px" alt="">
+            <h3 style="display : inline;"> 시온청년부 출석률</h3>
+        </div>
+    </div>
+
+<!--    <div style="float : right;">-->
+<!--        <a href=# style="text-align : right;" id="showDBPanel" onclick="if(hideDBPanel.style.display=='none') {hideDBPanel.style.display='';showDBPanel.innerText='▲_접기'} else {hideDBPanel.style.display='none';showDBPanel.innerText='▶시작날짜db설정'}">▶시작날짜db설정</a>-->
+<!--        <div id="hideDBPanel" style="display: none">-->
+<!--            <a>총회날짜변경(출석 초기화되는날) : <input  type = 'date' id = 'typeStart'></a>-->
+<!--            <button style="display:inline-block;" class ="myButtonCGroup" onclick="setStartDB()">날짜변경</button>-->
+<!--        </div>-->
+<!--    </div>-->
+    <br>
+    <hr>
+    <h5 style="font-size : 15px">그래프는 전체인원을 출석률 순서로 출력됩니다. 그래프와 하단의 표를 참고하여 정회원계산하시면 됩니다.</h5>
+    <h5 style="font-size : 15px">출석률 70%이상 - 초록색(정회원) 나머지 하늘색(준회원), % 기준은 전체년도(52주 기준)를 나눠서 표시</h5>
+    <p> 1. 시작날짜~끝날짜(총회날~다음총회날)그래프 값, 시작, 끝날짜를 각각 db저장해서 불러오기, 웹에서 값변경하면 db에서 해당날짜부터 그래프 다시 그림</p>
+    <button class = "btn btn-outline-info"  onclick="history.back()"> 뒤로가기 </button>
+    <div style="display : flex;justify-content: space-between;flex-wrap: wrap;flex-direction: column;align-items: stretch;">
+        <button class = "btn btn-outline-info"  onclick="getAttendanceGraph()"> 전체인원 출석률 </button>
+        <button class = "btn btn-outline-info"  onclick="getGroupGraph()"> 조별 출석률 </button>
+        <button class = "btn btn-outline-info"  onclick="getAgeGraph()"> 나이별 출석률 </button>
+    </div>
+    <br>
+    <br>
+    <div id="datePanel"></div>
+    <div id="graphPanel"></div>
+
+
+</div><p style="text-align : center">아래의 표 %기준은 현재 db에 존재하는 전체출석날짜를 기준</p><hr>
+
+<h2 style="text-align : center">출석현황</h2>
+<div style="text-align : center;">
+    <a href="" id="download" >
+        <script>
+        date = new Date().toLocaleDateString();
+        document.write(date);
+        </script> 기준 출석현황 다운로드</a>
+
+</div>
+
+
+<div style="margin-left:auto;margin-right:auto;width: 95%; height:1000px; overflow: auto; white-space:nowrap; border-collapse:collapse; ">
+    <table border="0" cellspacing="0" cellpadding="0" id = 'csvtable' style="white-space: nowrap; width: 500px; border: 0px; border-collapse: collapse;">
+      <thead>
+        <tr id = 'tDate'>
+          <th style="z-index: 3;" >이름|날짜</th>
+          <th style="z-index: 1;" >%</th>
+        </tr>
+      </thead>
+      <tbody id = 'tChul'>
+      </tbody>
+    </table>
+</div>
+<hr>
+<div style="text-align : center; font-size : 6px; font-color : gray;">
+            <p>진주교회비전관 경남 진주시 의곡길16번길 15-1 (지번) 봉래동 189-9</p>
+            <p>made by ksh</p>
+            <a href="#" id = "toTop" title="맨 위로">
+                <img  style="display : block; margin-left : auto; margin-right : auto" src="/static/image/arrow.png"  width ="35" height ="35" alt="">
+            </a>
+        </div>
+ <script>
+        var Target = document.getElementById("clock");
+        var Target_apm = document.getElementById("apm");
+        function clock() {
+            var time = new Date();
+            var hours = time.getHours();
+            var minutes = time.getMinutes();
+            var seconds = time.getSeconds();
+            var AmPm ="AM";
+            if(hours > 12){
+                var AmPm ="PM";
+                hours %= 12;
+            }
+
+            Target.innerText = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+            Target_apm.innerText = `${AmPm}`;
+        }
+        clock();
+        setInterval(clock, 1000); // 1초마다 실행
+    </script>
+</body>
+
+
+</html>{% endblock %}

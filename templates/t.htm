@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<style data-emotion="css-global 1jeb2kv">
+html,body{
+font-family:-apple-system,BlinkMacSystemFont,Bazier Square,Noto Sans KR,Segoe UI,Apple SD Gothic Neo,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;width:100%;height:100%;overscroll-behavior:none;background-color:#fff;}
+#__next{
+width:100%;
+height:100%;
+margin:0 auto;
+}
+input::-ms-clear
+{
+display:none;
+}
+</style>
+
+<body>
+<br>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); min-width: 320px; text-align: center;" >
+    <!--    <button class="api-btn" onclick="requestUserInfo()" >사용자 정보 가져오기</button>-->
+        <div id="test"></div>
+        <div style = "" id="qrCode"></div>
+        <div id="ViewTimer"></div>
+        <a id = "kakaoBtn" style = "" href="javascript:kakaoLogin();"><img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오계정 로그인"/></a>
+        <p style="text-align : center; font-size : 11px;"><br>처음버튼을 누르면 정보제공 동의창이 나옵니다. <br> 정보제공 동의를 하셔야 서비스 이용이 가능합니다. <br> 세션이 만료되어 qr가 사라진 경우 버튼을 한번더 눌러주세요. </p>
+    </div>
+
+    <p id="token-result"></p>
+
+</body>

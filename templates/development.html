@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 실험실</title>
+    <script type="text/javascript">
+        function info(){
+            var v = $("input[type=radio][name=infoSelect]:checked").val()
+            var url = $('#url').val()
+            $.ajax({
+                type: "POST",
+                url: "/getInfo",
+                data: {url : url},
+                success: function (response) {
+                    if(confirm(response['msg']+"\nmp3변환 및 저장하시겠습니까?") == true){
+                        $.ajax({
+                                type: "POST",
+                                url: "/downList",
+                                data: {url : url, v : v},
+                                success: function (response) {
+
+                                }
+                       })
+                    }
+                }
+            })
+
+        }
+    </script>
+</head>
+
+<body>
+    <div style="display : flex;flex-direction: column;align-items: center;justify-content: flex-start;">
+        <br>
+        <h3>youtube 플레이리스트 mp3변환</h3>
+        <br>
+        <input id ='url' type="url" style="width : 90%;">
+        <br>
+        <div style="display:flex;flex-direction: column;">
+            <label><input type="radio" name="infoSelect" id="radioMp3"  value="3" checked="checked">mp3</label>
+            <label><input type="radio" name="infoSelect" id="radioMp4"  value="4" disabled>mp4</label>
+            <a href='#' class= 'myButtonEtc' onclick='info()'>플레이리스트 다운</a>
+            <button style = '' type="button" class="myButtonEtc" onClick="location.href='/'">뒤로가기</button>
+            <br>
+
+            <p style="text-align : center;">※비공개표시된 재생목록은 다운이 불가능합니다.</p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

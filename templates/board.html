@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 게시판</title>
+    <meta charset="utf-8">
+
+
+    <script type="text/javascript">
+    </script>
+
+    <style type="text/css">
+            * {
+                font-family: "Do Hyeon", sans-serif;
+            }
+            .h1 {
+                position: fixed
+                left: 20px;
+                top: 50px;
+                font-family: "Do Hyeon", sans-serif
+            }
+             h2 {
+                position: fixed
+                left: 50px;
+                top: 50px;
+
+            }
+            .div{
+                position: fixed
+                left:20px;
+                top:50px;
+            }
+            .page-num {
+                text-decoration: None;
+                color: #6c757d;
+            }
+            .active {
+                font-weight: bold;
+                color: black;
+            }
+    </style>
+
+
+</head>
+<body>
+<h1 class = "text-center mt-3"><p>자유게시판</p></h1>
+<div class="container" >
+    <br>
+    <br>
+    <br>
+    {% if not session['username'] %}
+    <script>
+        alert("로그인이 필요한 서비스입니다. 로그인창으로 이동합니다.");
+    </script>
+    <meta http-equiv="refresh" content="0.01;url=/account/login">
+    {% endif %}
+    <table class="table table-hover table-striped text-center" style="border: 1px solid;">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(boards|length) %}
+            <tr>
+                <td>{{ board_num-i }}</td>
+                <td><a href="{{ url_for('detail', board_id=boards[i]['_id']) }}" style="text-decoration: none; color: black;">{{ boards[i]['title'] }}</a></td>
+                <td>{{ boards[i]['username'] }}</td>
+                <td>{{ boards[i]['hit'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+    <div>
+        <ul class="pagination justify-content-center">
+            <li><a href="{{ url_for('board', page=page-1) }}" style="margin-right:5px;" class="text-secondary"> ◀ </a></li>
+            {% for i in range(start_page, end_page+1)%}
+            <li><a href="{{ url_for('board', page=i) }}" style="margin-right:5px;" class="page-num">{{ i }}</a></li>
+            {% endfor %}
+            <li><a href="{{ url_for('board', page=page+1) }}" style="margin-right:5px;" class="text-secondary"> ▶ </a></li>
+
+        </ul>
+    </div>
+    <form action="{{ url_for('write') }}">
+        <button type="submit" class="btn btn-outline-info float-right">게시글쓰기</button>
+    </form>
+    <button type="button" class="btn mr-1 btn-outline-info float-left" onClick="location.href='/'">뒤로가기</button>
+</div>
+
+<script>
+    var collection = document.getElementsByClassName("page-num");
+    for (var i=0; i<collection.length; i++){
+        if ((collection.item(i).innerText) == {{page}}){
+            collection.item(i).classList.add('active');
+        }
+    }
+</script>
+
+{% endblock %}

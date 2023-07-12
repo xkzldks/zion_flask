@@ -1,0 +1,1049 @@
+{% extends "base.html" %}
+{% block content %}
+<html lang="ko">
+<head>
+    <title>시온 출석 | 체크</title>
+    <meta property="og:title" content="시온 출석체크" />
+    <meta property="og:description" content="출석체크" />
+    <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        $(document).ready(function () {
+                    showReview();
+                    getUserAuth();
+                });
+        let result = '';
+        let copySen = '';
+        function getUserAuth(){
+                $.ajax({
+                        type: "GET",
+                        url: "/getUserAuth",
+                        data: {},
+                        success: function (response) {
+                            let auth = response['msg']
+                            console.log(auth);
+                            if(auth == ''){
+                                var txt = "<div>*비로그인*</div>"
+                                document.getElementById("userAuth").innerHTML += txt;
+                            }
+                            else if(auth == 1){
+                                var txt = "<div>*관리자계정*</div>"
+                                document.getElementById("userAuth").innerHTML += txt;
+                            }
+                            else if(auth == 2){
+                                var txt = "<div>*게스트계정*</div>"
+                                document.getElementById("userAuth").innerHTML += txt;
+                            }
+                        }
+                    })
+            }
+        function getCheckboxValue(){
+                let group = Object.values(getGroupList);;
+                for(let i = 0; i < group.length; i++){
+                    let c = 'input[name='+ getGroupList[i]['조 이름']+']:checked';
+                    const s = document.querySelectorAll(c);
+
+                    s.forEach((el) => {
+                                result += el.value + ' ';
+                    });
+                }
+                document.getElementById('result').innerText = result;
+        }
+
+        function getDb(){
+             if(confirm("명단을 저장하시겠습니까?") == true){
+                 getCheckboxValue();
+                    if (document.getElementById('result').innerText == ""){
+                        if(confirm("체크가 되지않았지만 명단을 저장하시겠습니까?") == true){
+                            chulCheck();
+                        }
+                        else{
+                            document.getElementById('result').innerText = ""
+                            result = ""
+                        }
+                    }
+                    else{
+                        chulCheck();
+                    }
+                }
+            }
+
+        function chulCheck(){
+            let title = $('#title').val()
+            $.ajax({
+                    type: "POST",
+                    url: "/chulCheck",
+                    data: {title_give:title},
+                    success: function (response) {
+                        let check = response['check']
+                        let title = check['title']
+                        let review = check['review']
+                        console.log(check);
+                        if(check == ''){
+                            dateCheck();
+                        }
+                        else{
+                            if(confirm("현재 저장된 데이터: "+title + review +"\n저장하시면 이 데이터는 삭제되고 새로운 데이터가 저장됩니다. \n저장하시겠습니까?") == true){
+                                dateCheck();
+                            }
+                        }
+                    }
+                })
+            }
+
+        function makeReview() {
+                let title = $('#title').val()
+                let review = document.getElementById('result').innerText
+
+                $.ajax({
+                    type: "POST",
+                    url: "/review",
+                    data: {title_give:title, review_give:review},
+                    success: function (response) {
+                    if(response['False'] == 'False'){
+                        alert("로그인이 필요한 서비스입니다.");
+                        document.getElementById('result').innerText = ""
+                        result = ""
+                    }
+                    else if(response['False'] == 'Auth'){
+                        alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                        document.getElementById('result').innerText = ""
+                        result = ""
+                    }
+                    else{
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+
+        function dateCheck(){
+            if($(title).val() != ""){
+                makeReview()
+            }
+            else{
+                alert("날짜를 확인해주세요");
+                document.getElementById('result').innerText = ""
+                result = ""
+            }
+        }
+
+        function getCheckDB(){
+            if($(title).val() == ""){
+                alert("삭제할 명단의 날짜를 입력하세요");
+                document.getElementById('result').innerText = ""
+                result = ""
+            }
+            else{
+                if(confirm($(title).val()+" 명단을 삭제하시겠습니까?") == true){
+                let title = $('#title').val()
+                       $.ajax({
+                                type: "POST",
+                                url: "/dbDel",
+                                data: {title_give:title},
+                                success: function (response) {
+                                        if(response['False'] == 'False'){
+                                            alert("로그인이 필요한 서비스입니다.");
+                                            document.getElementById('result').innerText = ""
+                                            result = ""
+                                        }
+                                        else if(response['False'] == 'Auth'){
+                                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                            document.getElementById('result').innerText = ""
+                                            result = ""
+                                        }
+                                        else{
+                                            alert(response["msg"]);
+                                            window.location.reload();
+                                        }
+                                    }
+                            })
+                       if (error ) {
+                            return false;
+                       }
+                    }
+                else{
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+            }
+            }
+        function getCheckAddPerson(){
+            getCheckboxValue();
+                if($('#title').val() == "" ||( document.getElementById('result').innerText == "")){
+                    alert("삭제할 명단의 날짜와 해당 인원을 확인하세요");
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                    }
+                else{
+                    if(confirm($('#title').val() + " 해당 인원의 출석기록을 추가하시겠습니까?") == true){
+                        let title = $('#title').val()
+                        let review = document.getElementById('result').innerText
+                               $.ajax({
+                                        type: "POST",
+                                        url: "/personAdd",
+                                        data: {title_give:title, new_give:review},
+                                        success: function (response) {
+                                            if(response['False'] == 'False'){
+                                                alert("로그인이 필요한 서비스입니다.");
+                                                document.getElementById('result').innerText = ""
+                                                result = ""
+                                            }
+                                            else if(response['False'] == 'Auth'){
+                                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                                document.getElementById('result').innerText = ""
+                                                result = ""
+                                            }
+                                            else{
+                                                alert(response["msg"]);
+                                                window.location.reload();
+                                            }
+                                        }
+                               })
+                    }
+                    else{
+                         document.getElementById('result').innerText = ""
+                         result = ""
+                    }
+                }
+
+            }
+        function getCheckDelPerson(){
+            getCheckboxValue();
+            if($('#title').val() == "" ||( document.getElementById('result').innerText == "")){
+                    alert("삭제할 명단의 날짜와 해당 인원을 확인하세요");
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+            else{
+                if(confirm($('#title').val() + " 해당 인원의 출석기록을 삭제하시겠습니까?") == true){
+                    let title = $('#title').val()
+                    let review = document.getElementById('result').innerText
+                           $.ajax({
+                                    type: "POST",
+                                    url: "/personDel",
+                                    data: {title_give:title, new_give:review},
+                                    success: function (response) {
+                                        if(response['False'] == 'False'){
+                                            alert("로그인이 필요한 서비스입니다.");
+                                            document.getElementById('result').innerText = ""
+                                            result = ""
+                                        }
+                                        else if(response['False'] == 'Auth'){
+                                            alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                            document.getElementById('result').innerText = ""
+                                            result = ""
+                                        }
+                                        else{
+                                            alert(response["msg"]);
+                                            window.location.reload();
+                                        }
+                                    }
+                           })
+                }
+                else{
+                     document.getElementById('result').innerText = ""
+                     result = ""
+                }
+            }
+        }
+
+        function checkCopy() {
+            if($('#title').val() == ""){
+                    alert("결과복사할 날짜를 확인하세요");
+                    document.getElementById('result').innerText = ""
+                     result = ""
+                    }
+                else{
+                    if(confirm($('#title').val() + " 해당 날짜의 결과를 복사하시겠습니까?") == true){
+                        let title = $('#title').val()
+                               $.ajax({
+                                        type: "POST",
+                                        url: "/copyResult",
+                                        data: {title_give:title},
+                                        success: function () {
+                                        getCopy();
+                                        document.getElementById('result').innerText = ""
+                                         result = ""
+                                        }
+                        })
+                    }
+                    else{
+                         document.getElementById('result').innerText = ""
+                         result = ""
+                    }
+                }
+            }
+        function getCopy() {
+                alert('결과복사 시작');
+                $.ajax({
+                      type: "GET",
+                      url: "/copyResult",
+                      data: {},
+                      success: function (response) {
+                          let reviews = response['review']
+                          alert(reviews);
+                          copyToClipboard(reviews);
+                      }
+                    })
+            }
+        function copyToClipboard(str) {
+            var tempElement = document.createElement("textarea");
+            document.body.appendChild(tempElement);
+            tempElement.value = str;
+            tempElement.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempElement);
+            alert('결과복사됨!');
+        }
+
+        function graphCalc(){
+            alert(document.getElementById("startDay").value());
+        }
+        function showReview() {
+            getGroup()
+                $.ajax({
+                    type: "GET",
+                    url: "/review",
+                    data: {},
+                    success: function (response) {
+                        let reviews = response['all_reviews']
+                        for (let i = 0; i < reviews.length; i++){
+                            let year = reviews[i]['year']
+                            let title = reviews[i]['title']
+                            let review = reviews[i]['review']
+                            let count = reviews[i]['count']
+                            let temp_html = `<tr>
+                                                <td style="text-align : center;">${year}</td>
+                                                <td style="text-align : center;">${title}</td>
+                                                <td>${review}</td>
+                                                <td style="text-align : center;">${count}</td>
+                                            </tr>`
+                            $('#reviews-box').append(temp_html)
+                        }
+                    }
+                })
+            }
+        function createCheckBox(){
+            $.ajax({
+                  type: "GET",
+                  url: "/getDB",
+                  data: {},
+                  success: function (response) {
+                      dbP = response['dbP']
+                      let dbG = response['dbG']
+                      console.log(dbP);
+                      console.log(dbG);
+                      document.getElementById("txtPanelAddCheckbox").innerHTML = "";
+                      for(let i = 0; i < dbG.length; i++){
+                         var txt = "<span style='line-height:20%'><br></span><div class = 'groupClass' id ="+dbG[i]['조 이름']+">&nbsp;"+dbG[i]['조 이름']+"<br></div>"
+                         document.getElementById("txtPanelAddCheckbox").innerHTML += txt;
+                      }
+                      console.log(dbP.length);
+                      for(let n = 0; n < dbP.length; n++){
+                         var txt = "<label><input type = 'checkbox' onclick='getCheckboxInfo(event)' name = '" + dbP[n]['조']+ "'  value = '" + dbP[n]['이름'] + "'> "  + dbP[n]['이름'] + "</label>";
+                         document.getElementById(dbP[n]['조']).innerHTML += txt;
+                      }
+                      getNotSetGroup()
+                  }
+
+              })
+           }
+        function getNotSetGroup(){
+            $.ajax({
+                  type: "GET",
+                  url: "/getNotsetGroup",
+                  data: {},
+                  success: function (response) {
+                      let dbP = response['dbP']
+                      document.getElementById("txtPanelAddNotGroupSet").innerHTML = "";
+                      for (let i = 0; i < dbP.length; i++){
+                            if(i == 0){
+                                    var txt = "미분류 그룹" + "<br><label><input onclick='getCheckboxInfo(event)' type = 'checkbox' name = '" + "미분류" + "'  value = '" + dbP[i]['이름'] + "'> "  + dbP[i]['이름'] + "</label> ";
+                                    document.getElementById("txtPanelAddNotGroupSet").innerHTML += txt;
+                            }
+                            else{
+                                var txt = "<label><input onclick='getCheckboxInfo(event)' type = 'checkbox' name = '" + "미분류"+ "'  value = '" + dbP[i]['이름'] + "'> "  + dbP[i]['이름'] + "</label> ";
+                                document.getElementById("txtPanelAddNotGroupSet").innerHTML += txt;
+                      }
+
+                    }
+                  }
+              })
+            }
+        function getTxtGroup(){
+            $.ajax({
+                  type: "GET",
+                  url: "/getTxtGroup",
+                  data: {},
+                  success: function (response) {
+                      let dbG = response['dbG']
+                      document.getElementById("txtPanelAddGroup").innerHTML = "";
+                      for (let i = 0; i < dbG.length; i++){
+                            var txt = "<br><label><input type = 'txt' name = 'reGroup' autocomplete='off' value = '" + dbG[i]['조 이름'] + "'></label>";
+                            document.getElementById("txtPanelAddGroup").innerHTML += txt;
+                            if(i==dbG.length-1){
+                                var txt = " <label><a href='#' class= 'myButtonCGroup' onclick='insertGroupTxt()'>+</a></label>";
+                                document.getElementById("txtPanelAddGroup").innerHTML += txt;
+                            }
+                            }
+
+                      }
+              })
+            }
+
+        function insertGroupTxt(){
+            var txt = "<br><label><input type = 'txt' name = 'reGroup' value ='그룹추가(공백불가능)' autocomplete='off'></label>";
+            document.getElementById("txtPanelAddGroup").innerHTML += txt;
+            var txt = " <label><a href='#' class= 'myButtonCGroup' onclick='insertGroupTxt()'>+</a></label>";
+            document.getElementById("txtPanelAddGroup").innerHTML += txt;
+        }
+        var getGroupList = []
+
+        function getGroup(){
+            $.ajax({
+                  type: "GET",
+                  url: "/getGroup",
+                  data: {},
+                  success: function (response) {
+                      createCheckBox()
+                      getTxtGroup()
+                      getGroupList = response['dbG']
+                      let dbG = response['dbG']
+                      for(let n = 0; n<getGroupList.length; n++){
+                          $("#textGroup").append('<option value="' + getGroupList[n]['조 이름'] + '">' + getGroupList[n]['조 이름'] + '</option>')
+                          $("#textAddPeopleGroup").append('<option value="' + getGroupList[n]['조 이름'] + '">' + getGroupList[n]['조 이름'] + '</option>')
+                      }
+                  }
+              })
+           }
+        function setGroup(){
+            var lenNameGroup = $('input[name=reGroup]').length;
+                            var strGroup = String();
+                            for(let i = 0; i < lenNameGroup; i++){
+                                var valueName = $('input[name = reGroup]').eq(i).val();
+                                strGroup += valueName + " ";
+                            }
+            if(confirm(strGroup + "그룹을 저장하시겠습니까?") == true){
+                $.ajax({
+                        type: "POST",
+                        url: "/setGroup",
+                        data: {strGroup : strGroup},
+                        success: function (response) {
+                            if(response['False'] == 'False'){
+                                alert("로그인이 필요한 서비스입니다.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        }
+               })
+            }
+        }
+       function clearTextBox(){
+                document.getElementById("txtPanelAddCheckbox").innerHTML = "";
+       }
+       function changeGroup(){
+                getCheckboxValue();
+                if((document.getElementById('result').innerText == "")){
+                    alert("해당 인원을 확인하세요");
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+                else{
+                if(confirm(document.getElementById('result').innerText + " 해당 인원의 조를 변경하시겠습니까?") == true){
+                    let nameChangeGroup = document.getElementById('result').innerText;
+                    let selectedGroup = $("#textGroup option:selected").val();
+                    $.ajax({
+                            type: "POST",
+                            url: "/changeGroupU",
+                            data: {peopleList:nameChangeGroup, new_give:selectedGroup},
+                            success: function (response) {
+                                if(response['False'] == 'False'){
+                                    alert("로그인이 필요한 서비스입니다.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                                else if(response['False'] == 'Auth'){
+                                    alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                                else{
+                                    alert(response["msg"]);
+                                    window.location.reload();
+                                }
+                            }
+                           })
+                }else{
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+            }
+        }
+        function insertPeopleDB(){
+            if((confirm("이름 : " +$('#textManagePeople').val() + "\n조 : " + $("#textAddPeopleGroup option:selected").val()+"\n성별 : " +$("input[type=radio][name=sSelect]:checked").val() +"\n인원을 저장하시겠습니까?")) == true){
+                var value = $("input[type=radio][name=sSelect]:checked").val();
+                if (value) {
+                    let name = $('#textManagePeople').val();
+                    let group = $("#textAddPeopleGroup option:selected").val();
+                    let sSelect = $("input[type=radio][name=sSelect]:checked").val();
+                    let info = $('#textManagePeopleInfo').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/dbPersonAdd",
+                        data: {name:name, group:group, sSelect:sSelect, info:info},
+                        success: function (response) {
+                            if(response['False'] == 'False'){
+                                    alert("로그인이 필요한 서비스입니다.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['no'] == '같은 이름의 사람이 있습니다!'){
+                                alert("이름이 같은 사람이 존재합니다!\n추가하실때 이름 뒤에 알파벳을 추가해주세요. \n예) "+name+" 이/가 존재할 경우 "+name+"B");
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        }
+                   })
+                }
+                else {
+                    alert('이름, 성별, 그룹을 확인해주세요!');
+                }
+           }
+        }
+        function replacePeopleDB(){
+            if((confirm("이름 : " +$('#textManagePeople').val() + "\n조 : " + $("#textAddPeopleGroup option:selected").val()+"\n성별 : " +$("input[type=radio][name=sSelect]:checked").val() +"\n특이사항 : "+ $('#textManagePeopleInfo').val()+"\n인원을 변경하시겠습니까?")) == true){
+                var value = $("input[type=radio][name=sSelect]:checked").val();
+                if (value) {
+                    let name = $('#textManagePeople').val();
+                    let group = $("#textAddPeopleGroup option:selected").val();
+                    let sSelect = $("input[type=radio][name=sSelect]:checked").val();
+                    let info = $('#textManagePeopleInfo').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/dbPersonChange",
+                        data: {name:name, group:group, sSelect:sSelect, info:info},
+                        success: function (response) {
+                            if(response['False'] == 'False'){
+                                    alert("로그인이 필요한 서비스입니다.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['no'] == '같은 이름의 사람이 없습니다!'){
+                                alert("이름이 같은 사람이 존재하지않습니다!\n변경하실 사람의 이름을 확인해주세요");
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        }
+                   })
+                }
+                else {
+                    alert('이름, 성별, 그룹을 확인해주세요!');
+                }
+           }
+        }
+        function deletePeopleDB(){
+            if((confirm("이름 : " +$('#textManagePeople').val() + "\n조 : " + $("#textAddPeopleGroup option:selected").val()+"\n인원을 삭제하시겠습니까?")) == true){
+                if($('#textManagePeople').val() =='' || $("#textAddPeopleGroup option:selected").val() ==''){
+                    alert("이름 및 조를 확인해주세요!");
+                }
+                else{
+                    let name = $('#textManagePeople').val();
+                    let group = $("#textAddPeopleGroup option:selected").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/dbPersonDel",
+                        data: {name:name, group:group},
+                        success: function (response) {
+                            if(response['False'] == 'False'){
+                                    alert("로그인이 필요한 서비스입니다.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                            else if(response['False'] == 'Auth'){
+                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                document.getElementById('result').innerText = ""
+                                result = ""
+                            }
+                            else if(response['no'] == 'DB에 저장된 인원이 없습니다!'){
+                                alert("DB에 저장된 인원이 없습니다! 확인해주세요.");
+                            }
+                            else{
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        }
+                   })
+                }
+            }
+        }
+        function whoIs(element){
+            if(element.이름 === String(etv)){
+                return true;
+            }
+        }
+        function getCheckboxInfo(event)  {
+            let resultCheckboxValue ='';
+            etv = event.target.value;
+            document.getElementById('textManagePeople').value = event.target.value;
+            $("#textAddPeopleGroup").val(event.target.name).trigger('change');
+
+
+            const peoInfo = dbP.find(whoIs);
+            console.log(peoInfo);
+            if (peoInfo.성별[0] == '남'){
+                $("input:radio[name='sSelect']:radio[value='남']").prop('checked', true);
+            }
+            else{
+                $("input:radio[name='sSelect']:radio[value='여']").prop('checked', true);
+            }
+            document.getElementById('textManagePeopleInfo').value = peoInfo.특이사항[0];
+            if(($("input[type=radio][name=infoSelect]:checked").val() == "O") || (hidePeoplePanel.style.display='')){
+                resultCheckboxValue = '\n\n\n\n';
+                document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+                if(event.target.checked)  {
+                resultCheckbox.style.visibility = "visible";
+                    $.ajax({
+                            type: "POST",
+                            url: "/getCheckboxInfo",
+                            data: {name:event.target.value, group:event.target.name},
+                            success: function (response) {
+                                if(response['False'] == 'False'){
+                                    var resultCheckboxValue = "로그인이 필요한 서비스입니다.";
+                                    document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+                                }
+                                else if(response['False'] == 'Auth'){
+                                    var resultCheckboxValue = "로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.";
+                                    document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+                                }
+                                else{
+                                    var se = response['se']
+                                    var info = response['info']
+                                    var resultCheckboxValue = "* 이름 : " + event.target.value + "\n* 성별 : "+se+ "\n* 조 : " + event.target.name+"\n* 특이사항 : " + info;
+                                    document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+                               }
+                            }
+                    })
+                }
+                else{
+
+                    resultCheckboxValue = '\n\n\n\n';
+                    document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+              }
+
+
+
+              }
+              else{
+                    resultCheckbox.style.visibility = "visible";
+                    resultCheckboxValue = '';
+                    document.getElementById('resultCheckboxValue').innerText = resultCheckboxValue;
+                }
+              }
+
+
+    </script>
+    <style type="text/css">
+            label{
+                color : #335017;
+            }
+            .groupClass{
+                color : #335017;
+            }
+            .daemoon_font{
+               display: inline;
+            }
+
+            #td1 { font-size:12px;}
+	        #td2 { font-size:12px;}
+	        #td3 { font-size:12px;}
+	        #td4 { font-size:12px;}
+	        #reviews-box{font-size:17px;}
+            #resultCopy { text-align: right; }
+
+	        .myButtonAdd {
+                box-shadow:inset 0px 1px 0px 0px #97c4fe;
+                background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+                background-color:#3d94f6;
+                border-radius:6px;
+                border:1px solid #337fed;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:8px 10px;
+                margin: auto;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #1570cd;
+            }
+            .myButtonAdd:hover {
+                background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+                background-color:#1e62d0;
+            }
+            .myButtonAdd:active {
+                position:relative;
+                top:1px;
+            }
+
+	        .myButtonDelDB {
+                box-shadow:inset 0px 1px 0px 0px #cf866c;
+                background:linear-gradient(to bottom, #ff3700 5%, #bc3315 100%);
+                background-color:#ff3700;
+                border-radius:6px;
+                border:1px solid #942911;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:8px 10px;
+                margin: auto;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #854629;
+            }
+            .myButtonDelDB:hover {
+                background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+                background-color:#bc3315;
+            }
+            .myButtonDelDB:active {
+                position:relative;
+                top:1px;
+            }
+
+            .myButtonEtc {
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#4d384d;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                margin: auto;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #ffffff;
+            }
+            .myButtonEtc:hover {
+                background:linear-gradient(to bottom, #f2e4f2 5%, #fffcff 100%);
+                background-color:#f2e4f2;
+            }
+            .myButtonEtc:active {
+                position:relative;
+                top:1px;
+            }
+            .myButtonCGroup{
+                box-shadow:inset 0px 1px 0px 0px #97c4fe;
+                background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+                background-color:#3d94f6;
+                border-radius:6px;
+                border:1px solid #337fed;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:10px;
+                font-weight:bold;
+                padding:2px 8px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #1570cd;
+            }
+            .myButtonCGroup:hover {
+                background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+                background-color:#1e62d0;
+            }
+            .myButtonCGroup:active {
+                position:relative;
+                top:1px;
+            }
+            .myButtonMGroup{
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#828f3e;
+                font-family:Arial;
+                font-size:10px;
+                font-weight:bold;
+                padding:2px 8px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #000000;
+            }
+            .myButtonMGroup:hover {
+                background:linear-gradient(to bottom, #f2e4f2 5%, #fffcff 100%);
+                background-color:#f2e4f2;
+            }
+            .myButtonMGroup:active {
+                position:relative;
+                top:1px;
+            }
+            .myButtonDGroup {
+                box-shadow:inset 0px 1px 0px 0px #f5978e;
+                background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+                background-color:#f24537;
+                border-radius:6px;
+                border:1px solid #d02718;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:10px;
+                font-weight:bold;
+                padding:2px 8px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #810e05;
+            }
+            .myButtonDGroup:hover {
+                background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+                background-color:#c62d1f;
+            }
+            .myButtonDGroup:active {
+                position:relative;
+                top:1px;
+            }
+            .jb-medium { font-size: x-small; }
+
+            .flx{
+                display : flex;
+                justify-content: space-between;
+            }
+
+
+    </style>
+</head>
+
+<body>
+<!--사이드 메뉴-->
+
+    <A style="POSITION: fixed; MARGIN-LEFT: 700px; TOP: 1000px; left: 51%;">
+        <table style="border:0px; width:100px;">
+            <tr>
+                <td>
+                    <a href="#" id = "toTop" title="맨 위로">
+                        <img  style="display : block; margin-left : auto; margin-right : auto" src="/static/image/arrow.png"  width ="55" height ="55" alt="">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </A>
+
+    <div class="container">
+        <div style="text-align : center;" id= userAuth></div>
+        <div class = "flx">
+            {% if session['username'] %}
+            <a>{{ session['username'] }}님 환영합니다</a>
+            {% else %}
+            <a>잘못된 접근입니다. 로그인을 해주세요.</a>
+            {% endif %}
+            <div style="display : inline;">
+                <span id="clock" style="color:gray;">clock</span>
+                <span id="apm" style="color:gray;"  >ampm</span>
+            </div>
+        </div>
+        <br>
+        <div style="text-align : center;" id = "daemoon_font">
+            <img  src="/static/image/icon2.png" width="24px" height ="24px" alt="시온청년부">
+            <h3 style="display : inline;"> 시온청년부 출석체크사이트</h3>
+        </div>
+        <br>
+        <A style="POSITION: fixed; MARGIN-LEFT: 650px; TOP: 170px; LEFT: 53%;">
+            <table style="border:0px; width:100px;">
+                <tr>
+                    <td>
+                        <a href="#" id = "b1" class="myButtonAdd" onclick='getDb()' >명단저장</a><br>
+                        <a href="#" id = "b2" class= "myButtonAdd" onclick='getCheckAddPerson()' >인원추가</a><br>
+                        <a href="#" id = "b3" class= "myButtonDelDB" onclick='getCheckDelPerson()'>인원삭제</a><br>
+                        <a href="#" id = "b4" onclick='getCheckDB()'class="myButtonDelDB">명단삭제</a><br>
+                        <a href="#" class = "myButtonEtc" onclick="checkCopy()">결과복사</a><br><br><br><br>
+                    </td>
+                </tr>
+            </table>
+        </A>
+        <div class="info">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">날짜</span>
+                </div>
+                <textarea style="resize: none;" class="form-control" id="title"
+                          cols="30"
+                          rows="1" placeholder="날짜 입력 예) 2022.04.22이면 0422"></textarea>
+            </div>
+<!--            <div class="input-group mb-3" style=" display : none;">-->
+<!--                <div class="input-group-prepend">-->
+<!--                    <span class="input-group-text">새로온 사람</span>-->
+<!--                </div>-->
+<!--                <textarea class="form-control" id="new"-->
+<!--                          cols="30"-->
+<!--                          rows="1" placeholder="새로온 사람 또는 아래 명단에 없는 사람, 혹은 해당 날짜의 값을 변경하기위해 입력"></textarea>-->
+<!--            </div>-->
+            <div>
+                <a href=#none id="showInfo" onclick="if(hideInfo.style.display=='none') {hideInfo.style.display='';showInfo.innerText='▲접기'} else {hideInfo.style.display='none';showInfo.innerText='▶사용방법 및 추가사항(클릭)'}">▶사용방법 및 추가사항(클릭)</a>
+                <div id="hideInfo" style="display: none">
+                    <div> update - 06/09 갱신기능 추가
+                     06/27 갱신기능 삭제, 데이터 삭제기능 추가<br>
+                     명단저장 - 새 데이터 추가, 만약 해당 날짜에 저장된 데이터가 있을때 저장을 누르면 새로 넣은 데이터가 덧씌워짐<br>
+                     명단삭제 - 저장된 데이터 삭제가능 ### 저장된 명단에만 가능###<br>
+                     인원 추가,삭제 - 저장된 명단 중 해당하는 날짜에 추가 또는 삭제하고싶은 인원 추가 및 삭제 가능 ### 저장된 명단에만 가능###<br>
+                     07/03 결과 클립보드 복사기능 - 날짜입력 후 결과복사버튼누르면 해당하는 날짜의 명단을 클립보드에 복사함 ### 저장된 명단에만 가능###<br>
+                     07/10 체크박스 명단 DB에서 불러옴, 실시간 db처리<br>
+                     추가할 것 - 웹에서 DB인원관리, 그래프 마무리, 웹에서 카카오톡메세지 보내기(희망사항)<br></div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <a href=# id="showDBPanel" onclick="if(hideDBPanel.style.display=='none') {hideDBPanel.style.display='';showDBPanel.innerText='▲_접기'} else {hideDBPanel.style.display='none';showDBPanel.innerText='▶DB관리패널'}">▶DB관리패널</a>
+                <div id="hideDBPanel" style="display: none">
+                    <a href=# id="showGroupPanel" onclick="if(hideGroupPanel.style.display=='none') {hideGroupPanel.style.display='';showGroupPanel.innerText='▲__접기'} else {hideGroupPanel.style.display='none';showGroupPanel.innerText='▶_GroupDB관리'}">▶_GroupDB관리</a>
+                    <div id="hideGroupPanel" style="display: none">
+                            <div>
+                                <br>
+                                조 구성 변경
+                                <div id="txtPanelAddGroup"></div>
+                                <a href="#" class= "myButtonCGroup" onclick="setGroup()">그룹구성변경</a><br>
+                                <hr style="border: solid 2px brown;">
+                            </div>
+                    </div><br>
+                    <a href=# id="showPeoplePanel" onclick="if(hidePeoplePanel.style.display=='none') {hidePeoplePanel.style.display='';showPeoplePanel.innerText='▲__접기'} else {hidePeoplePanel.style.display='none';showPeoplePanel.innerText='▶_PeopleDB관리'}">▶_PeopleDB관리</a>
+                    <div id="hidePeoplePanel" style="display: none">
+                        <div>
+                            <br>
+                            인원DB 추가 및 관리 ※ 중복이름시 이름 뒤 알파벳를 추가표기하여 저장바람 예) 홍길동(먼저 있던 사람은 이름변경X) 홍길동B ..., 삭제는 이름, 조를 선택하여 삭제<br>
+                            이름 : <input style="text-align : left" id= "textManagePeople" type="text" placeholder="이름" size="8"><br>
+                            조  : <select id ="textAddPeopleGroup"><div id = 'textAddPeopleGroup2'></div></select><br>
+                            성별 :  <label><input type="radio" name="sSelect" id="radioMan" value="남"> 남</label>
+                                    <label><input type="radio" name="sSelect" id="radioGirl" value="여"> 여</label><br>
+                            특이사항 : <input style="text-align : left; display : nowrap;" id= "textManagePeopleInfo" type="text" placeholder="특이사항" size="100"><br>
+                             <a href="#" class= "myButtonCGroup" onclick="insertPeopleDB()">추가</a>
+                             <a href="#" class= "myButtonDGroup" onclick="deletePeopleDB()">삭제</a>
+                             <a href="#" class= "myButtonMGroup" onclick="replacePeopleDB()">변경</a><br><hr style="border: solid 2px brown;">
+                            선택한 인원의 조 변경(※복수선택가능) : <select id ="textGroup"></select>
+                            <a href="#" class= "myButtonCGroup" onclick="changeGroup()">변경하기</a><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div style="text-align : left;"><label><input type="radio" name="infoSelect" id="radioShowInfoO" onclick="getCheckboxInfo(event)" value="O">정보표시 및 인원추가</label>
+                <label><input type="radio" checked="checked" name="infoSelect" id="radioShowInfoX" onclick="getCheckboxInfo(event)" value="X">닫기</label></div>
+            <div style="text-align : center; border: 1px solid black; border-radius: 10px;" id = "resultCheckbox">
+                ##인원정보##
+                <br>
+                <div id='resultCheckboxValue'></div>
+
+            </div>
+            <!-- 체크박스 --><hr>
+                <div style="background-color : #389739a3;  outline : solid 15px #9b574d; " id="txtPanelAddCheckbox"></div>
+                <hr>
+                <div id="txtPanelAddNotGroupSet"></div>
+                <hr>
+                <div class="input-group-prepend">
+                    <a href="#" class="myButtonAdd" onclick='getDb()' >명단저장</a>
+                    <br>
+                    <a href="#" class= "myButtonAdd" onclick='getCheckAddPerson()' >인원추가</a>
+                    <a href="#" class= "myButtonDelDB" onclick='getCheckDelPerson()'>인원삭제</a>
+                    <hr>
+                    <a href="#" onclick='getCheckDB()'class="myButtonDelDB">명단삭제</a>
+                </div>
+                <hr>
+                <div style="display: flex;">
+                    <a href ="#" class = "myButtonEtc" onclick="checkCopy()">결과복사</a>
+                    <a href ="/graph" class = "myButtonEtc">그래프</a>
+                </div>
+
+                <label id='result'></label>
+
+            </div><br>
+        <div style="width:100%; height:800px; overflow:auto; border-collapse:collapse; " class="reviews">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table">
+                <thead style="background-color : #f7b9b9bf;">
+                <tr>
+                    <th style="text-align : center; width : 10%" id = "td1" scope="col">년도</th>
+                    <th style="text-align : center; width : 10%" id = "td2" scope="col">날짜</th>
+                    <th style="text-align : center; width : 50%" id = "td3" scope="col">명단</th>
+                    <th style="text-align : center; width : 30%" id = "td4" scope="col">인원</th>
+                </tr>
+                </thead>
+                <tbody id="reviews-box">
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <br>
+        <hr>
+        <div style="text-align : center; font-size : 6px; font-color : gray;">
+            <p>진주교회비전관 경남 진주시 의곡길16번길 15-1 (지번) 봉래동 189-9</p>
+            <p>made by ksh</p>
+        </div>
+     <script>
+            var Target = document.getElementById("clock");
+            var Target_apm = document.getElementById("apm");
+            function clock() {
+                var time = new Date();
+                var hours = time.getHours();
+                var minutes = time.getMinutes();
+                var seconds = time.getSeconds();
+                var AmPm ="AM";
+                if(hours > 12){
+                    var AmPm ="PM";
+                    hours %= 12;
+                }
+
+                Target.innerText = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+                Target_apm.innerText = `${AmPm}`;
+            }
+            clock();
+            setInterval(clock, 1000); // 1초마다 실행
+
+
+        </script>
+
+    </body>
+</html>
+{% endblock %}

@@ -1,0 +1,468 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 그래프</title>
+
+    <script>
+        (function( $ ) {
+            $(function() {
+                function animated_contents() {
+                    $(".zt-skill-bar > div ").each(function (i) {
+                        var $this  = $(this),
+                            skills = $this.data('width');
+                        $this.css({'width' : skills + '%'});
+                    });
+                }
+
+            if(jQuery().appear) {
+                $('.zt-skill-bar').appear().on('appear', function() {
+                    animated_contents();
+                });
+            } else {
+                animated_contents();
+            }
+        });
+    }(jQuery));
+    </script>
+
+    <script type="text/javascript">
+    $(function(){
+          $(".fold-table tr.view").on("click", function(){
+            if($(this).hasClass("open")) {
+              $(this).removeClass("open").next(".fold").removeClass("open");
+            } else {
+              $(".fold-table tr.view").removeClass("open").next(".fold").removeClass("open");
+              $(this).addClass("open").next(".fold").addClass("open");
+            }
+          });
+        });
+
+        $(document).ready(function () {
+            getAttendanceGraph();
+
+            document.getElementById('endDay').value = new Date().toISOString().substring(0, 10);;
+        });
+        function weekCount(today) {
+          var year = dt.getFullYear();
+          var countDay = new Date(year,0,1);
+          var week = 1;
+          while(today>countDay){
+            countDay.setDate(countDay.getDate()+ 1);
+            var countNum = countDay.getDay();
+            if(countNum == 0){
+              week++;
+            }
+          }
+          return week;
+        }
+        var dt = new Date();
+        console.log(weekCount(dt));
+        var dateTxt = weekCount(dt);
+        console.log(dateTxt);
+<!--        document.getElementById("datePanel").innerHTML += dateTxt;-->
+
+        function setCalStartDB(){
+            $.ajax({
+                    type: "POST",
+                    url: "/calStartDB",
+                    data: {},
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+        }
+
+        function getAttendanceGraph() {
+                       $.ajax({
+                            type: "GET",
+                            url: "/getAttendanceGraph",
+                            data: {},
+                            success: function (response) {
+                                let chul = response['chul']
+                                alert(chul);
+                                for (let i = 0; i < chul.length; i++){
+                                    if (chul.length != 0){
+                                        if ((chul[i][1]/52*100).toFixed(1)> 65){
+
+                                            var txt = "<div class='zt-skill-bar'><div data-width='"+chul[i][1]+"' style = 'width:"+chul[i][1]/52*100+"%;'>"+(chul[i][1]/52*100).toFixed(1)+"%<span>"+(i+1)+" "+chul[i][0]+" | "+chul[i][1]+"일 "+(chul[i][1]/52*100).toFixed(1)+"%</span></div></div>"
+
+                                            document.getElementById("graphPanel").innerHTML += txt;
+                                        }
+                                        else{
+                                            var txt = "<div class='xt-skill-bar'><div data-width='"+chul[i][1]+"' style = 'width:"+chul[i][1]/52*100+"%;'>"+(chul[i][1]/52*100).toFixed(1)+"%<span>"+(i+1)+" "+chul[i][0]+" | "+chul[i][1]+"일 | "+(chul[i][1]/52*100).toFixed(1)+"%</span></div></div>"
+                                            document.getElementById("graphPanel").innerHTML += txt;
+                                        }
+                                    }
+                                    else{
+                                        var txt = "<h3>데이터가 부족합니다</h3>"
+                                        document.getElementById("graphPanel").innerHTML += txt;
+                                    }
+                                }
+                            }
+                        })
+                    }
+        function setStartDB(){
+               const day = document.querySelector("#startDay").value
+               console.log(day);
+
+        }
+
+    </script>
+    <style type="text/css">
+    h1 {
+        font-family: "Do Hyeon"
+    }
+    .zt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(0,0,0,0.1);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .zt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .zt-skill-bar div {
+        background-color:  #0f8a42c2;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .zt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : 11px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .zt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .xt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(0,0,0,0.1);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .xt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .xt-skill-bar div {
+        background-color:  #529cce;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .xt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : -30px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .xt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .myButtonCGroup{
+        box-shadow:inset 0px 1px 0px 0px #97c4fe;
+        background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+        background-color:#3d94f6;
+        border-radius:6px;
+        border:1px solid #337fed;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:10px;
+        font-weight:bold;
+        padding:2px 8px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #1570cd;
+    }
+    .myButtonCGroup:hover {
+        background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+        background-color:#1e62d0;
+    }
+    .myButtonCGroup:active {
+        position:relative;
+        top:1px;
+    }
+    body {
+        color: #666;
+        font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+        }
+        table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        }
+        th,
+        td {
+        padding: 6px 15px;
+        }
+        th {
+        background: #42444e;
+        color: #fff;
+        text-align: left;
+        }
+        tr:first-child th:first-child {
+        border-top-left-radius: 6px;
+        }
+        tr:first-child th:last-child {
+        border-top-right-radius: 6px;
+        }
+        td {
+        border-right: 1px solid #c6c9cc;
+        border-bottom: 1px solid #c6c9cc;
+        }
+        td:first-child {
+        border-left: 1px solid #c6c9cc;
+        }
+        tr:nth-child(even) td {
+        background: #eaeaed;
+        }
+        tr:last-child td:first-child {
+        border-bottom-left-radius: 6px;
+        }
+        tr:last-child td:last-child {
+        border-bottom-right-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class = 'container'><br>
+
+    <div class="zt-span6 last"></div>
+    <div style="float : right">
+        <script >
+            date = new Date().toLocaleDateString();
+            document.write(date);
+        </script>
+    </div>
+    <h3> 시온청년부 출석률 </h3>
+        <div style="float : right;">
+            <a href=# id="showDBPanel" onclick="if(hideDBPanel.style.display=='none') {hideDBPanel.style.display='';showDBPanel.innerText='▲_접기'} else {hideDBPanel.style.display='none';showDBPanel.innerText='▶시작날짜db설정'}">▶시작날짜db설정</a>
+            <div id="hideDBPanel" style="display: none">
+                <a>총회날짜변경(출석 초기화되는날) : <input  type = 'date' id = 'typeStart'></a>
+                <button style="display:inline-block;" class ="myButtonCGroup" onclick="setStartDB()">날짜변경</button>
+            </div>
+        </div>
+
+    <div>
+        시작날짜 : <input type='date' id = 'startDay'>
+        ____끝날짜 : <input type='date' id='endDay'>
+        <button style="display:inline-block;" class ="myButtonCGroup">날짜변경</button>
+    </div>
+    <hr>
+    <h5 style="font-size : 15px">그래프는 최소 5번이상 출석한 인원만 출력됩니다. 전체 출석은 그래프 밑에있는 표를 확인하세요(추가예정)</h5>
+    <h5 style="font-size : 15px">출석률 65%이상 - 초록색(정회원) 나머지 하늘색(준회원)</h5>
+    <p> 1. 시작날짜~끝날짜(총회날~다음총회날)그래프 값, 시작, 끝날짜를 각각 db저장해서 불러오기, 웹에서 값변경하면 db에서 바껴서 그래프 다시 그림</p>
+    <div id="datePanel"></div><br>
+    <p> </p>
+    <div id="graphPanel" style="border : 2px"></div><br><br>
+
+</div>
+<div style="width: 100%; overflow: auto;">
+<table>
+  <thead>
+    <tr id = 'tDate'>
+      <th>Number</th>
+      <th>Player</th>
+      <th>Position</th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>Marco Belinelli</td>
+      <td>G</td>
+      <td>6-5</td>
+      <td>195</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Carlos Boozer</td>
+      <td>F</td>
+      <td>6-9</td>
+      <td>266</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Jimmy Butler</td>
+      <td>G-F</td>
+      <td>6-7</td>
+      <td>220</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Luol Deng</td>
+      <td>F</td>
+      <td>6-9</td>
+      <td>220</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Taj Gibson</td>
+      <td>F</td>
+      <td>6-9</td>
+      <td>225</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>Richard Hamilton</td>
+      <td>G</td>
+      <td>6-7</td>
+      <td>193</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Kirk Hinrich</td>
+      <td>G</td>
+      <td>6-4</td>
+      <td>190</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>Nazr Mohammed</td>
+      <td>C</td>
+      <td>6-10</td>
+      <td>250</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Joakim Noah</td>
+      <td>C</td>
+      <td>6-11</td>
+      <td>232</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td>Vladimir Radmanovic</td>
+      <td>F</td>
+      <td>6-10</td>
+      <td>235</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Nate Robinson</td>
+      <td>G</td>
+      <td>5-9</td>
+      <td>180</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Derrick Rose</td>
+      <td>G</td>
+      <td>6-3</td>
+      <td>190</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Marquis Teague</td>
+      <td>G</td>
+      <td>6-2</td>
+      <td>190</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>
+
+
+</html>{% endblock %}

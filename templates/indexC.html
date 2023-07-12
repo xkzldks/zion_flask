@@ -1,0 +1,1943 @@
+
+
+<!DOCTYPE html>
+
+<!--웹알림을 위한 서비스워커 등록-->
+
+<!-- service worker는 로그인 시만 작동 -->
+
+<!-- service worker는 로그 시만 작동 end -->
+
+<html>
+
+<head>
+  <title>분당다함교회</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="57x57"  href="favicon-57x57.png"/>
+  <link rel="shortcut icon" sizes="72x72" href="favicon-72x72.png" type="image/x-icon"> 
+  <link href="/modu/font/noto_sans_kr/noto_sans_kr.css" rel="stylesheet"> <!-- 서버 폰트 -->
+  <link href="/modu/font/noto_serif_kr/noto_serif_kr.css" rel="stylesheet"> <!-- 서버 폰트 -->
+  <link href="/modu/css/reset.css" rel="stylesheet" type="text/css"> <!-- 공통 리셋 -->
+	<link href="/modu/css/responsive_rem.css " rel="stylesheet" type="text/css"> <!-- 공통 반응형 rem -->
+  <link href="html/style.css?version=2022102018" rel="stylesheet" type="text/css">
+  <link href="/modu/font_awesome2/css/all.css" rel="stylesheet"> <!-- 공통 폰트어썸 -->
+  <link href="/modu/notiboard/css/swiper.min.css" rel="stylesheet"> <!-- 공통 스와이퍼 css-->
+  <link href="html/animation.css" rel="stylesheet" type="text/css">
+  <script src="/modu/js/jquery-3.3.1.min.js"></script> <!-- 공통 jquery -->
+  <script src="/modu/notiboard/js/swiper.min.js"></script> <!-- 공통 스와이퍼 js-->
+  <script type="text/javascript" src="html/common.js?version=2022102018"></script>
+  <script type="text/javascript" src="html/animation.js"></script>
+  <!--[if lt IE 9]>
+  <script type="text/javascript" src="html/selectivizr-min.js"></script>
+  <![endif]-->
+    <!-- SRCIPT MANAGER -->
+  <link href="/modu/font/noto_sans_kr/noto_sans_kr.css" rel="stylesheet">
+<link href="/modu/font/nanum_gothic/nanum_gothic.css" rel="stylesheet">
+<link href="/modu/font/nanum_myeongjo/nanum_myeongjo.css" rel="stylesheet">
+<link href="/modu/font/nanum_brush/nanum_brush.css" rel="stylesheet">
+<link href="/modu/font/cute/cute.css" rel="stylesheet">
+<link href="/modu/font/east_sea_dokdo/east_sea_dokdo.css" rel="stylesheet">
+<link href="/modu/font/stylish/stylish.css" rel="stylesheet">
+<link href="/modu/font/black_han_sans/black_han_sans.css" rel="stylesheet">
+<link href="/modu/font/kopub/kopub.css" rel="stylesheet">	<script>
+	var emailaddr = 'rohi190607@gmail.com';
+	var filename = '/index.asp';
+	var frame = 'index';
+	var homedir = 'wrch16';
+	var pid = '';
+	var server_name = 'www.dahamchurch.org';
+	var dir = 'via';
+	</script>
+	<script language = 'javascript' src='/modu/uinc/ulink/blur.js'></script>
+	<script language = 'javascript' src='/modu/include/js_all.js'></script>
+	<script language = 'javascript' src='/modu/uinc/ulink/link_manager.js?version=2022-10-20'></script>
+	<script language = 'javascript' src='/modu/uinc/Embed.js'></script>
+  <!-- SRCIPT MANAGER END -->
+  <!--메타테그(구글,네이버 소유확인 포함)-->
+  <meta name="Title" content="분당다함교회"/>
+<meta name="Keywords" content="분당다함교회, 분당교회, 분당우리교회, 최정권목사, 최정권 목사, 최정권목사님, 이찬수 목사, 분립개척교회"/>
+<meta name="Description" content="분당다함교회는 분당우리교회(이찬수목사님)의 일만성도파송운동으로 세워진 교회입니다."/>
+<meta name="Author" content="웹처치"/>
+<meta name="Publisher" content="웹처치"/>
+<meta name="naver-site-verification" content="af445903edd484df0afb6c82eee511537b7024fa" />
+
+<meta name="google-site-verification" content="OAxD8r8Tq9WudZLp4aCn2-DHd7lt6DS-pB93W3vUtr0" />
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="분당다함교회"/>
+<meta property="og:description" content="분당다함교회는 분당우리교회(이찬수목사님)의 일만성도파송운동으로 세워진 교회입니다."/>
+<meta property="og:url" content="https://www.dahamchurch.org/"/>
+<meta property="og:image" content="https://www.dahamchurch.org/img/top/logo_snsimg.png"/>
+</head>
+
+<body>
+<!-- 
+    완전새로고침 
+    관리자가 클릭시 이미지 및 스타일의 캐시까지 초기화 하는 기능
+-->
+
+<!-- 완전새로고침 end -->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<link href="/modu/css/reset.css" rel="stylesheet" type="text/css">
+<link href="/modu/css/responsive_rem.css" rel="stylesheet" type="text/css">
+<link href="/modu/upop/pop/css/popups_css.css" rel="stylesheet" type="text/css">
+<link href="/modu/upop/pop/css/popups_animation.css" rel="stylesheet" type="text/css">
+<script src="/modu/js/jquery-3.3.1.min.js"></script>
+<script src="/modu/js/jquery-ui.min.js"></script>
+<!-- 
+	팝업 솔루션
+	
+	팝업 아이디 : popups_item1~
+	
+	팝업 사이즈 :
+		data-popups-w = 가로사이즈 (입력하지 않을시 컨텐츠 사이즈에 맞춰서 적용 / 0 or "")
+		data-popups-h = 세로사이즈 + 24 (오늘하루열지않음 부분 포함)(입력하지 않을시 컨텐츠 사이즈에 맞춰서 적용 / 0 or "")
+		
+		style 도 동일하게 적용
+		width = 가로사이즈 (입력하지 않을시 컨텐츠 사이즈에 맞춰서 적용 / 입력하지 않음)
+		height = 세로사이즈 + 24 (오늘하루열지않음 부분 포함)(입력하지 않을시 컨텐츠 사이즈에 맞춰서 적용 / 입력하지 않음)
+		top = 상단에서 px
+		left = 좌측에서 px
+		
+	애니메이션 :
+		popups_item 의 클래스에 부여
+		없음 = 기본
+		animation_popups_down = 아래로
+		animation_popups_up = 위로
+		animation_popups_right = 오른쪽으로
+		animation_popups_left = 왼쪽으로
+		animation_popups_bigger = 커지게
+		animation_popups_smaller = 작아지게
+		animation_popups_news = 뉴스페이퍼
+		animation_popups_flip = 회전
+		animation_popups_sign = 간판
+		animation_popups_fold = 폴더
+		animation_popups_jump = 점프
+		animation_popups_full = 전체화면
+		animation_popups_lb = 좌측하단 고정
+		animation_popups_lt = 좌측상단 고정
+		animation_popups_rb = 우측하단 고정
+		animation_popups_rt = 우측상단 고정
+	
+	popups_item_link 링크 : 
+		링크는 컨텐츠 전체영역 = 이미지 및 에디터로 작성하고 링크를 걸 경우 때문.
+		링크값 없을시 제거 (end 포함) = 링크 태그 존재시 아래 영상 재생 문제가 발생
+-->
+
+
+<script src="/modu/upop/pop/js/popups_js.js"></script>
+<script>
+	// 쿠키 세팅
+	var set_cookie_popups = function(name, value, exp_day){
+    var today = new Date();
+    today.setDate( today.getDate() + exp_day );
+    document.cookie = name + '=' + escape( value ) + '; path=/; expires=' + today.toGMTString() + ';'
+  }
+  
+	// 쿠키 가져오기
+  var get_cookie_popups = function(popup){
+    var cookie_data = document.cookie;
+    if(cookie_data.indexOf($(popup).attr('id') + '=done') < 0){
+			$(popup).addClass('show');
+    }else{
+			$(popup).removeClass('show');
+    }
+  }
+	
+	// 팝업 가져오기
+	$('article.popups_item').each(function(){
+		get_cookie_popups(this);
+	});
+	
+	// 팝업 사이즈 조절
+	var resize_popup_h = function(){
+		var $popup = $('article.popups_item');
+		var max_w = document.documentElement.clientWidth; // 브라우저 넓이
+		var max_h = document.documentElement.clientHeight; // 브라우저 높이
+		
+		$popup.each(function(idx){
+			if($(this).is(':visible')){
+				var $popup_curr = $(this);
+				var popup_w = Number($popup_curr.attr('data-popups-w')); // 팝업 넓이
+				var popup_h = Number($popup_curr.attr('data-popups-h')); // 팝업 높이
+
+				if(matchMedia("screen and (max-width: 1020px)").matches){ // 모바일에선 영상 넓이 100%
+					if((popup_w == 0 || popup_w == '')){
+						if($popup_curr.find('iframe').length > 0 || $popup_curr.find('video').length > 0){
+							$popup_curr.css('width','100%');
+						}
+					}
+				}else{
+					if($popup_curr.find('iframe').length > 0 || $popup_curr.find('video').length > 0){
+						$popup_curr.css('width','auto');
+					}
+				}
+
+				if(popup_w >= max_w){ // 브라우저 넓이보다 팝업 넓이가 넓을때 가로 100%
+					$popup_curr.addClass('max_w');
+				}else{
+					$popup_curr.removeClass('max_w');
+				}
+
+				if(popup_h >= max_h){ // 브라우저 높이보다 팝업 높이가 높을때 세로 100%
+					$popup_curr.addClass('max_h');
+				}else{
+					$popup_curr.removeClass('max_h');
+				}
+				
+			}
+		});
+	}
+	resize_popup_h();
+	
+	// 영상 사이즈 조절
+	var resize_popups_video = function(target){
+		var $video = $(target);
+		if($video.is(':visible')){
+			if(matchMedia("screen and (max-width: 1020px)").matches) {
+				var ifr_w = Number($video.css('width').replace('px',''));
+				var ifr_h = ifr_w * 0.5625; // 16:9
+				$video.css('height',ifr_h);
+			}
+		}
+	}
+	$('div.popups_item_cont iframe').each(function(){
+		resize_popups_video(this);
+	});
+	$('div.popups_item_cont video').each(function(){
+		resize_popups_video(this);
+	});
+	
+	
+	// 드래그 기능
+	$('article.popups_item').draggable();
+  
+	// 팝업 닫기
+  var close_popups = function(btn){
+		var $popup = $(btn).closest('article.popups_item'); // 클릭한 버튼의 팝업
+    var ani_delay = 700;
+		if($popup.find('input.ipt_chk_today').is(':checked')){ // 오늘 하루 열지 않음 클릭시
+			set_cookie_popups($popup.attr('id'), 'done', 1); // 쿠키 저장
+		}
+		$popup.addClass('cls');
+
+    if($popup.attr('class').indexOf('animation_popups') < 0){ // 애니메이션 없을때 딜레이 없음
+      ani_delay = 0;
+    }
+
+		setTimeout(function(){
+			$popup.remove();
+		},ani_delay);
+	}
+  
+	// 닫기 클릭
+	$('button.popups_btn_cls').on('click',function(){
+		close_popups(this);
+	});
+	// 오늘 하루 열지 않음 클릭
+	$('input.ipt_chk_today').on('click',function(){
+		close_popups(this);
+	});
+	
+	// 브라우저 리사이즈
+	$(window).resize(function(){
+    resize_popup_h();
+		$('div.popups_item_cont iframe').each(function(){
+			resize_popups_video(this);
+		});
+		$('div.popups_item_cont video').each(function(){
+			resize_popups_video(this);
+		});
+	});
+	
+	
+</script>
+<!-- ie popup -->
+<style>
+  .popup_ie {position:fixed; top:200px; left:50%; width:800px; padding:40px; transform:translateX(-50%); background:#fff; box-shadow:0px 0px 8px rgba(0,0,0,0.4); border-top:8px solid orange; z-index:999999999;}
+  .popup_ie_txt {margin-bottom:40px;text-align:center;}
+  .popup_ie_txt .icon {display:block; width:100px; margin:0 auto 40px; font-size:70px; color:orange;}
+  .popup_ie_txt .item {display:block; font-size:3rem; line-height:1.8;}
+  .popup_ie_txt .item.small {font-size:1.8rem;}
+  .popup_ie_list {display:flex; flex-wrap:wrap; justify-content:center;}
+  .popup_ie_list > li {margin-bottom:20px; padding:0 40px; text-align:center; font-size:2rem;}
+  .popup_ie_list > li:nth-of-type(1) {flex: 0 0 100%; padding:0; color:#4357c6; font-weight:600;}
+  .popup_ie_list > li:nth-of-type(5) {flex: 0 0 100%; padding:0; padding-top:20px;}
+  .popup_ie_list > li > .link {display:block;}
+  .popup_ie_list > li > .link .icon {margin-bottom:20px; transition: transform 0.2s;}
+  .popup_ie_list > li > .link:hover .icon {transform:scale(1.2);}
+</style>
+<aside class="popup_ie" style="display:none;">
+  <p class="popup_ie_txt">
+    <img src="/modu/upop/pop/img/icon_browser_caut.gif" alt="" class="icon">
+    <span class="item">익스플로러에선 사이트를 이용하기 어렵습니다.</span>
+    <span class="item">최신 브라우저에서 이용해 주시기 바랍니다.</span>
+    <span class="item small">(익스플로러 2022년 6월15일 지원종료)</span>
+  </p>
+  <ul class="popup_ie_list">
+    <li>최신 브라우저 다운로드 페이지</li>
+    <li>
+      <a href="https://www.google.co.kr/chrome/?brand=IBEF&gclid=Cj0KCQiA_c-OBhDFARIsAIFg3ewymMgSIqIvylgMhY0Q7MbM5nIcrqgF_esLMSTFwNK9N2yBkRWuhxoaAmzeEALw_wcB&gclsrc=aw.ds" target="_blank" class="link">
+        <img src="/modu/upop/pop/img/icon_browser_c.gif" alt="" class="icon">
+        <p class="txt">크롬</p>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/ko-kr/edge" target="_blank" class="link">
+        <img src="/modu/upop/pop/img/icon_browser_e.gif" alt="" class="icon">
+        <p class="txt">엣지</p>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.mozilla.org/ko/firefox/new/" target="_blank" class="link">
+        <img src="/modu/upop/pop/img/icon_browser_f.gif" alt="" class="icon">
+        <p class="txt">파이어폭스</p>
+      </a>
+    </li>
+    <li>그 외에 사파리, 오페라 등을 이용해주세요.</li>
+  </ul>
+</aside>
+<script>
+  // ie 팝업
+  setTimeout(function(){
+    var agent = navigator.userAgent; 
+    if((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)){ 
+      // 안내팝업
+      $('aside.popup_ie').css('display','block');
+
+      // 윈10의 경우 엣지로 자동이동
+      if ((agent.indexOf('Windows NT 10.0') != -1) || (agent.indexOf('Windows NT 6.4') != -1)) {
+        if(typeof popup_edge === "undefined"){ // 해당교회 상단에 popup_edge를 false로 선언하면 엣지팝업 비활성
+          window.location = 'microsoft-edge:' + window.location;
+        }
+      }
+    }
+  },600);
+</script>
+<!-- ie popup end -->
+  <div class="wrap">
+    
+    <!-- header -->
+    <header class="header pc_area">
+      <div class="header_cont cont_size" id="animation_1">
+        <!-- home -->
+        <a href="javascript:goTo('home');" class="menu_home">
+          <img src="img/body/home_btn.jpg">
+          <span>처음으로</span>
+        </a>
+        <!-- home end -->
+        <!-- user menu -->
+        <ul class="menu_user">
+          
+          <li>
+            <a href="javascript:goTo('loginpage');" class="link login_btn">로그인</a>
+          </li>
+          <li>
+            <a href="javascript:goTo('regist');" class="link">회원가입</a>
+          </li>
+          
+          <li>
+            <a href="javascript:goTo('schedule');" class="link">일정</a>
+          </li>
+          <li>
+            <a href="javascript:goTo('comm');" class="link">카페</a>
+          </li>
+          <li>
+            <a href="javascript:alert('회원전용공간입니다');goTo('loginpage');" class="link">문자</a>
+          </li>
+        </ul>
+        <!-- user menu end -->
+      </div>
+    </header>
+    <!-- header end -->
+    <!-- main -->
+    <main class="main clearfix">
+      <section class="main_cont cont_size">
+        <!-- top menu -->
+        <article class="menu_top_area">
+          <!-- logo -->
+          <h1 class="logo" id="animation_2">
+            <a href="javascript:goTo('home');" class="link">
+              <img src="img/top/logo2.png" alt="로고" class="logo_img">
+            </a>
+          </h1>
+          <!-- menu -->
+          <nav class="menu_top pc_area" id="animation_3">
+            <div class="menu_top_fst_area">
+              <ul class="menu_top_fst">
+                <li>
+                  <a href="#n" class="link">그리스도 중심 성경읽기</a>
+									 <ul class="menu_top_scd">
+											<li><a href="https://www.woorichurch.org/wch/s_board/read.asp?board_seq=407&board_sub_seq=1&view_sub_seq=0&seq=401562&page=1&search_select=&search_text=" target="_blank" class="link">안내</a></li>
+											<li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=408" target="_blank" class="link">오늘의 성경읽기</a></li>
+											<li><a href="https://www.woorichurch.org/wch/media_board/list.asp?board_idx=194" target="_blank" class="link">참고영상_가이드</a></li>
+											<li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=409" target="_blank" class="link">리딩지저스영상</a></li>
+											<li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=410" target="_blank" class="link">자료실</a></li>
+											<li><a href="javascript:goTo('1','s_board','8')" href='#' class='link'>성경읽기표</a></li>
+
+                  </ul>
+                </li>
+                <li>
+                  <a href="#n" class="link">교회소개</a>
+                  <ul class="menu_top_scd">
+                    <li><a href="javascript:goTo('2', 'uotc', '6730', '30981')" href='#' class='link'>교회소개</a></li><li><a href="javascript:goTo('2', 'uotc', '6730', '31288')" href='#' class='link'>교회 비전</a></li><li><a href="javascript:goTo('2','serve')")" href='#' class='link'>섬기는 이들                                                                                         </a></li><li><a href="javascript:goTo('2','worshipTable','')" href='#' class='link'>예배안내</a></li><li><a href="javascript:goTo('2', 'uotc', '6730', '30982')" href='#' class='link'>오시는 길</a></li>
+                  </ul>
+                </li>
+								<li>
+                  <a href="#n" class="link">커뮤니티</a>
+                  <ul class="menu_top_scd">
+                    <li><a href="javascript:goTo('3','s_board','2')" href='#' class='link'>공지사항</a></li><li><a href="javascript:goTo('3','weekly')")" href='#' class='link'>주보</a></li><li><a href="javascript:goTo('3','s_board','3')" href='#' class='link'>기도제목 나눔</a></li><li><a href="javascript:goTo('3','media_board','1')" href='#' class='link'>설교영상</a></li><li><a href="javascript:goTo('3','s_board','4')" href='#' class='link'>사진게시판</a></li><li><a href="javascript:goTo('3','s_board','7')" href='#' class='link'>새가족부</a></li><li><a href="javascript:goTo('3','media_board','2')" href='#' class='link'>영상게시판</a></li><li><a href="javascript:goTo('3','s_board','6')" href='#' class='link'>장례소식</a></li><li><a href="javascript:goTo('3','s_board','1')" href='#' class='link'>개척이야기</a></li>
+                  </ul>
+                </li>
+								<li>
+                  <a href="#n" class="link">내 집은 만민이 기도하는 집</a>
+                  <ul class="menu_top_scd">
+				  						<li><a href="javascript:goTo('4','s_board','9')" href='#' class='link'>내 집은 만민이 기도하는 집</a></li>
+                  </ul>
+                </li>
+								<li>
+                  <a href="https://www.woorichurch.org/bwoori/2014_info/html/bwoori01_201441.html" target="_blank" class="link">다락방</a>
+                </li>
+                <li>
+                  <a href="#n" class="link">주일학교</a>
+                  <ul class="menu_top_scd">
+										<li><a href="javascript:goTo('6', 'uotc', '6731', '30983')" href='#' class='link'>유아유치부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30984')" href='#' class='link'>유년부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30985')" href='#' class='link'>소년부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30986')" href='#' class='link'>청소년부</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#n" class="link">청년교구</a>
+                  <ul class="menu_top_scd">
+										<li><a href="javascript:goTo('7', 'uotc', '6731', '31289')" href='#' class='link'>청년교구</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#n" class="link">일만성도 파송운동</a>
+                  <ul class="menu_top_scd">
+										<li><a href="javascript:goTo('8', 'uotc', '6744', '31051')" href='#' class='link'>선언문</a></li>
+										<li>
+											<a href="https://www.woorichurch.org/bwoori/html/sub2021/ilman/ilman_main.asp" target="_blank" class="link">일만성도파송운동</a>
+										</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- //menu end -->
+          <!-- menu mobile -->
+					<!-- user menu -->
+					<ul class="menu_user_mobi">
+						
+						<li>
+							<a href="javascript:goTo('loginpage');" class="link">로그인</a>
+						</li>
+						<li>
+							<a href="javascript:goTo('regist');" class="link">회원가입</a>
+						</li>
+						
+						<li>
+							<a href="javascript:goTo('schedule');" class="link">일정</a>
+						</li>
+						<li>
+							<a href="javascript:goTo('comm');" class="link">카페</a>
+						</li>
+						<li>
+							<a href="javascript:alert('회원전용공간입니다');goTo('loginpage');" class="link">문자</a>
+						</li>
+					</ul>
+					<!-- user menu end -->
+          <button class="btn_sand_mobi mobi_area">
+            <img src="img/top/btn_sand.png" alt="" class="btn_sand_img"> 
+          </button>
+          <nav class="menu_top_mobi mobi_area">
+            <a href="" class="menu_top_mobi_logo">
+              <img src="img/top/logo.png" alt="" class="logo_img"> <!-- 모바일 메뉴 로고 -->
+            </a>
+            <button class="top_menu_mobi_btn_cls">
+              <!-- 닫기 -->
+              <img src="img/top/btn_cls.png" alt="" class="btn_cls_img"> 
+            </button>
+            <ul class="menu_top_fst_mobi clearfix">
+              <li>
+                <p class="txt">그리스도 중심 성경읽기</p>
+                <ul class="menu_top_scd_mobi">
+									<li><a href="https://www.woorichurch.org/wch/s_board/read.asp?board_seq=407&board_sub_seq=1&view_sub_seq=0&seq=401562&page=1&search_select=&search_text=" target="_blank" class="link">안내</a></li>
+                    <li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=408" target="_blank" class="link">오늘의 성경읽기</a></li>
+                    <li><a href="https://www.woorichurch.org/wch/media_board/list.asp?board_idx=194" target="_blank" class="link">참고영상_가이드</a></li>
+                    <li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=409" target="_blank" class="link">리딩지저스영상</a></li>
+                    <li><a href="https://www.woorichurch.org/wch/s_board/list.asp?board_seq=410" target="_blank" class="link">자료실</a></li>
+					<li><a href="javascript:goTo('1','s_board','8')" href='#' class='link'>성경읽기표</a></li>
+                </ul>
+              </li>
+              <li>
+                <p class="txt">교회소개</p>
+                <ul class="menu_top_scd_mobi">
+									<li><a href="javascript:goTo('2', 'uotc', '6730', '30981')" href='#' class='link'>교회소개</a></li><li><a href="javascript:goTo('2', 'uotc', '6730', '31288')" href='#' class='link'>교회 비전</a></li><li><a href="javascript:goTo('2','serve')")" href='#' class='link'>섬기는 이들                                                                                         </a></li><li><a href="javascript:goTo('2','worshipTable','')" href='#' class='link'>예배안내</a></li><li><a href="javascript:goTo('2', 'uotc', '6730', '30982')" href='#' class='link'>오시는 길</a></li>
+                </ul>
+              </li>
+              <li>
+                <p class="txt">커뮤니티</p>
+                <ul class="menu_top_scd_mobi">
+									<li><a href="javascript:goTo('3','s_board','2')" href='#' class='link'>공지사항</a></li><li><a href="javascript:goTo('3','weekly')")" href='#' class='link'>주보</a></li><li><a href="javascript:goTo('3','s_board','3')" href='#' class='link'>기도제목 나눔</a></li><li><a href="javascript:goTo('3','media_board','1')" href='#' class='link'>설교영상</a></li><li><a href="javascript:goTo('3','s_board','4')" href='#' class='link'>사진게시판</a></li><li><a href="javascript:goTo('3','s_board','7')" href='#' class='link'>새가족부</a></li><li><a href="javascript:goTo('3','media_board','2')" href='#' class='link'>영상게시판</a></li><li><a href="javascript:goTo('3','s_board','6')" href='#' class='link'>장례소식</a></li><li><a href="javascript:goTo('3','s_board','1')" href='#' class='link'>개척이야기</a></li>
+                </ul>
+              </li>
+              <li>
+                <p class="txt">내 집은 만민이 기도하는 집</p>
+                <ul class="menu_top_scd_mobi">
+				  <li><a href="javascript:goTo('4','s_board','9')" href='#' class='link'>내 집은 만민이 기도하는 집</a></li>
+                </ul>
+              </li>
+							<li>
+                <p class="txt">다락방</p>
+									<ul class="menu_top_scd_mobi">
+										<li>
+											<a href="https://www.woorichurch.org/bwoori/2014_info/html/bwoori01_201441.html" target="_blank" class="link">다락방</a>
+										</li>
+									</ul>
+								</li>
+								<li>
+                <p class="txt">주일학교</p>
+                <ul class="menu_top_scd_mobi">
+                  <li><a href="javascript:goTo('6', 'uotc', '6731', '30983')" href='#' class='link'>유아유치부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30984')" href='#' class='link'>유년부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30985')" href='#' class='link'>소년부</a></li><li><a href="javascript:goTo('6', 'uotc', '6731', '30986')" href='#' class='link'>청소년부</a></li>
+                </ul>
+              </li>
+							<li>
+                <p class="txt">청년교구</p>
+                <ul class="menu_top_scd_mobi">
+									<li><a href="javascript:goTo('7', 'uotc', '6731', '31289')" href='#' class='link'>청년교구</a></li>
+                </ul>
+              </li>
+							<li>
+                <p class="txt">일만성도 파송운동</p>
+									<ul class="menu_top_scd_mobi">
+										<li><a href="javascript:goTo('8', 'uotc', '6744', '31051')" href='#' class='link'>선언문</a></li>
+										<li>
+											<a href="https://www.woorichurch.org/bwoori/html/sub2021/ilman/ilman_main.asp" target="_blank" class="link">일만성도파송운동</a>
+										</li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- //menu mobile end -->
+          <!-- footer -->
+          <footer class="footer pc_area" id="animation_4">
+            
+            <div class="copy_area btn_copy pc_area">
+              <a href="javascript:goTo('safe')" class="bott_info_link">개인정보처리방침</a><a href="javascript:goTo('email_no')" class="bott_info_link">이메일무단수집거부</a>
+            </div>
+            <div class="copy_area copy_info">
+              <p class="copy_txt">경기 성남시 분당구 불정로386번길 10 2층</p>
+              <p class="copy_txt">TEL. 031-604-1245</p>
+            </div>
+            <div class="copy_area copy_eng">
+              <p class="copy_txt">&copy; 분당다함교회<br> All rights reserved</p>
+              <p class="copy_txt"><a href="https://webchurch.co.kr/index.asp" target="blank" class="bott_info_link">Powered by Webchurch</a></p>
+            </div>
+          </footer>
+          <!-- //footer end -->
+        </article>
+        <!-- //top menu end -->
+        <!-- main -->
+        <article class="main_cont_area">
+          <!-- main section 01 -->
+          <section class="main_sec01">
+            <!-- main banner -->
+            <div class="banner_area" id="animation_5">
+              <div class="banner_cont">
+                <!DOCTYPE html>
+
+<link rel="stylesheet" href="/modu/notiboard/css/swiper.min.css">
+<link rel="stylesheet" href="/modu/notiboard/css/bm_swiper.css?version=2022102018">
+<link href="/modu/font_awesome2/css/all.css" rel="stylesheet">
+<script type="text/javascript" src="/modu/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/modu/js/vimeo-player.js"></script><!-- vimeo api -->
+
+<!-- 메인광고알림판 모든 형태(날개형제외) -->
+<div class="banner_main bm_swiper">
+	<div class="bm_swiper_area">
+		<div class="swiper-container bm_swiper_cont">
+			<div class="swiper-wrapper bm_swiper_wrap">
+			
+			<div class="swiper-slide bm_swiper_slide">
+			  
+				<a class="slide-link slide-inner" href="https://dahamchurch.org/modu/s_board/read.asp?board_seq=2&board_sub_seq=1&view_sub_seq=0&seq=227&lef=03&sublef=undefined&page=1&search_select=&search_text=" target="_top" style='cursor:pointer;'>
+				  
+					<img src="/file/WRCH16/banner/9228myhouse3.jpg"  alt="" class="bm_swiper_img">
+				  
+				</a>
+			  
+			</div>
+			
+			<div class="swiper-slide bm_swiper_slide">
+			  
+				<a class="slide-link slide-inner" href="https://youtu.be/r4GsuvwoUbo" target="_top" style='cursor:pointer;'>
+				  
+					<img src="/file/WRCH16/banner/82051016 주일예배 썸네일.jpg"  alt="" class="bm_swiper_img">
+				  
+				</a>
+			  
+			</div>
+			
+			<div class="swiper-slide bm_swiper_slide">
+			  
+				<a class="slide-link slide-inner" href="https://dahamchurch.org/modu/s_board/list.asp?board_seq=4&lef=03&sublef=undefined&view_sub_seq=8" target="_top" style='cursor:pointer;'>
+				  
+					<img src="/file/WRCH16/banner/6522[크기변환]KakaoTalk_20221008_155532801_02.png"  alt="" class="bm_swiper_img">
+				  
+				</a>
+			  
+			</div>
+			
+			<div class="swiper-slide bm_swiper_slide">
+			  
+				<a class="slide-link slide-inner" href="https://www.dahamchurch.org/modu/s_board/read.asp?board_seq=2&board_sub_seq=1&view_sub_seq=0&seq=161&lef=03&sublef=undefined&page=1&search_select=&search_text=" target="_top" style='cursor:pointer;'>
+				  
+					<img src="/file/WRCH16/banner/7917sum_singer.jpg"  alt="" class="bm_swiper_img">
+				  
+				</a>
+			  
+			</div>
+			
+			<div class="swiper-slide bm_swiper_slide">
+			  
+				<a class="slide-link slide-inner" href="https://www.dahamchurch.org/modu/s_board/read.asp?board_seq=2&board_sub_seq=1&view_sub_seq=1&seq=220&lef=02&sublef=undefined&page=1" target="_top" style='cursor:pointer;'>
+				  
+					<img src="/file/WRCH16/banner/7185abcc.jpg"  alt="" class="bm_swiper_img">
+				  
+				</a>
+			  
+			</div>
+			
+			</div>
+			<!-- Add Pagination -->
+			<div class="swiper-pagination bm_swiper_page"></div>
+			<!-- Add Arrows -->
+			<div class="swiper-button-next bm_swiper_btn"></div>
+			<div class="swiper-button-prev bm_swiper_btn"></div>
+			<!-- Add Scrollbar -->
+			<div class="swiper-scrollbar bm_swiper_scrl"></div>
+		</div>
+		<!-- effect thumbs list : 메인 swiper와 같은 이미지를 썸네일로 출력 -->
+		<div class="swiper-container gallery-thumbs bm_swiper_thumbs_cont">
+			<div class="swiper-wrapper">
+			  
+				<div class="swiper-slide">
+					<img src="/file/WRCH16/banner/9228myhouse3.jpg" alt="" class="bm_swiper_thumbs_img">
+				</div>
+			  
+				<div class="swiper-slide">
+					<img src="/file/WRCH16/banner/82051016 주일예배 썸네일.jpg" alt="" class="bm_swiper_thumbs_img">
+				</div>
+			  
+				<div class="swiper-slide">
+					<img src="/file/WRCH16/banner/6522[크기변환]KakaoTalk_20221008_155532801_02.png" alt="" class="bm_swiper_thumbs_img">
+				</div>
+			  
+				<div class="swiper-slide">
+					<img src="/file/WRCH16/banner/7917sum_singer.jpg" alt="" class="bm_swiper_thumbs_img">
+				</div>
+			  
+				<div class="swiper-slide">
+					<img src="/file/WRCH16/banner/7185abcc.jpg" alt="" class="bm_swiper_thumbs_img">
+				</div>
+			  
+			</div>
+		</div>
+		<!-- effect thumbs list end -->
+	</div>
+</div>
+<!-- 메인광고알림판 모든 형태(날개형제외) end -->
+
+<!-- 유튜브 실시간 버튼 팝업 -->
+<aside class="yt_strm_btn" style="display:none;; top:px; left:px;" OnClick="window.open('');"> <!-- 미노출 : display:none; 노출  라이브 버튼 위치 top, left -->
+  <span class="txt">LIVE 영상</span>
+  <i class="fas fa-arrows-alt icon"></i>
+</aside>
+<!-- 유튜브 실시간 버튼 팝업 end -->
+<!-- Swiper JS -->
+<script src="/modu/notiboard/js/swiper.min.js"></script>
+<script src="/modu/js/jquery-ui.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+
+	// swiper Required parameter
+  var slide_count = 5; // 슬라이드 개수
+	var swiper_width = 940;		// 메인광고알림판 가로사이즈
+	var swiper_height = 490;	// 메인광고알림판 세로사이즈
+	var auto_delay = 6000;			// 이미지 교체시간(ms)
+	var slide_efct = 'coverflow';		// 이미지 교체 효과 / horizontal:기본(가로/효과없음) / vertical:세로 / fade:흐려짐 / coverflow:교체(3d) / curtain: 커튼처럼 덮어씌우기 / thumbs:썸네일 리스트 / wing:날개형
+	var page_memo_arr = ''; // 각 슬라이드 메모
+	
+	var page_btn_type = 'fraction';	// 페이지 버튼 디자인
+	var btn_arrow_class = 'trsp'; // 좌우 화살표 / trsp:투명배경 / rect:네모배경 / circle:동글배경 / none:미사용
+	var is_btn_efct_dnmc = false;	// 페이지 버튼 다이다믹 사용유무 
+	var is_btn_auto_play = false;		// 재생버튼 사용유무 
+	var yt_url_ary = [];
+  //var yt_url_ary = ['https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y','https://www.youtube.com/embed/MkmSxGCGW8Y']; // 유튜브 url
+
+	// swiper Default parameter
+	var swiper_main;		// swiper 객체
+	var swiper_option;		// 메인 swiper 옵션
+	var is_loop = true; // 루프 옵션
+	var swiper_main_thumbs; // thumbs swiper 옵션
+	var page_btn_option;	// 페이지 버튼 옵션
+	var slide_speed = 800;	// 이미지 교체 속도
+	var slide_direc = 'horizontal'; // 슬라이드 방향 / horizontal / vertical
+	var page_btn_scrl;		// 페이지 버튼 스크롤 클래스 / default:undefined
+	var is_auto_play = ''; // 자동재생 여부 22.01.28
+	var btn_auto_play = '<div class="bm_swiper_btn_play"><img src="/modu/notiboard/img/btn_stop.png" alt="" class="bm_swiper_btn_play_img"></div>';	// 재생버튼		
+	var efct_coverflow_set = '';	// 교체효과 - 커버플로우 옵션
+	var efct_curtain_set;			// 교체효과 - 커튼 옵션
+	var inter_leave_offset = 0.7;	// 교체효과 - 커튼 이미지 밀어내는 정도 0~1
+  
+  // 유튜브 api 생성
+  var tag = document.createElement('script');
+  tag.src = "https://youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // 단일슬라이드 (루프 중지 / 화살표,버튼,재생버튼 안보이기)
+  if(slide_count <= 1){
+    is_loop = false;
+    btn_arrow_class = '';
+    page_btn_type = 'none';
+    is_btn_auto_play = false;
+  }
+  // 루프 중지 (페이지버튼 - 스크롤)
+  if(page_btn_type == 'scroll'){
+    is_loop = false;
+  }
+
+  // 루프 중지 (유튜브, 비메오 있을시 - 루프시 복사되는 슬라이드로 인해 유튜브,비메오 영상의 아이디가 중복됨)
+  if($('.video_yt').length > 0 || $('.video_vm').length > 0){
+    is_loop = false;
+  }
+
+	// 메인광고알림판 사이즈
+	if(swiper_width == 0 || swiper_width == '' || swiper_width == null || swiper_width == undefined)
+	{
+		swiper_width = 1920;
+	}
+	if(swiper_height == 0 || swiper_height == '' || swiper_height == null || swiper_height == undefined)
+	{
+		swiper_height = 800;
+	}
+  if(swiper_width < 1920 && slide_efct != 'wing'){ // 가로사이즈 존재하면 해당 사이즈로 지정(날개형 제외)
+    $('div.banner_main.bm_swiper').css({'width':swiper_width});
+  }
+
+	var swiper_ratio = swiper_height * 100 / swiper_width +'%';
+	//$('div.banner_main.bm_swiper').css({'padding-bottom':swiper_ratio});
+  if(swiper_height < 700){
+    $('div.banner_main.bm_swiper').css({'min-height':'0'});
+  }
+
+  $('div.banner_main.bm_swiper').css({'height':swiper_height+'px'});
+
+	// 교체효과 - coverflow 옵션
+	efct_coverflow_set = {
+		slideShadows: true, //슬라이더 그림자
+		rotate: 50,			// 슬라이더 회전 각
+		stretch: 0,			// 슬라이더간 거리
+		depth: 50,			//깊이 효과값
+		modifier: 1,		//효과 배수
+	}
+
+	// 이미지 슬라이드 방향
+	if(slide_efct == 'vertical') {slide_direc = 'vertical';}
+
+	// 교체효과 - 버티컬 사용시
+	if(slide_efct == 'vertical')
+	{
+		$('div.swiper-button-next.bm_swiper_btn').addClass('verti');
+		$('div.swiper-button-prev.bm_swiper_btn').addClass('verti');
+		if(page_btn_type == 'time') // 교체효과 - 버티컬 사용시 버튼 디자인 - time 사용불가 / time > ring으로 대체
+		{ 
+			page_btn_type = 'ring'; 
+		}
+
+    // 페이지 효과가 세로일경우 페이지버튼 css fix
+    $('.bm_swiper_area .bm_swiper_cont .swiper-pagination').css('position','absolute');
+
+		slide_efct = '';
+	}
+
+	// 페이지 버튼 스크롤 사용시
+	if(page_btn_type == 'scroll') 													
+	{
+		page_btn_scrl = '.swiper-scrollbar';
+		$('.swiper-scrollbar.bm_swiper_scrl').css('opacity','1');
+	}
+	
+	// swiper 옵션 생성
+	if(slide_efct == 'thumbs') // thumbs effect 옵션
+	{
+		$('div.bm_swiper_cont').addClass('thumbs_top');
+		$('div.bm_swiper_thumbs_cont').addClass('active');
+		swiper_main_thumbs = new Swiper('div.bm_swiper_thumbs_cont',{ // thumbs swiper 생성
+			spaceBetween: 10,
+			slidesPerView: 4,
+			loop: is_loop,
+			freeMode: true,
+			watchSlidesVisibility: true,
+			watchSlidesProgress: true,
+		});
+		swiper_option = {	// 메인 swiper 옵션
+			autoplay: {		// 오토플레이
+				delay: auto_delay, // 이미지 교체 시간
+				disableOnInteraction: false,
+			},
+			speed: slide_speed,
+			loop: is_loop,
+			navigation: { // 좌우버튼
+				nextEl: '.swiper-button-next.bm_swiper_btn', 
+				prevEl: '.swiper-button-prev.bm_swiper_btn', 
+			},	
+			thumbs: {
+				swiper: swiper_main_thumbs,
+			},
+		};
+	}
+	else if(slide_efct == 'wing') // wing effect 옵션
+	{
+		swiper_option = {
+			slidesPerView: 'auto',
+			centeredSlides: true,
+			loop: is_loop,
+			autoplay: {
+				delay: auto_delay,
+				disableOnInteraction: false,
+			}, 
+			pagination: {
+				el: '.swiper-pagination.bm_swiper_page',
+				clickable: true, // 페이지 버튼 클릭 여부
+				dynamicBullets: is_btn_efct_dnmc, // 페이지 다이나믹 버튼
+				renderBullet: function (index, className) { // 페이지 버튼 디자인 / ring:링(빈공간) / circle:원형(색) / num:숫자 / scroll:스크롤 / time:타임 바 / none:미사용
+
+					// 재생버튼 디자인
+					if(page_btn_type == 'num')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '">' + (index + 1) + '</span>';
+					}
+					else if(page_btn_type == 'none' || page_btn_type == 'scroll')
+					{
+						return '';
+					}
+					else if(page_btn_type == 'time')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"><span class="timeline_memo"><span class="memo">'+page_memo_arr[index]+'</span></span><span class="timeline"></span></span>';
+					}
+					else // ring,circle
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"></span>';
+					}
+				},
+			}
+			,
+			navigation: {
+				nextEl: '.swiper-button-next.bm_swiper_wing_btn',
+				prevEl: '.swiper-button-prev.bm_swiper_wing_btn',
+			},
+		};
+	}
+	else if(slide_efct == 'vertical') // vertical effect 옵션
+	{
+		swiper_option = {
+			speed: slide_speed, // 이미지 교체 속도
+			effect: slide_efct, // 이미지 교체 효과
+			autoplay: { // 오토플레이
+				delay: auto_delay, // 이미지 교체 시간
+				disableOnInteraction: false,
+			},
+			loop: is_loop,
+			pagination: {
+				el: '.swiper-pagination.bm_swiper_page',
+				clickable: true, // 페이지 버튼 클릭 여부
+				dynamicBullets: is_btn_efct_dnmc, // 페이지 다이나믹 버튼
+				renderBullet: function (index, className) { // 페이지 버튼 디자인 / ring:링(빈공간) / circle:원형(색) / num:숫자 / scroll:스크롤 / time:타임 바 / none:미사용
+
+					// 재생버튼 디자인
+					if(page_btn_type == 'num')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '">' + (index + 1) + '</span>';
+					}
+					else if(page_btn_type == 'none' || page_btn_type == 'scroll')
+					{
+						return '';
+					}
+					else if(page_btn_type == 'time')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"><span class="timeline_memo"><span class="memo">'+page_memo_arr[index]+'</span></span><span class="timeline"></span></span>';
+					}
+					else // ring,circle
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"></span>';
+					}
+				},
+			}
+			,
+			scrollbar: { // 페이지 버튼 스크롤바형
+				el: page_btn_scrl,
+				hide: false,
+			},
+			navigation: { // 좌우버튼
+				nextEl: '.swiper-button-next.bm_swiper_btn', 
+				prevEl: '.swiper-button-prev.bm_swiper_btn', 
+			},
+			direction: slide_direc,	// 슬라이드 진행방향
+			coverflowEffect: efct_coverflow_set, // 교체효과 - 커버플로우
+		};
+	}
+	else // thumbs, wing, vertical 이외의 effect 옵션
+	{
+		swiper_option = {
+			speed: slide_speed, // 이미지 교체 속도
+			effect: slide_efct, // 이미지 교체 효과
+			autoplay: { // 오토플레이
+				delay: auto_delay, // 이미지 교체 시간
+				disableOnInteraction: false,
+			},
+			loop: is_loop,
+			pagination: {
+				el: '.swiper-pagination.bm_swiper_page',
+				clickable: true, // 페이지 버튼 클릭 여부
+				dynamicBullets: is_btn_efct_dnmc, // 페이지 다이나믹 버튼
+				renderBullet: function (index, className) { // 페이지 버튼 디자인 / ring:링(빈공간) / circle:원형(색) / num:숫자 / scroll:스크롤 / time:타임 바 / none:미사용
+
+					// 재생버튼 디자인
+					if(page_btn_type == 'num')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '">' + (index + 1) + '</span>';
+					}
+					else if(page_btn_type == 'none' || page_btn_type == 'scroll')
+					{
+						return '';
+					}
+					else if(page_btn_type == 'time')
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"><span class="timeline_memo"><span class="memo">'+page_memo_arr[index]+'</span></span><span class="timeline"></span></span>';
+					}
+					else // ring,circle
+					{
+						return '<span class="' + className + ' ' + page_btn_type + '"></span>';
+					}
+				},
+			}
+			,
+			scrollbar: { // 페이지 버튼 스크롤바형
+				el: page_btn_scrl,
+				hide: false,
+			},
+			navigation: { // 좌우버튼
+				nextEl: '.swiper-button-next.bm_swiper_btn', 
+				prevEl: '.swiper-button-prev.bm_swiper_btn', 
+			},
+			direction: slide_direc,	// 슬라이드 진행방향
+			coverflowEffect: efct_coverflow_set, // 교체효과 - 커버플로우
+		};
+	}
+  
+  // 페이지 버튼 디자인 - 페이지번호
+  if(page_btn_type == 'fraction'){
+    swiper_option.pagination.type = 'fraction';
+  }
+
+  // 슬라이드 초기화 해제 (영상이 있을때, 영상부분에서 따로 커스텀)
+  if($('.main_video').length > 0){
+    swiper_option.init = false;
+  }
+
+  // ----------------------------- 유튜브 iframe 생성 -------------------------------------- //
+  var yt_id_ary = []; // 유튜브 아이디
+  var yt_obj_ary = []; // 유튜브 플레이어 객체
+  var yt_url_id_ary = []; // 유튜브 영상 아이디
+  var idx_bef_load = 0;
+  var video_yt_leng = $('.video_yt').length;
+  var yt_err_on = false; // 유튜브 에러코드 트리거
+  
+  // 유튜브 url 에서 아이디 추출
+  function get_yt_id(url){
+    var tag = '';
+    if(url){
+      var regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/gi;
+      var matchs = url.match(regExp);
+      matchs = matchs[0].replace('youtu.be/','');
+      if (matchs) {
+        tag += matchs;
+      }
+      return tag;
+    }
+  }
+
+  if(video_yt_leng > 0){
+
+    $.each(yt_url_ary, function(idx, item){
+      if(item.indexOf('youtu') > -1){ // youtube url 만 생성
+        yt_url_id_ary.push(get_yt_id(item));
+      }
+    });
+
+    // 유튜브 아이디 추가
+    $('.video_yt').each(function(i){
+      $(this).attr('id','yt_player_' + i); 
+      yt_id_ary.push('yt_player_' + i);
+      idx_bef_load = i;
+    });
+
+    // 유튜브 iframe 생성 함수
+    function onYouTubeIframeAPIReady() {
+      if(video_yt_leng > 0){
+        var player_yt;
+
+        // 로드 전 유튜브 갯수와 스와이퍼 루프로 인한 유튜브 갯수가 차이날때
+        if(idx_bef_load != video_yt_leng){ 
+          video_yt_leng = video_yt_leng - (video_yt_leng - idx_bef_load);
+        }
+        
+        // 객체 반복 생성
+        for (var i = 0; i <= video_yt_leng; i++)
+        {
+          var player_yt_id = yt_id_ary[i];
+          player_yt = new YT.Player(player_yt_id,{
+            videoId: yt_url_id_ary[i],
+            width: '100%',
+            height: '100%',
+            playerVars: {
+              controls: 2, // controls / 0: 컨트롤x , 1:컨트롤o , 2:컨트롤o(성능향상)
+              rel: 0,
+              
+            },
+            events: {
+              'onStateChange': onPlayerStateChange,
+              'onReady': onPlayerReady,
+              'onError' : onPlayerError
+            }
+          });
+          yt_obj_ary.push(player_yt);
+        }
+
+        function onPlayerStateChange(event){
+          // 영상 재생시 오토플레이 중지
+          if(event.data === 1){
+            swiper_main.autoplay.stop();
+          }
+          // 영상 재생 완료시 다음 슬라이드, 오토플레이 활성
+          if(event.data === 0){
+            swiper_main.slideNext();
+            swiper_main.autoplay.start();
+          }
+        }
+
+        function onPlayerError(event){
+          // 실시간일때 재생 불가시 해당 링크 열기
+          var $strm = $('.yt_strm_pop');
+
+          if($strm.length > 0 && yt_err_on == false){ 
+            var link = $strm.attr('href');
+            $strm.addClass('show');
+            window.open(link);
+            yt_err_on = true;
+          }
+        }
+
+      }
+    }
+
+    function onPlayerReady(event) { // 유튜브 자동 재생
+      if($('.yt_strm_pop').length < 1 && is_auto_play == 'Y'){ // 실시간이 아닐때, 자동재생 중지를 방지하기위한 음소거
+        event.target.mute(); 
+      }
+      if(
+          $(event.target.getIframe()).attr('id') == 'yt_player_0' && $('#yt_player_0').parent().parent().hasClass('swiper-slide-active') && 
+          is_auto_play == 'Y'
+        ){ // 첫번째 슬라이드의 첫번째 유튜브 영상일때 자동재생
+        play_video_yt(0);
+      }
+    }
+
+    function play_video_yt(idx){ // 유튜브 재생
+      yt_obj_ary[idx].playVideo();
+    }
+
+    function stop_video_yt(){ // 유튜브 정지
+      for (var i = 0; i < yt_obj_ary.length; i++)
+      {
+        yt_obj_ary[i].stopVideo();
+      }
+    }
+
+  }
+  // ----------------------------- 유튜브 iframe 생성 end -------------------------------------- //
+
+  // ----------------------------- 비메오 객체 생성 -------------------------------------- //
+  var vm_id_ary = []; // 비메오 아이디
+  var vm_obj_ary = []; // 비메오 플레이어 객체
+  var video_vm_leng = $('.video_vm').length;
+
+  if(video_vm_leng > 0){
+
+    $('.video_vm').each(function(i){
+      $(this).attr('id','vm_player_' + i);
+      vm_id_ary.push('vm_player_' + i);
+    });
+
+    for(var i = 0; i < video_vm_leng; i++){
+      var player_vm = new Vimeo.Player(document.querySelector('#vm_player_' + i));
+      if(is_auto_play == 'Y'){ // 자동재생시 음소거
+        player_vm.setVolume(0);
+      }
+      vm_obj_ary.push(player_vm);
+      player_vm.on('play',function(){ // 영상 재생시 오토플레이 중지
+        swiper_main.autoplay.stop();
+      });
+      player_vm.on('ended',function(){ // 영상 재생 완료시 다음 슬라이드, 오토플레이 활성
+        swiper_main.slideNext();
+        swiper_main.autoplay.start();
+      });
+    }
+
+    function play_video_vm(idx){ // 비메오 재생
+      vm_obj_ary[idx].play();
+    }
+
+    function stop_video_vm(){ // 비메오 정지
+      for (var i = 0; i < vm_obj_ary.length; i++)
+      {
+        vm_obj_ary[i].unload();
+      }
+    }
+
+  }
+
+  // ----------------------------- 비메오 객체 생성 end -------------------------------------- //
+
+
+	// swiper 생성
+	var swiper_cont_class = 'bm_swiper_cont';
+	if(slide_efct == 'wing') swiper_cont_class = 'bm_swiper_wing_cont'; // 날개형
+	function create_swiper(option_call)
+	{
+    setTimeout(function(){ // wing bug fix = 스크롤 생길시 여백이 생김. 원인 : 스크롤이 생기기 전에 페이지를 읽어서 넓이 값이 달라지는 것으로 추정. 시간차를 둬서 스크립트를 나중에 읽도록 수정
+      swiper_main = new Swiper('.swiper-container.'+swiper_cont_class, swiper_option);
+      option_call();
+    },1);
+	}
+	create_swiper(function(){
+		// 교체효과 - 커튼 옵션 추가
+		if(slide_efct == 'curtain')
+		{
+			$('.slide-inner').addClass('curtain');
+			swiper_main.params.watchSlidesProgress = true;
+			swiper_main.on('progress',function(){
+				var swiper_obj = this;
+				for (var i = 0; i < swiper_obj.slides.length; i++) {
+					var slideProgress = swiper_obj.slides[i].progress;
+					var innerOffset = swiper_obj.width * inter_leave_offset;
+					var innerTranslate = slideProgress * innerOffset;
+					swiper_obj.slides[i].querySelector(".slide-inner").style.transform = "translate3d(" + innerTranslate + "px, 0, 0)";
+				}   
+			});
+			swiper_main.on('touchStart',function(){
+				var swiper_obj = this;
+				for (var i = 0; i < swiper_obj.slides.length; i++) {
+					swiper_obj.slides[i].style.transition = "";
+				}
+			});
+			swiper_main.on('setTransition',function(speed){
+				var swiper_obj = this;
+				for (var i = 0; i < swiper_obj.slides.length; i++) {
+					swiper_obj.slides[i].style.transition = speed + "ms";
+					swiper_obj.slides[i].querySelector(".slide-inner").style.transition =
+						speed + "ms";
+				}
+			});
+		}
+
+		// thumbs effect 예외처리
+		if(slide_efct == 'thumbs')
+		{
+			$('div.bm_swiper_btn_play').addClass('thumbs');
+		}
+
+		// 좌우 화살표 변경
+		$('.swiper-button-next.bm_swiper_btn, .swiper-button-prev.bm_swiper_btn').addClass(btn_arrow_class);
+
+		// wing effect 예외처리
+		if(slide_efct == 'wing')
+		{
+			var swiper_wing_wrap = $('div.swiper-wrapper.bm_swiper_wing_wrap').css('width').replace('px','');
+			var slide_wing_width = $('.swiper-slide.bm_swiper_wing_slide').eq(0).css('width').replace('px','');
+			var wing_w = (swiper_wing_wrap - slide_wing_width) / 2;
+			$('.swiper-wing-left').css({'width':wing_w,'left':0});
+			$('.swiper-wing-right').css({'width':wing_w,'right':0});
+			$('div.swiper-button-next.bm_swiper_wing_btn').css({'right':wing_w-40});
+			$('div.swiper-button-prev.bm_swiper_wing_btn').css({'left':wing_w-40});
+			$(window).resize(function(){
+				swiper_wing_wrap = $('div.swiper-wrapper.bm_swiper_wing_wrap').css('width').replace('px','');
+				slide_wing_width = $('.swiper-slide.bm_swiper_wing_slide').eq(0).css('width').replace('px','');
+				wing_w = (swiper_wing_wrap - slide_wing_width) / 2;
+				$('.swiper-wing-left').css({'width':wing_w,'left':0});
+				$('.swiper-wing-right').css({'width':wing_w,'right':0});
+				$('div.swiper-button-next.bm_swiper_wing_btn').css({'right':wing_w-40});
+				$('div.swiper-button-prev.bm_swiper_wing_btn').css({'left':wing_w-40});
+			});
+
+			$('.swiper-wing-right,.swiper-button-next.bm_swiper_wing_btn').mouseenter(function(){
+				$('.swiper-button-next').css('opacity','1');
+			});
+			$('.swiper-wing-right,.swiper-button-next.bm_swiper_wing_btn').mouseleave(function(){
+				$('.swiper-button-next').css('opacity','0.1');
+			});
+			$('.swiper-wing-left,.swiper-button-prev.bm_swiper_wing_btn').mouseenter(function(){
+				$('.swiper-button-prev').css('opacity','1');
+			});
+			$('.swiper-wing-left,.swiper-button-prev.bm_swiper_wing_btn').mouseleave(function(){
+				$('.swiper-button-prev').css('opacity','0.1');
+			});
+		}    
+
+    $(function(){
+      // 오토플레이 시작, 정지
+      $('div.bm_swiper_btn_play').click(function(){
+        if($(this).hasClass('stop'))
+        {
+          swiper_main.autoplay.start();
+          on_page_btn_timeline();
+          $(this).removeClass('stop');
+          var img_src = $('img.bm_swiper_btn_play_img').attr('src');
+          img_src = img_src.replace('play','stop');
+          $('img.bm_swiper_btn_play_img').attr('src',img_src);
+
+          $.play_main_video(swiper_main,false); // 영상 재생
+        }
+        else
+        {
+          swiper_main.autoplay.stop();
+          $('span.swiper-pagination-bullet-active.time .timeline').stop();
+          $(this).addClass('stop');
+          var img_src = $('img.bm_swiper_btn_play_img').attr('src');
+          img_src = img_src.replace('stop','play');
+          $('img.bm_swiper_btn_play_img').attr('src',img_src);
+
+          $.video_stop_all(); // 영상 멈춤
+        }
+      });
+
+      $('.yt_strm_btn').draggable();
+      
+    });
+
+
+    /** 영상 관련 **/
+    var video_cnt = $('.main_video').length; // 영상 갯수
+    var video_yt_cnt = $('.video_yt').length;
+    var video_vm_cnt = $('.video_vm').length;
+
+    if(video_cnt > 0){
+      // 영상 재생 함수
+      $.play_main_video = function(swiper_obj,is_init){
+        var slide_idx = swiper_obj.activeIndex;
+        var video_active = $(swiper_obj.slides[slide_idx]).find('.main_video'); // 현재 슬라이드의 비디오
+        var video_class = video_active.attr('class');
+
+        if(video_active.length > 0 && is_auto_play == 'Y'){ // 영상이 존재하면
+          if(video_class.indexOf('video_mp4') > 0){ // mp4 일때
+            swiper_main.autoplay.stop();
+            $.video_stop_all();
+            video_active.prop('muted','true');
+            video_active.trigger('play');
+          }
+          else if (video_class.indexOf('video_yt') > 0){ // 유튜브 일때
+            swiper_main.autoplay.stop();
+            $.video_stop_all();
+
+            var delay = 500;
+            if(is_init) delay = 2000;
+
+            setTimeout(function(){
+              var video_idx = video_active.attr('id').replace('yt_player_','');
+              play_video_yt(video_idx);
+            },delay);
+          }
+          else if (video_class.indexOf('video_vm') > 0){ // 비메오 일때
+            swiper_main.autoplay.stop();
+            $.video_stop_all();
+
+            var delay = 500;
+            if(is_init) delay = 2000;
+
+            setTimeout(function(){
+              var video_idx = video_active.attr('id').replace('vm_player_','');
+              play_video_vm(video_idx);
+            },delay);
+          }
+        }
+      }
+
+      // 모든 영상 재생 정지 함수
+      $.video_stop_all = function(){
+        if(video_cnt > 0){
+          $('.main_video').trigger('pause');
+          $('.main_video').each(function(){
+            this.addEventListener('loadedmetadata', function(){
+              this.currentTime = 0;
+            });
+          }); // 다른 슬라이드 재생바 : 0
+        }
+        if(video_yt_cnt > 0){
+          stop_video_yt();
+        }
+        if(video_vm_cnt > 0){
+          stop_video_vm();
+        }
+      }
+
+      // 영상 슬라이드 초기화
+      if('' != 'Y'){ // 실시간 영상이 아닐때만
+        swiper_main.on('init',function(){
+          $('.main_video').each(function(){ 
+            this.onplay = function(){ // 영상 재생시 오토플레이 중지
+              swiper_main.autoplay.stop();
+            }
+            this.onended = function(){ // 영상 재생 완료시 다음 슬라이드, 오토플레이 활성
+              swiper_main.slideNext();
+              swiper_main.autoplay.start();
+            }
+          });
+          $.play_main_video(this,true);
+        });
+        swiper_main.init();
+      }
+
+      // 다음 슬라이드 넘어갔을때 영상 재생
+      swiper_main.on('slideChangeTransitionEnd',function(){
+        var slide_obj = this;
+        var active_slide_idx = slide_obj.activeIndex;
+        if($(slide_obj.slides[active_slide_idx]).find('.bm_swiper_img').length > 0){
+          swiper_main.autoplay.start();
+        }else{
+          $.play_main_video(slide_obj,false);
+        }
+      });
+    }
+    /** 영상 관련 end **/
+
+		// 재생버튼 사용
+		if(is_btn_auto_play) 															
+		{
+			$('div.bm_swiper div.swiper-pagination').append(btn_auto_play);
+		}
+
+		// 페이지 버튼 타임 바 애니메이션
+		function on_page_btn_timeline(){
+			var $timeline = $('span.swiper-pagination-bullet-active.time .timeline');
+			$timeline.css('width','0%');
+			$timeline.stop().animate({
+				width: '100%',
+			},auto_delay);
+		}
+		on_page_btn_timeline();
+		swiper_main.on('slideChange',function(){
+			on_page_btn_timeline();
+		});
+
+    // 페이지 버튼 타임 바 메모 효과
+		$('span.swiper-pagination-bullet.time').hover(function(){
+			$(this).find('span.timeline_memo .memo').stop().animate({
+				bottom: '8px',
+				opacity: '1'
+			},300);
+		},function(){
+			$(this).find('span.timeline_memo .memo').stop().animate({
+				bottom: '-10px',
+				opacity: '0'
+			},300);
+		});
+
+    // 메모 내용 없을시
+    if(page_memo_arr == ''){
+      $('span.timeline_memo .memo').addClass('disable');
+    }
+
+	});
+
+</script>
+<!-- 메인광고알림판 end -->
+
+              </div>
+            </div>
+            <script>
+              // 동영상 비율과 메인광고 비율이 맞지않기때문에 동영상일땐 css 조정 필요
+              if (yt_url_ary + '' != '') {
+                if (matchMedia("screen and (max-width: 768px)").matches) {
+                  $('.banner_area').css('padding-bottom', '56.25%');
+                }
+                $('.main_sermon_area').css('top', '0');
+              }
+            </script>
+            <!-- //main banner end -->
+						<!-- main quick -->
+						<ul class="main_quick_list">
+							<li id="animation_6">
+								<a href="javascript:goTo('1','uotc','6730','30981');" class="link">
+									<img src="img/body/main_quick09.png" alt="icon" class="icon">
+									<span class="txt">교회소개</span>
+								</a>
+							</li>
+							<li id="animation_7">
+								<a href="https://sum.su.or.kr:8888/bible/today" target="_blank" class="link">
+									<img src="img/body/main_quick06.png" alt="icon" class="icon">
+									<span class="txt">오늘의 QT</span>
+								</a>
+							</li>
+							<li id="animation_8">
+								<a href="javascript:goTo('3','weekly');" class="link">
+									<img src="img/body/main_quick08.png" alt="icon" class="icon">
+									<span class="txt">주보</span>
+								</a>
+							</li>
+							<li id="animation_9">
+								<a href="javascript:goTo('2','s_board','6');" class="link">
+									<img src="img/body/main_quick04.png" alt="icon" class="icon">
+									<span class="txt">경조사</span>
+								</a>
+							</li>
+							<li id="animation_10">
+								<a href="javascript:goTo('2','s_board','4');" class="link">
+									<img src="img/body/main_quick05.png" alt="icon" class="icon">
+									<span class="txt">교회앨범</span>
+								</a>
+							</li>
+							<li id="animation_11">
+								<a href="javascript:goTo('1','offering');" class="link">
+									<img src="img/body/main_quick03.png" alt="icon" class="icon">
+									<span class="txt">온라인헌금</span>
+								</a>
+							</li>
+						</ul>
+						<!-- //main quick end -->
+          </section>
+          <!-- //main section 01 end -->
+					<!-- main section 02 -->
+          <section class="main_sec02">
+            <ul class="main_sec02_list">
+							<li class="menu_board" id="animation_12">
+								<h2 class="menu_board_tit">공지사항<span class="more"><a href="javascript:goTo('2','s_board','2');">+</a></span></h2>
+								<ul class="menu_board_list">
+								
+									<li>
+										<a href="javascript:goTo('2', 's_board', '2', '1', '227');" class="link">
+											<span class="sbj">[2022 전교인 기도 릴레이] 내 집은 만민이 기도하는 집이라</span>
+											<span class="date">2022.10.16</span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="javascript:goTo('2', 's_board', '2', '1', '220');" class="link">
+											<span class="sbj">2022년 하반기 학습, 세례, 입교 및 유아세례 신청 안내</span>
+											<span class="date">2022.10.13</span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="javascript:goTo('2', 's_board', '2', '1', '190');" class="link">
+											<span class="sbj"> 10월 다함 "깨" 기도</span>
+											<span class="date">2022.10.04</span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="javascript:goTo('2', 's_board', '2', '1', '171');" class="link">
+											<span class="sbj">2022 가을 특별 새벽부흥회 '프사' 릴레이~!!</span>
+											<span class="date">2022.09.24</span>
+										</a>
+									</li>
+								 
+								</ul>
+							</li>
+							<li class="menu_board" id="animation_13">
+								<h2 class="menu_board_tit">은혜나눔<span class="more"><a href="javascript:goTo('2','s_board','5')">+</a></span></h2>
+								<ul class="menu_board_list">
+								
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+								</ul>
+							</li>
+							<li class="menu_board" id="animation_14">
+								<h2 class="menu_board_tit">장례소식<span class="more"><a href="javascript:goTo('2','s_board','6');">+</a></span></h2>
+								<ul class="menu_board_list">
+								
+									<li>
+										<a href="javascript:goTo('2', 's_board', '6', '1', '225');" class="link">
+											<span class="sbj">윤정희A 성도(직장02) 모친상</span>
+											<span class="date">2022.10.15</span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+									<li>
+										<a href="#n" class="link">
+											<span class="sbj">새 글이 없습니다.</span>
+											<span class="date"></span>
+										</a>
+									</li>
+								 
+								</ul>
+							</li>
+            </ul>
+          </section>
+          <!-- //main section 02 end -->
+          <!-- main section 03 -->
+          <section class="main_sec03 sermon">
+						<h2 class="menu_gal_tit" id="animation_15">설교영상<span class="more"><a href="javascript:goTo('2','media_board','1');">+</a></span></h2>
+            <ul class="menu_gal_list">
+							
+							<li id="animation_16">
+								<a href="javascript:goTo('2', 'media_board', '1', '1', '235');" class="link">
+									<div class="menu_srm_vod">
+									
+										<iframe src="https://www.youtube.com/embed/mmlAk0fWP0Q" class="srm_video ifr" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									
+										<!--기본이미지-->
+										
+									</div>
+									</a>
+									<a href="javascript:goTo('2', 'media_board', '1', '1', '235');" class="link_info">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">믿음의 눈을 뜨라!</p>
+										<p class="gal_list_info_date">2022-10-19</p>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_17">
+								<a href="javascript:goTo('2', 'media_board', '1', '4', '230');" class="link">
+									<div class="menu_srm_vod">
+									
+										<iframe src="https://www.youtube.com/embed/r4GsuvwoUbo" class="srm_video ifr" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									
+										<!--기본이미지-->
+										
+									</div>
+									</a>
+									<a href="javascript:goTo('2', 'media_board', '1', '4', '230');" class="link_info">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">내가 다시 세우리라</p>
+										<p class="gal_list_info_date">2022-10-16</p>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_18">
+								<a href="javascript:goTo('2', 'media_board', '1', '1', '221');" class="link">
+									<div class="menu_srm_vod">
+									
+										<iframe src="https://www.youtube.com/embed/ihLEcpUYAAo" class="srm_video ifr" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									
+										<!--기본이미지-->
+										
+									</div>
+									</a>
+									<a href="javascript:goTo('2', 'media_board', '1', '1', '221');" class="link_info">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">이래도 떠나려는가?</p>
+										<p class="gal_list_info_date">2022-10-12</p>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_19">
+								<a href="javascript:goTo('2', 'media_board', '1', '4', '220');" class="link">
+									<div class="menu_srm_vod">
+									
+										<iframe src="https://www.youtube.com/embed/pRQr47QdQUs" class="srm_video ifr" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									
+										<!--기본이미지-->
+										
+									</div>
+									</a>
+									<a href="javascript:goTo('2', 'media_board', '1', '4', '220');" class="link_info">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">우리의 최대치는 여기까지 입니다</p>
+										<p class="gal_list_info_date">2022-10-09</p>
+									</div>
+								</a>
+							</li>
+							
+            </ul>
+          </section>
+          <!-- //main section 03 end -->
+		  <!-- main section 03 -->
+          <section class="main_sec03">
+						<h2 class="menu_gal_tit" id="animation_15">내 집은 만민이 기도하는 집<span class="more"><a href="javascript:goTo('4','s_board','9');">+</a></span></h2>
+            <ul class="menu_gal_list">
+							
+							<li id="animation_36">
+								<a href="javascript:goTo('2', 's_board', '9', '3', '244');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">내.만.집 | 은혜나눔 | 10월 20일</p>
+										<p class="gal_list_info_date">2022-10-20</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=9&board_sub_seq=3&filename=20221020184225%5Fquhwbopd%2Epng" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_37">
+								<a href="javascript:goTo('2', 's_board', '9', '3', '243');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">모두가 내가 구할 기도인것을 깨닫습니다.</p>
+										<p class="gal_list_info_date">2022-10-20</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=9&board_sub_seq=3&filename=20221020162134%5Fmqokzkqn%2Epng" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_38">
+								<a href="javascript:goTo('2', 's_board', '9', '1', '242');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">온 가족이 함께 예배드리러 가는 모습을 꿈꿔봅니다.</p>
+										<p class="gal_list_info_date">2022-10-20</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="img/body/noimg.png" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_39">
+								<a href="javascript:goTo('2', 's_board', '9', '4', '232');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">내.만.집 | 기도제목 | 10월20일</p>
+										<p class="gal_list_info_date">2022-10-20</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=9&board_sub_seq=4&filename=20221017151102%5Ffrsbdnbt%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+            </ul>
+          </section>
+          <!-- //main section 03 end -->
+		  <!-- main section 03 -->
+          <section class="main_sec03">
+						<h2 class="menu_gal_tit" id="animation_15">2022 특별새벽부흥회<span class="more"><a href="javascript:goTo('2','s_board','4','8');">+</a></span></h2>
+            <ul class="menu_gal_list">
+							
+							<li id="animation_20">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '217');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 첫째날 | 하나님의 가족들 | 최정권 목사 | 2022-09-26</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133831%5Fcwvqyxxr%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_21">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '216');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 둘째날 | 해와 같이 빛나리라 | 최정권 목사 | 2022-09-27</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133720%5Fgmwpzxtw%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_22">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '215');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 셋째날 | 지금은 더 깊이, 더 넓게 | 최정권 목사 | 2022-09-28</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133532%5Fiofdfepd%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_23">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '214');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 넷째날 | 하나님 나라로 만족합니다 | 최정권 목사 | 2022-09-29</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133429%5Fqtdywfqh%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_24">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '213');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 다섯째날 | 영원을 바라보고 사는 오늘 | 최정권 목사 | 2022-09-3</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133340%5Fuxbdwupd%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_25">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '212');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을특별새벽부흥회 | 여섯째날 | 하나님 나라의 율법교사로! | 최정권 목사 | 2022-10-0</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=8&filename=20221008133237%5Femtbkkup%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_26">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '211');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을 특별새벽부흥회 D-5 홍보영상</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="https://img.youtube.com/vi/Mif7Am7fBQQ/mqdefault.jpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_27">
+								<a href="javascript:goTo('2', 's_board', '4', '8', '210');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022 가을 특별새벽부흥회 오프닝 영상</p>
+										<p class="gal_list_info_date">2022-10-08</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="https://img.youtube.com/vi/B6IZujhs7u4/mqdefault.jpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+            </ul>
+          </section>
+          <!-- //main section 03 end -->
+		  <!-- main section 03 -->
+          <section class="main_sec03">
+						<h2 class="menu_gal_tit" id="animation_15">사진게시판<span class="more"><a href="javascript:goTo('2','s_board','4');">+</a></span></h2>
+            <ul class="menu_gal_list">
+							
+							<li id="animation_28">
+								<a href="javascript:goTo('2', 's_board', '4', '2', '239');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">주일예배 특송 / 7남 다락방 / 여기에 모인 우리 / 22-10-16</p>
+										<p class="gal_list_info_date">2022-10-19</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=2&filename=20221019194258%5Fvhzifczw%2Epng" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_29">
+								<a href="javascript:goTo('2', 's_board', '4', '6', '224');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">05여 다락방</p>
+										<p class="gal_list_info_date">2022-10-13</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=6&filename=20221013135853%5Fglihcgvw%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_30">
+								<a href="javascript:goTo('2', 's_board', '4', '6', '223');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">04여 다락방</p>
+										<p class="gal_list_info_date">2022-10-13</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=6&filename=20221013135836%5Fbmwukxnl%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_31">
+								<a href="javascript:goTo('2', 's_board', '4', '6', '222');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">03여 다락방</p>
+										<p class="gal_list_info_date">2022-10-13</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=4&board_sub_seq=6&filename=20221013135802%5Fvutuwoao%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+            </ul>
+          </section>
+          <!-- //main section 03 end -->
+		  <!-- main section 03 -->
+          <section class="main_sec03">
+						<h2 class="menu_gal_tit" id="animation_15">새가족부<span class="more"><a href="javascript:goTo('3','s_board','7');">+</a></span></h2>
+            <ul class="menu_gal_list">
+							
+							<li id="animation_32">
+								<a href="javascript:goTo('3', 's_board', '7', '1', '192');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022년 9월 새가족 수료식 (2022.09.25.)</p>
+										<p class="gal_list_info_date">2022-10-04</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=7&board_sub_seq=1&filename=20221004221157%5Fnchgmlpd%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_33">
+								<a href="javascript:goTo('3', 's_board', '7', '1', '191');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022년 9월 새가족 신앙강좌, 새가족부 봉사자 모임, 기도회</p>
+										<p class="gal_list_info_date">2022-10-04</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=7&board_sub_seq=1&filename=20221004213925%5Fxhblreuz%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_34">
+								<a href="javascript:goTo('3', 's_board', '7', '1', '147');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022년 8월 새가족 수료식 (2022.08.28.)</p>
+										<p class="gal_list_info_date">2022-08-31</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=7&board_sub_seq=1&filename=20220831004439%5Fomizhocl%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li id="animation_35">
+								<a href="javascript:goTo('3', 's_board', '7', '1', '146');" class="link">
+									<div class="gal_list_info">
+										<p class="gal_list_info_sbj">2022년 8월 새가족 신앙강좌</p>
+										<p class="gal_list_info_date">2022-08-30</p>
+									</div>
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="/modu/s_board/view_img.asp?ori=Y&board_seq=7&board_sub_seq=1&filename=20220830225536%5Fylrwvwgb%2Ejpg" alt="" class="gal_list_img" onload="response_ratio_img(this);">
+										</div>
+									</div>
+								</a>
+							</li>
+							
+            </ul>
+          </section>
+          <!-- //main section 03 end -->
+        </article>
+      </section>
+    </main>
+    <!-- main end -->
+    <!-- footer -->
+    <footer class="footer_mobi">
+      
+      <div class="copy_area btn_copy">
+        <a href="javascript:goTo('safe')" class="bott_info_link">개인정보처리방침</a><a href="javascript:goTo('email_no')" class="bott_info_link">이메일무단수집거부</a>
+      </div>
+      <div class="copy_area copy_info">
+        <p class="copy_txt">경기 성남시 분당구 불정로386번길 10 2층</p>
+        <p class="copy_txt">TEL. 031-604-1245</p>
+      </div>
+      <div class="copy_area copy_eng">
+        <p class="copy_txt">&copy; 분당다함교회<br> All rights reserved. <a href="https://webchurch.co.kr/index.asp" target="blank" class="bott_info_link">Powered by Webchurch</a></p>
+      </div>
+    </footer>
+    <!-- //footer end -->
+  </div>
+  </div>
+</body>
+
+</html>

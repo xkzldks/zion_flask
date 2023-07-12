@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="title mt-3"><a href="#"></a>{{ board.title }}</h2>
+    <div class="info" style="display: block; text-align: justify;">
+        <span>날짜 : {{ board.create_date }}<br> 작성자 : {{board.username}}</span>
+        <span style="float:right;">
+            조회 : {{ board.hit }}
+        </span>
+    </div>
+            
+    <hr>
+    <div id="content">{{ board.content }} </div>
+        <script language="javascript">
+            var tmpStr = "{{ board.content }}";
+            tmpStr = tmpStr.replaceAll("&lt;", "<");
+            tmpStr = tmpStr.replaceAll("&gt;", ">");
+            tmpStr = tmpStr.replaceAll("&amp;lt;", "<");
+            tmpStr = tmpStr.replaceAll("&amp;gt;", ">");
+            tmpStr = tmpStr.replaceAll("&amp;nbsp;", " ");
+            tmpStr = tmpStr.replaceAll("&amp;amp;", "&");
+            document.getElementById("content").innerHTML=tmpStr;
+        </script>
+    {% if board.images %}
+        <div> 첨부파일:
+            {% for image in board.images %}
+                <a href="{{ url_for('filedown', filename=image['filename'])}}" class="attatchment">{{ image['filename'] }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if board.username == session['username'] %}
+    <div style="text-align: right;">
+        <a href="{{ url_for('modify', board_id=board._id) }}" style="text-decoration: None;"><button type="button" class="btn-outline-info">수정</button></a>
+        <button type="button"  data-bs-toggle="modal" class="btn-outline-info" data-bs-target="#exampleModal">삭제</button>
+        
+    </div>
+    {% elif session['username'] == "zion" or session['username'] == "test"%}
+    <div style="text-align: right;">
+        <button type="button"  data-bs-toggle="modal" class="btn-outline-info" data-bs-target="#exampleModal">삭제</button>
+    </div>
+    {% endif %}
+
+    <!-- 좋아요 싫어요 -->
+    <hr>
+    <div class="good-bad-button">
+        <button id="good-button" onclick="good()"><i class="fa-solid fa-thumbs-up"></i>&nbsp;<span class="good-num">{{ board.good|length }}</span>
+        </button>
+        <button id="bad-button" onclick="bad()"><i class="fa-solid fa-thumbs-down"></i>&nbsp;<span class="bad-num">{{ board.bad|length }}</span></button>
+    </div>
+    <button type = "button" class="btn-outline-info"  onClick="location.href='/board'">뒤로가기</button>
+</div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">게시글 삭제</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          정말로 삭제하시겠습니까?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          <a href="{{ url_for('delete', board_id=board._id) }}"><button type="button" class="btn btn-danger">삭제</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    function good(){
+        axios.get("/good/{{board._id}}")
+        .then((res) => {
+            console.log(res.data)
+            // 메세지 없음 -> 팔로우 된거
+            if(res.data.success == true){
+                var num = Number($('#good-button > span').text())
+                if (res.data.is_good){
+                    $('#good-button > span').text(num+1)
+                } else {
+                    $('#good-button > span').text(num-1)
+                    
+                }
+            } else {
+                alert(res.data.msg)
+            }
+        })
+    }
+    function bad(){
+        axios.get("/bad/{{board._id}}")
+        .then((res) => {
+            // 메세지 없음 -> 팔로우 된거
+            if(res.data.success == true){
+                var num = Number($('#bad-button > span').text())
+                if (res.data.is_bad){
+                    $('#bad-button > span').text(num+1)
+                } else {
+                    $('#bad-button > span').text(num-1)
+                    
+                }
+            } else {
+                alert(res.data.msg)
+            }
+        })
+
+    }
+</script>
+<style>
+    table {
+        border-collapse: collapse;
+      }
+      tr, td {
+        border: 1px solid #444444;
+      }
+      .good-bad-button{
+          text-align: center;
+      }
+      button{
+          display: inline;
+          border: 1px solid #d1d1d1;
+          border-radius: 4px;
+          padding: 3px 10px;
+      }
+      
+</style>
+
+{% endblock %}

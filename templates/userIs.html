@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>진주교회 시온</title>
+
+    <meta property="og:title" content="시온 출석체크" />
+    <meta property="og:description" content="출석체크" />
+    <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+
+    $(document).ready(function () {
+        var is_mobile = isMobile();
+
+        if( is_mobile ) {
+            var userIs = 'mobile';
+        } else {
+            var userIs = 'another';
+        }
+        $.ajax({
+                type: "POST",
+                url: "/userIs",
+                data: {user : userIs},
+                success: function (response) {
+                    alert("?");
+                }
+            })
+    });
+    function isMobile() {
+        var user = navigator.userAgent;
+        var is_mobile = false;
+
+        if( user.indexOf("iPhone") > -1
+            || user.indexOf("Android") > -1
+            || user.indexOf("iPad") > -1
+            || user.indexOf("iPod") > -1
+        ) {
+            is_mobile = true;
+        }
+        return is_mobile;
+    }
+    </script>
+
+</head>
+<body>
+gasdgasgd
+</body>
+</html>
