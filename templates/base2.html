@@ -124,15 +124,15 @@ container{
               <img alt="" src="/static/image/icon2.png" width="24px" height="24px">
               시온 청년부
           </a>
-          <a href="{{ url_for('account/logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
+          <a href="{{ url_for('account.logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
       {% else %}
 
           <a class ="nav-link" href="/" aria-label="Product" style="color: white">
               <img alt="" src="/static/image/icon2.png" width="24px" height="24px">
               시온 청년부
           </a>
-          <a href="{{ url_for('account/login') }}" class="nav-link">로그인</a>
-          <a href="{{ url_for('account/register')}}" class="nav-link">회원가입</a>
+          <a href="{{ url_for('account.login') }}" class="nav-link">로그인</a>
+          <a href="{{ url_for('account.register')}}" class="nav-link">회원가입</a>
       {% endif %}
     </div>
 
