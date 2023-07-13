@@ -980,8 +980,8 @@ def readPeopleDB():
             n.append(_)
     chulseck.bubble_sort(n)
     print("n ",len(n))
-    print("소속 x ", n)
-    print("소속 o ", l)
+    #print("소속 x ", n)
+    #print("소속 o ", l)
     return jsonify({'dbP': l, 'dbG': dbGroup})
 
 
@@ -990,7 +990,7 @@ def readPeopleDB():
 def readNotSetPeopleDB():
     print("/getNotsetGroup")
     print("넘어옴!")
-    print("소속 x ", n)
+    #print("소속 x ", n)
     return jsonify({'dbP': n})
 
 
