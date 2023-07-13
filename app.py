@@ -11,7 +11,7 @@ from model2 import db
 from bson.objectid import ObjectId
 import music
 import chulseck
-
+app.secret_key = "123"
 now = datetime.now()
 app = Flask(__name__)
 # account app import
