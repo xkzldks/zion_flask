@@ -11,7 +11,7 @@ from model2 import db
 from bson.objectid import ObjectId
 import music
 import chulseck
-app.secret_key = "123"
+
 now = datetime.now()
 app = Flask(__name__)
 # account app import
@@ -19,7 +19,7 @@ app.register_blueprint(account.blue_account)
 
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
-
+app.secret_key = "123"
 
 @app.route('/kakao')
 def kakao():
