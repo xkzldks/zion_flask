@@ -869,6 +869,16 @@ def getAgeGraph():
     print(chu)
     return jsonify({"chul": chu})
 
+@app.route('/dayGraph', methods=['GET'])
+def dayGraph():
+    print("/dayGraph")
+    reviews = list(db.chulseck.find({},{'_id': False}))
+    dayArray = []
+    for _ in reviews:
+        print(_['title'], _['count'][-2:])
+        dayArray.add(_['title'], _['count'][-2:])
+        #dayArray[_['title']] = _['count'][-2:]
+    
 
 @app.route('/getAttendanceGraph', methods=['GET'])
 def getAttendanceGraph():
