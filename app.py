@@ -13,12 +13,13 @@ import music
 import chulseck
 import smtplib
 from email.message import EmailMessage
-app.secret_key = "123"
+
+
 now = datetime.now()
 app = Flask(__name__)
 # account app import
 app.register_blueprint(account.blue_account)
-
+app.secret_key = "123"
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
