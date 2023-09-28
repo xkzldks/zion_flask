@@ -1142,7 +1142,7 @@ def autoSave():
 
     for i in eList:
         message = EmailMessage()
-        message.set_content(reviews + "\n\n\n" + 'http://zion' + now.date().strftime("%Y") + ".site\n")  # 내용
+        message.set_content(result + "\n\n\n" + 'http://zion' + now.date().strftime("%Y") + ".site\n")  # 내용
         message["Subject"] = str("[진주교회 시온청년부] " + now.date().strftime("%Y/%m/%d") + " 출석백업")  # 제목
         message["From"] = EMAIL_ADDR  # 보내는 사람의 이메일 계정
         message["To"] = i  # 받는 사람
