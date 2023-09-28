@@ -13,7 +13,7 @@ import music
 import chulseck
 import smtplib
 from email.message import EmailMessage
-
+app.secret_key = "123"
 now = datetime.now()
 app = Flask(__name__)
 # account app import
