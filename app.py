@@ -11,6 +11,8 @@ from model2 import db
 from bson.objectid import ObjectId
 import music
 import chulseck
+import smtplib
+from email.message import EmailMessage
 
 now = datetime.now()
 app = Flask(__name__)
@@ -19,7 +21,6 @@ app.register_blueprint(account.blue_account)
 
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
-app.secret_key = "123"
 
 @app.route('/kakao')
 def kakao():
@@ -235,18 +236,23 @@ def chulCheck():
     print(title_receive)
     i = list(db.chulseck.find({'title': title_receive}, {'_id': False}))
 
-    print("i",i)
+    print("i", i)
     print(type(i))
     print(len(i))
     print('넘어온거 ', title_receive)
-    try:
-        if str(i[0]['year']) == now.date().strftime("%Y"):
+
+
+    try:  ## 저장된 명단 있을때
+        if len(i) > 1: #년도가 다르고 일수가 같은 명단이 2개 있을때
+            print("명단 두개", i)
+
+        if str(i[0]['year']) == now.date().strftime("%Y"): #올해꺼
             print("저장된거 있음")
             return jsonify({'check': i[0]})
         else:
-            print(i[0]['year'], now.date().strftime("%Y"))
+            print(i[0]['year'], now.date().strftime("%Y")) #올해꺼 아님
             print(type(i[0]['year']), type(now.date().strftime("%Y")))
-    except IndexError:
+    except IndexError: ## 저장명단 없을때
         print("저장된거 없음")
         return jsonify({'check': i})
 
@@ -299,10 +305,12 @@ def writeReview():
         if str(i[0]['year']) == now.date().strftime("%Y"):
             print("저장된거 있음")
             db.chulseck.update_one({'title': title_receive}, {"$set": {'review': list_people, 'count': list_result}})
+            autoSave()
             return jsonify({'msg': '저장성공!'})
     except IndexError:
         print("저장된거 없음")
         db.chulseck.insert_one(doc)
+        autoSave()
         return jsonify({'msg': '저장성공!'})
 
 
@@ -869,16 +877,6 @@ def getAgeGraph():
     print(chu)
     return jsonify({"chul": chu})
 
-@app.route('/dayGraph', methods=['GET'])
-def dayGraph():
-    print("/dayGraph")
-    reviews = list(db.chulseck.find({},{'_id': False}))
-    dayArray = []
-    for _ in reviews:
-        print(_['title'], _['count'][-2:])
-        dayArray.add(_['title'], _['count'][-2:])
-        #dayArray[_['title']] = _['count'][-2:]
-    
 
 @app.route('/getAttendanceGraph', methods=['GET'])
 def getAttendanceGraph():
@@ -990,8 +988,8 @@ def readPeopleDB():
             n.append(_)
     chulseck.bubble_sort(n)
     print("n ",len(n))
-    #print("소속 x ", n)
-    #print("소속 o ", l)
+    print("소속 x ", n)
+    print("소속 o ", l)
     return jsonify({'dbP': l, 'dbG': dbGroup})
 
 
@@ -1000,7 +998,7 @@ def readPeopleDB():
 def readNotSetPeopleDB():
     print("/getNotsetGroup")
     print("넘어옴!")
-    #print("소속 x ", n)
+    print("소속 x ", n)
     return jsonify({'dbP': n})
 
 
@@ -1108,6 +1106,52 @@ def copyResultGet():
         return jsonify({'review': r})
 
 
+# @app.route('/autoSave', methods=['GET'])
+def autoSave():
+    print('/autoSave')
+    userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
+    if not session.get("username"):
+        return jsonify({"False": "False"})
+    elif userAuthCheck[0]['auth'] != 1:
+        return jsonify({"False": "Auth"})
+
+    reviews = list(db.chulseck.find({}, {'_id': False}))
+    print(reviews)
+    result = ''
+    for i in reviews:
+        result += str(i['year']) + '년 ' + str(i['title'][:2]) + "월 " + str(i['title'][2:]) + "일 출석 " + i[
+            'count'].replace('<br>', '').replace('  ', ' ') + "\n" + i['review'][1:] + "\n\n"
+    # print(result)
+    now = datetime.now()
+
+    eList = ['naochugu@gmail.com', 'xkzldks@naver.com']
+    # STMP 서버의 url과 port 번호
+    SMTP_SERVER = 'smtp.gmail.com'
+    SMTP_PORT = 465
+
+    # 1. SMTP 서버 연결
+    smtp = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
+
+    EMAIL_ADDR = 'naochugu@gmail.com'
+    EMAIL_PASSWORD = 'bead jpye ahpz sfjn'  # 구글 앱 비밀번호
+
+    # 2. SMTP 서버에 로그인
+    smtp.login(EMAIL_ADDR, EMAIL_PASSWORD)
+    # 3. MIME 형태의 이메일 메세지 작성
+
+    for i in eList:
+        message = EmailMessage()
+        message.set_content(reviews + "\n\n\n" + 'http://zion' + now.date().strftime("%Y") + ".site\n")  # 내용
+        message["Subject"] = str("[진주교회 시온청년부] " + now.date().strftime("%Y/%m/%d") + " 출석백업")  # 제목
+        message["From"] = EMAIL_ADDR  # 보내는 사람의 이메일 계정
+        message["To"] = i  # 받는 사람
+        smtp.send_message(message)  # 4. 서버로 메일 보내기
+
+    # 5. 메일을 보내면 서버와의 연결 끊기
+    smtp.quit()
+    return jsonify({'msg': "메일전송!"})
+
+
 @app.route('/getUserAuth', methods=['GET'])
 def getUserAuth():
     print('/getUserAuth')
@@ -1154,6 +1198,7 @@ def filesave(file):
 
     file.save(file_path)
     return filename
+
 
 @app.route('/write', methods=['GET', 'POST'])
 def write():
@@ -1203,7 +1248,6 @@ def write():
             flash('제목과 내용을 빈칸없이 입력해주세요')
             # return render_template('board_in.html')
     return render_template('board_in.html')
-
 
 
 @app.route('/board')
@@ -1322,6 +1366,8 @@ def format_datetime(value):
     return value.strftime('%Y-%m-%d %H:%M:%S')
 
 
+
+
 @app.route('/filedown/<filename>')
 def filedown(filename):
     file_path = app.config['UPLOAD_FOLDER'] + filename
@@ -1375,32 +1421,42 @@ def qrCode():
     name = request.form['name']
     gender = request.form['gender']
     birthday = request.form['birthday']
+    peopleList2 = list(db.peopleList.find({}, {'_id': False}))
     person = ""
 
-    person = list(db.peopleList.find({"이름": name}, {'_id': False}))
+    if len(name) > 3:# 이름이 네글자 이상인 경우
+        print(name)
+        if name[:3] in peopleList2:
+            print()
+    else:
 
-    print(person)
-    dM = str(datetime.today().month)
-    dD = str(datetime.today().day)
-    if int(dM) < 10:
-        dM = "0" + str(datetime.today().month)
+        person = list(db.peopleList.find({"이름": name}, {'_id': False}))
+        if peopleList2.count(name[:3]) >= 2:#이름 중복
+            print(len(person))
+        else:
+            print(person)
+            dM = str(datetime.today().month)
+            dD = str(datetime.today().day)
+            if int(dM) < 10:
+                dM = "0" + str(datetime.today().month)
 
-    if int(dD) < 10:
-        dD = "0" + str(datetime.today().day)
-    try:
-        qr = {
-            "year": now.date().strftime("%Y"),
-            "title": dM+dD,
-            "이름": name,
-            "조": person[0]['조'][0],
-            "r": randint(1, 100)
-        }
-        qr2 = "year : " + str(now.date().strftime("%Y")) + "\ntitle : " + dM+dD + "\n이름 : " + name + "\n조 : " + person[0]['조'][0] + "\nr : " + str(randint(1, 100))
-        print("qr", qr, "qr2", qr2)
-    except IndexError:
-        return jsonify({"msg": "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."})
+            if int(dD) < 10:
+                dD = "0" + str(datetime.today().day)
+            try:
+                qr = {
+                    "year": now.date().strftime("%Y"),
+                    "title": dM+dD,
+                    "이름": name,
+                    "조": person[0]['조'][0],
+                    "r": randint(1, 100)
+                }
+                qr2 = "year : " + str(now.date().strftime("%Y")) + "\ntitle : " + dM+dD + "\n이름 : " + name + "\n조 : " + person[0]['조'][0] + "\nr : " + str(randint(1, 100))
+                db.peopleList.update_one({'이름': name}, {"$set": {'r': randint}})
+                print("qr", qr, "qr2", qr2)
+            except IndexError:
+                return jsonify({"msg": "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."})
 
-    return jsonify({"msg": qr, "qr2": str(qr2)})
+            return jsonify({"msg": qr, "qr2": str(qr2)})
 
 
 @app.route('/qrChul', methods= ["POST"])
@@ -1475,7 +1531,9 @@ def qrChul():
         db.chulseck.update_one({'title': dic['title']}, {"$set": {'review': list_people, 'count': list_result}})
         return jsonify({"msg": "good"})
 
+
+
+
 if __name__ == '__main__':
     app.secret_key = "123"
-    print("끼아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",app.secret_key)
     app.run('0.0.0.0', debug=True)
