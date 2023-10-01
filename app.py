@@ -21,7 +21,7 @@ app.register_blueprint(account.blue_account)
 
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
-
+app.secret_key = "123"
 @app.route('/kakao')
 def kakao():
     return render_template('kaka.html')
