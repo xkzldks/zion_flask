@@ -107,9 +107,17 @@
                         if(check == ''){
                             dateCheck();
                         }
+                        else if(check == 'false'){
+                            alert(response["check"]);
+                            document.getElementById('result').innerText = ""
+                        }
                         else{
                             if(confirm("현재 저장된 데이터: "+title + review +"\n저장하시면 이 데이터는 삭제되고 새로운 데이터가 저장됩니다. \n저장하시겠습니까?") == true){
                                 dateCheck();
+                            }
+                            else{
+                                document.getElementById('result').innerText = ""
+                                result = ""
                             }
                         }
                     }
@@ -775,6 +783,31 @@
                 }
            }
         }
+        function autoSave(){
+            if(confirm("메일백업?") == true){
+               $.ajax({
+                type: "GET",
+                url: "/autoSave",
+                data: {},
+                success: function (response) {
+                    if(response['False'] == 'False'){
+                        alert("로그인이 필요한 서비스입니다.");
+                        document.getElementById('result').innerText = ""
+                        result = ""
+                    }
+                    else if(response['False'] == 'Auth'){
+                        alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                        document.getElementById('result').innerText = ""
+                        result = ""
+                    }
+                    else{
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+               })
+            }
+        }
         function delMultiPeopleDB(){
             getCheckboxValue()
             if((document.getElementById('result').innerText == "")){
@@ -960,6 +993,36 @@
                         }
                    })
             }
+        }
+        function mailBackup(){
+            var mail = prompt("※이 기능은 출석체크를 진행한 후 저장된 내용을 메일로 보내주는 기능입니다.\n메일을 전달받을 이메일주소와 본인의 이름을 옆의 형식에 맞게 아래에 적어주세요\n메일주소@도메인/이름","naochugu@gmail.com/김상현");
+            console.log(mail);
+                if(mail != ""){
+                    $.ajax({
+                            type: "POST",
+                            url: "/mailBackup",
+                            data: {mail:mail},
+                            success: function (response) {
+                                if(response['False'] == 'False'){
+                                        alert("로그인이 필요한 서비스입니다.");
+                                        document.getElementById('result').innerText = ""
+                                        result = ""
+                                }
+                                else if(response['False'] == 'Auth'){
+                                    alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                    document.getElementById('result').innerText = ""
+                                    result = ""
+                                }
+                                else if(response['success']){
+                                    alert(response["success"]);
+                                    window.location.reload();
+                                }
+                                else{
+                                    alert(response["msg"]);
+                                }
+                            }
+                    })
+                }
         }
     </script>
     <style type="text/css">
@@ -1353,6 +1416,9 @@
                     </div>
                 </div>
             </div>
+            {% if session['username'] == 'test' %}
+                <br>
+            {% endif %}
             <br>
             <div style="text-align : left;">
                 <label><input type="radio" name="infoSelect" id="radioShowInfoO" onclick="displayPeopleInfo()" value="0">정보표시 및 변경</label>
@@ -1393,6 +1459,7 @@
                 <div style="display: flex;">
                     <a href ="#" class = "myButtonEtc" onclick="checkCopy()">결과복사</a>
                     <a href ="/graph" class = "myButtonEtc">그래프</a>
+                    <a href ="#" class = "myButtonEtc" onclick="mailBackup()">메일백업</a>
                 </div>
 
                 <label id='result'></label>

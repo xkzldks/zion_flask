@@ -183,27 +183,16 @@
 
 </head>
 <body>
-
 <div style="text-align : center;">
-        <span id="clock" style="color:gray;">clock</span>
-        <span id="apm" style="color:gray;"  >ampm</span>
-    </div>
+    <span id="clock" style="color:gray;">clock</span>
+    <span id="apm" style="color:gray;"  >ampm</span>
+</div>
 <br>
 <br>
 <div style="text-align : center; display : flex;justify-content: center;">
-        <img src="/static/image/icon2.png" width="24px" height ="24px" alt="시온청년부">
-        <h3 style="display : inline; font-size : 24px;"> 시온청년부 출석체크사이트</h3>
+    <img src="/static/image/icon2.png" width="24px" height ="24px" alt="시온청년부">
+    <h3 style="display : inline; font-size : 24px;"> 시온청년부 출석체크사이트</h3>
 </div>
-
-<!--<div id="index_03">-->
-<!--        <div id="slide3" style="text-align : center; display : flex;justify-content: center; width:90% height : 20%" >-->
-<!--            <ul>-->
-<!--                <li><img src="/static/image/04.jpg" alt="슬라이드7"></li>-->
-<!--                <li><img src="/static/image/05.jpg" alt="슬라이드8"></li>-->
-<!--                <li><img src="/static/image/06.jpg" alt="슬라이드9"></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
 {% if session['username'] %}
 <div class ="container">
     <div style="text-align : center;" id= userAuth></div>
@@ -226,11 +215,11 @@
         <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('kakao') }}" >>> qr출석체크 <<</a></div>
     </form>
     <br>
-
 </div>
 {% endif %}
 <div class="w3-content" style="opacity : 100%; max-width:90%; display : flex; align-items: center; flex-direction: column; margin: auto;">
-  <img class="mySlides" src="/static/image/05.jpg" style="width:90%; margin : auto; border : outset;">
+  <img class="mySlides" src="/static/image/04.jpg" style="width:90%; margin : auto; border : outset;">
+  <img class="mySlides" src="/static/image/05.jpg" style="width:90%; margin : auto; display : none;">
   <img class="mySlides" src="/static/image/06.jpg" style="width:90%; margin : auto; display : none;">
   <img class="mySlides" src="/static/image/07.jpg" style="width:90%; margin : auto; display : none;">
   <img class="mySlides" src="/static/image/08.jpg" style="width:90%; margin : auto; display : none;">
@@ -240,28 +229,31 @@
     <div class="w3-row-padding w3-section" style="display : flex; flex-direction: row;">
     <div class="img1 w3-col s4" onclick="currentDiv(1)" style="cursor:pointer; display : flex; justify-content: center;">
       <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
-      src="/static/image/05.jpg">
+      src="/static/image/04.jpg">
     </div>
     <div class="img1 w3-col s4" onclick="currentDiv(2)" style="cursor:pointer; opacity : 70%; display : flex; justify-content: center;">
       <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
-      src="/static/image/06.jpg" >
+      src="/static/image/05.jpg" >
     </div>
     <div class="img1 w3-col s4" onclick="currentDiv(3)" style="cursor:pointer; opacity : 70%; display : flex; justify-content: center;">
       <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
-      src="/static/image/07.jpg" >
+      src="/static/image/06.jpg" >
     </div>
     <div class="img1 w3-col s4" onclick="currentDiv(4)" style="cursor:pointer; opacity : 70%; display : flex; justify-content: center;">
       <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
-      src="/static/image/08.jpg" >
+      src="/static/image/07.jpg" >
     </div>
     <div class="img1 w3-col s4" onclick="currentDiv(5)" style="cursor:pointer; opacity : 70%; display : flex; justify-content: center;">
       <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
+      src="/static/image/08.jpg" >
+    </div>
+    <div class="img1 w3-col s4" onclick="currentDiv(6)" style="cursor:pointer; opacity : 70%; display : flex; justify-content: center;">
+      <img class="demo w3-border w3-hover-shadow" style="width : 33%;"
       src="/static/image/09.jpg" >
     </div>
-
 </div>
 
-</div>
+
 
 
 <!--&lt;!&ndash;<hr class='hr-dashed'/>&ndash;&gt;-->
@@ -306,6 +298,7 @@
 <!--<script>-->
 <!--$('#touchSlider').touchSlider();-->
 <!--</script>-->
+    </div>
 </body>
 
 </html>

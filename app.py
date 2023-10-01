@@ -14,12 +14,11 @@ import chulseck
 import smtplib
 from email.message import EmailMessage
 
-
 now = datetime.now()
 app = Flask(__name__)
 # account app import
 app.register_blueprint(account.blue_account)
-app.secret_key = "123"
+
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
@@ -675,13 +674,18 @@ def getGroupGraph():
 
     group2 = ["" for i in range(len(dbGroup))]
     group3 = []
+
     for _ in dbGroup:
         dbG.append(_.get('조 이름'))
     print(dbGroup)
     print(dbG)
 
-    for i in people:
-        group2[dbG.index(i['조'][0])] += i['이름']+" "
+    try:
+        for i in people:
+            group2[dbG.index(i['조'][0])] += i['이름']+" "
+    except ValueError:
+        print('getGroupGraph2_월전체 에러')
+        return jsonify({"error": 'error'})
     print("group2", group2)
 
     for _ in group2:
@@ -745,8 +749,12 @@ def getGroupGraph2():
     print(dbGroup)
     print(dbG)
 
-    for i in people:
-        group2[dbG.index(i['조'][0])] += i['이름']+" "
+    try:
+        for i in people:
+            group2[dbG.index(i['조'][0])] += i['이름']+" "
+    except ValueError:
+        print('getGroupGraph2_월평균 에러')
+        return jsonify({"error": 'error'})
     print("group2", group2)
 
     for _ in group2:
@@ -1117,6 +1125,8 @@ def autoSave():
         return jsonify({"False": "Auth"})
 
     reviews = list(db.chulseck.find({}, {'_id': False}))
+    mailList = list(db.mail.find({}, {'_id': False}))
+    # mail = mailName.split('/')
     print(reviews)
     result = ''
     for i in reviews:
@@ -1140,12 +1150,13 @@ def autoSave():
     smtp.login(EMAIL_ADDR, EMAIL_PASSWORD)
     # 3. MIME 형태의 이메일 메세지 작성
 
-    for i in eList:
+    for i in mailList:
+        print(i)
         message = EmailMessage()
-        message.set_content(result + "\n\n\n" + 'http://zion' + now.date().strftime("%Y") + ".site\n")  # 내용
+        message.set_content(result + '\n\n\nhttp://zion' + now.date().strftime("%Y") + ".site\n")  # 내용
         message["Subject"] = str("[진주교회 시온청년부] " + now.date().strftime("%Y/%m/%d") + " 출석백업")  # 제목
         message["From"] = EMAIL_ADDR  # 보내는 사람의 이메일 계정
-        message["To"] = i  # 받는 사람
+        message["To"] = i['메일주소']  # 받는 사람
         smtp.send_message(message)  # 4. 서버로 메일 보내기
 
     # 5. 메일을 보내면 서버와의 연결 끊기
@@ -1250,6 +1261,33 @@ def write():
             # return render_template('board_in.html')
     return render_template('board_in.html')
 
+
+@app.route('/mailBackup', methods = ['POST'])
+def mailBackup():
+    print('/mailBackup')
+    userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
+    if not session.get("username"):
+        return jsonify({"False": "False"})
+    elif userAuthCheck[0]['auth'] != 1:
+        return jsonify({"False": "Auth"})
+
+    mailName = request.form['mail'] #메일주소/이름
+    mail = mailName.split('/')
+    mailList = list(db.mail.find({'메일주소' : mail[0]}, {'_id': False}))
+    print("중복 : ", mailList)
+
+    try:
+        if not mailList:
+            doc = {
+                '메일주소': mail[0],
+                '이름': mail[1]
+            }
+            db.mail.insert_one(doc)
+            return jsonify({'success': '메일저장완료! 명단 저장후 입력하신 메일로 보내드립니다!'})
+        else:
+            return jsonify({'msg': '이미 추가된 메일입니다!'})
+    except:
+        return jsonify({'msg': '취소되었거나 잘못된 형식의 메일입니다!'})
 
 @app.route('/board')
 def board():
