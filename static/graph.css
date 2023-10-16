@@ -1,0 +1,243 @@
+    .tdz{
+         z-index: -3;
+    }
+    table {
+        font-size: 100%;
+    }
+    .zt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(185, 185, 185);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .zt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .zt-skill-bar div {
+        background-color:  #0f8a42c2;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .zt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : 11px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .zt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .xt-skill-bar {
+        color: rgb(241, 241, 241);
+        font-size: 15px;
+        line-height: 25px;
+        height: 25px;
+        margin-bottom: 5px;
+
+        background-color: rgba(185, 185, 185);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .xt-skill-bar * {
+        -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+               transition: all 0.5s ease;
+    }
+
+    .xt-skill-bar div {
+        background-color:  #529cce;
+        position: relative;
+        padding-left: 10px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .xt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        margin-left : -30px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .xt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+    .myButtonCGroup{
+        box-shadow:inset 0px 1px 0px 0px #97c4fe;
+        background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+        background-color:#3d94f6;
+        border-radius:6px;
+        border:1px solid #337fed;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:10px;
+        font-weight:bold;
+        padding:2px 8px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #1570cd;
+    }
+    .myButtonCGroup:hover {
+        background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+        background-color:#1e62d0;
+    }
+    .myButtonCGroup:active {
+        position:relative;
+        top:1px;
+    }
+        body {
+            color: #666;
+            font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        #ui-datepicker-div{
+            background : black;
+            opacity : 80%;
+        }
+        .ui-datepicker-next.ui-corner-all, .ui-datepicker-prev.ui-corner-all{
+            /* display : flex; */
+        }
+        .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all{
+            margin-top : 17px;
+        }
+        .ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: stretch;
+            align-items: center;
+        }
+        .ui-datepicker-title{
+            text-align-last: center;
+            margin : 10px;
+        }
+        .ui-icon.ui-icon-circle-triangle-w{
+            font-size : 32px;
+        }
+        .ui-icon.ui-icon-circle-triangle-e{
+            font-size : 32px;
+
+        }
+        th{
+            text-align: -webkit-center;
+            padding: 16px 16px;
+        }
+        td{
+            background: black;
+        }
+        .thz,
+        .tdz {
+            padding: 4px 10px;
+            text-align: -webkit-center;
+        }
+        .thz {
+            background: #42444e;
+            color: #fff;
+            text-align: left;
+        }
+
+        tr:nth-child(even) .tdz {
+            background: #eaeaed;
+        }
+        tr:nth-child(odd) .tdz {
+            background: white;
+        }
+
+    #csvtable th{
+        position: sticky;
+        top: 0px;
+    }
+    table#tDate th:first-child,
+    table#tDate td:first-child { position: sticky; left: 0; }
+    table#tDate th:nth-child(2),
+    table#tDate td:nth-child(2) { position: sticky; left: 183px; }
+
+
+        .flx{
+            display : flex;
+            justify-content: space-between;
+        }
+        svg{
+            width:100%;
+        }

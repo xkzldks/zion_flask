@@ -7,6 +7,7 @@ import account
 from random import *
 from flask import Flask, url_for, render_template, request, redirect, session, jsonify, flash, send_file
 from datetime import datetime
+import model2
 from model2 import db
 from bson.objectid import ObjectId
 import music
@@ -18,10 +19,10 @@ now = datetime.now()
 app = Flask(__name__)
 # account app import
 app.register_blueprint(account.blue_account)
-app.secret_key = "123"
+app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
-app.secret_key = "123"
+
 @app.route('/kakao')
 def kakao():
     return render_template('kaka.html')
@@ -146,6 +147,36 @@ def missionM():
         else:
             db.mission.update_one({'이름': b[0]}, {"$set": {'헌금': ''}})
     return jsonify({"msg": '변경성공'})
+
+
+@app.route('/dateLoad', methods=['GET'])
+def dateLoad():
+    print('/dateLoad')
+    dayLoad = list(db.graphDate.find({}, {'_id': False}))
+    print(dayLoad)
+    return jsonify({'startDay': dayLoad[0]['startDay'], 'endDay': dayLoad[0]['endDay'], 'weekCompare': dayLoad[0]['weekCompare']})
+
+
+@app.route('/dateSave', methods=["POST"])
+def dateSave():
+    print("/dateSave")
+    startDay, endDay = request.form['from'], request.form['to']
+    print(startDay, endDay)
+    f = startDay.replace('-', '')
+    e = endDay.replace('-', '')
+    print(int(e[0:4]), int(f[0:4]))
+    if int(e[0:4]) == int(f[0:4]):
+        print(datetime(int(f[0:4]), int(f[4:6]), int(f[6:8])).isocalendar()[1], datetime(int(e[0:4]), int(e[4:6]), int(e[6:8])).isocalendar()[1])
+        weekCompare = abs(datetime(int(e[0:4]), int(e[4:6]), int(e[6:8])).isocalendar()[1] - datetime(int(f[0:4]), int(f[4:6]), int(f[6:8])).isocalendar()[1])
+        db.graphDate.update_one({'d': 'd'}, {"$set": {'startDay': startDay, 'endDay': endDay, 'weekCompare': weekCompare}})
+        return jsonify({"msg": "날짜범위 " + startDay + ' ~ ' + endDay})
+    else:
+        w1 = datetime(int(e[0:4]), int(e[4:6]), int(e[6:8])).isocalendar()[1]
+        wc = datetime(int(f[0:4]), 12, 31).isocalendar()[1]
+        w2 = datetime(int(f[0:4]), int(f[4:6]), int(f[6:8])).isocalendar()[1]
+        weekCompare = wc - w2 + w1 + 1
+        db.graphDate.update_one({'d': 'd'}, {"$set": {'startDay': startDay, 'endDay': endDay, 'weekCompare': weekCompare}})
+        return jsonify({"msg": "날짜범위 " + startDay + ' ~ ' + endDay})
 
 
 @app.route('/dbReset', methods=["POST"])
@@ -890,12 +921,26 @@ def getAgeGraph():
 @app.route('/getAttendanceGraph', methods=['GET'])
 def getAttendanceGraph():
     print('/getAttendanceGraph')
+    dayBound = list(db.graphDate.find({}, {'_id': False}))
     reviews = list(db.chulseck.find({}, {'_id': False}))
     people = list(db.peopleList.find({}, {'_id': False}))
-    re =[]
     str = ""
     chul = {}
     chu = []
+    f = dayBound[0]['startDay'].replace('-', '')
+    e = dayBound[0]['endDay'].replace('-', '')
+    print(f, e)
+    # print(f, e)
+    # print(int(e[0:4]), int(e[4:6]), int(e[6:8]))
+    # print(datetime(int(f[0:4]), int(f[4:6]), int(f[6:8])).isocalendar()[1]) #startDay 주차
+    # print(datetime(int(e[0:4]), int(e[4:6]), int(e[6:8])).isocalendar()[1]) #endDay 주차
+
+    # for i in review:
+    #     # print(int(f"{i['year']}{i['title']}") - int(f) >= 0 and int(e) - int(f"{i['year']}{i['title']}") >= 0)
+    #     # print(int("{}{}".format(i['year'], i['title'])), int(f))
+    #     if int(f"{i['year']}{i['title']}") - int(f) >= 0 and int(e) - int(f"{i['year']}{i['title']}") >= 0:  #from <= compareDay
+    #         # print(f, ("{}{}".format(i['year'], i['title'])), e)
+    #         reviews.append(i)
 
     for i in reviews:
         str += i['review']
@@ -914,16 +959,7 @@ def getAttendanceGraph():
     chul2 = dict(sorted(chul.items(), key=lambda x: x[1], reverse=True)) #람다정렬
     print(chul2)
     print(chu)
-    chu2 = chu
-    # for i in people:
-    #     print(chu[i])
-    #     print(chu[i][0], chu[i][1])
-    #     if chu[i][1] == 0:
-    #         print("true")
-    #         print(chu[i])
-    #         chu2.remove(chu[i])
-    #         print(chu2[i][0], chu2[i][1])
-    # print(chu2)
+    # return jsonify({"chul": chu, "weekCompare": dayBound[0]['weekCompare']})
     return jsonify({"chul": chu})
 
 
@@ -932,6 +968,7 @@ def getTChul():
     print('/getTChul')
     reviews = list(db.chulseck.find({}, {'_id': False}))
     people = list(db.peopleList.find({}, {'_id': False}))
+    weekC = list(db.graphDate.find({}, {'_id': False}))
     chulseck.bubble_sort(people)
     chul = []
 
@@ -1403,8 +1440,6 @@ def format_datetime(value):
     offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
     value = datetime.fromtimestamp(int(value / 1000)) + offset
     return value.strftime('%Y-%m-%d %H:%M:%S')
-
-
 
 
 @app.route('/filedown/<filename>')
