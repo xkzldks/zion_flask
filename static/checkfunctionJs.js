@@ -138,6 +138,7 @@
                 }
                 let review = document.getElementById('result').innerText
                 if(title != "초기화"){
+                        document.body.style.opacity = "60%";
                         $.ajax({
                             type: "POST",
                             url: "/review",
