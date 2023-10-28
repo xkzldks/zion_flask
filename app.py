@@ -1490,7 +1490,7 @@ def bad(board_id):
         return jsonify({"success": False, "msg": "잘못된 요청입니다."})
 
 
-@app.route('/qr', methods = ["POST"])
+@app.route('/qr', methods=["POST"])
 def qrCode():
     name = request.form['name']
     gender = request.form['gender']
@@ -1517,15 +1517,16 @@ def qrCode():
             if int(dD) < 10:
                 dD = "0" + str(datetime.today().day)
             try:
+                r = randint(1,100)
                 qr = {
                     "year": now.date().strftime("%Y"),
                     "title": dM+dD,
                     "이름": name,
                     "조": person[0]['조'][0],
-                    "r": randint(1, 100)
+                    "r": r
                 }
                 qr2 = "year : " + str(now.date().strftime("%Y")) + "\ntitle : " + dM+dD + "\n이름 : " + name + "\n조 : " + person[0]['조'][0] + "\nr : " + str(randint(1, 100))
-                db.peopleList.update_one({'이름': name}, {"$set": {'r': randint}})
+                db.peopleList.update_one({'이름': name}, {"$set": {'r': r}})
                 print("qr", qr, "qr2", qr2)
             except IndexError:
                 return jsonify({"msg": "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."})
