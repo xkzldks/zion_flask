@@ -188,8 +188,28 @@ def dbReset():
     elif userAuthCheck[0]['auth'] != 1:
         return jsonify({"False": "Auth"})
     else:
-        db.chulseck.drop()
-        db.create_collection("chulseck")
+        autoSave()
+        reviews = list(db.chulseck.find({}, {'_id': False})) # 191 ~ 194 날짜 데이터 뽑아내기
+        dateList = []
+        for i in reviews:
+            dateList.append(i['title'])
+
+        dbRemain = request.form['dbRemain'].strip().split(' ') # 유저가 설정한 날짜데이터 받아오기
+        dbBackup = []
+
+        if not dbRemain: #dbRemain이 빈칸일 경우
+            db.chulseck.drop()
+            db.create_collection("chulseck")
+        else:
+            for i in dbRemain:
+                if str(i) in dateList:
+                    dbBackup.insert(0, list(db.chulseck.find({"title": str(i)})))
+                    print(list(db.chulseck.find({"title": str(i)})))
+            print(dbBackup)
+            db.chulseck.drop()
+            db.create_collection("chulseck")
+            for i in dbBackup:
+                db.chulseck.insert_one(i[0])
     return jsonify({"msg":"출석명단 삭제완료!!"})
 
 
