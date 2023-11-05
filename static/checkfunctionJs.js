@@ -213,6 +213,7 @@
                     var dbRemain = prompt("※최근 4주간 저장된 DB데이터 중 남기고 싶은 데이터의 날짜를 입력해주세요.\n여러개일 경우 띄어쓰기로 구별해주세요! 없다면 빈칸\n" + reviews[0]['title']+"\n" + reviews[1]['title']+"\n" + reviews[2]['title']+"\n" + reviews[3]['title']);
                     if (dbRemain != null){
                         if(confirm(dbRemain + "\n남기려하는 날짜가 맞습니까?")==true){
+                            document.body.style.opacity = "60%";
                             $.ajax({
                                     type: "POST",
                                     url: "/dbReset",
@@ -247,6 +248,7 @@
             }
             else{
                 if(confirm(title+" 명단을 삭제하시겠습니까?") == true){
+                        document.body.style.opacity = "60%";
                        $.ajax({
                                 type: "POST",
                                 url: "/dbDel",
@@ -307,6 +309,7 @@
                     if(confirm(title + " 해당 인원의 출석기록을 추가하시겠습니까?") == true){
                         let review = document.getElementById('result').innerText
                                $.ajax({
+                                        document.body.style.opacity = "60%";
                                         type: "POST",
                                         url: "/personAdd",
                                         data: {title_give:title, new_give:review},
@@ -363,6 +366,7 @@
             else{
                 if(confirm($('#title').val() + " 해당 인원의 출석기록을 삭제하시겠습니까?") == true){
                     let review = document.getElementById('result').innerText
+                    document.body.style.opacity = "60%";
                            $.ajax({
                                     type: "POST",
                                     url: "/personDel",
