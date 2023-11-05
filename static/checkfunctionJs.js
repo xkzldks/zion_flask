@@ -211,27 +211,38 @@
             else if(title == "초기화"){
                 if(confirm("!!!경고!!!\n※모든 출석기록을 삭제하시겠습니까?\n※삭제하기전 이전 데이터는 백업부탁드립니다.\n※그래프탭에서 오늘날짜기준 csv다운")==true){
                     var dbRemain = prompt("※최근 4주간 저장된 DB데이터 중 남기고 싶은 데이터의 날짜를 입력해주세요.\n여러개일 경우 띄어쓰기로 구별해주세요! 없다면 빈칸\n" + reviews[0]['title']+"\n" + reviews[1]['title']+"\n" + reviews[2]['title']+"\n" + reviews[3]['title']);
-                    $.ajax({
-                            type: "POST",
-                            url: "/dbReset",
-                            data: {dbRemain : dbRemain},
-                            success: function (response) {
-                                    if(response['False'] == 'False'){
-                                        alert("로그인이 필요한 서비스입니다.");
-                                        document.getElementById('result').innerText = ""
-                                        result = ""
-                                    }
-                                    else if(response['False'] == 'Auth'){
-                                        alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
-                                        document.getElementById('result').innerText = ""
-                                        result = ""
-                                    }
-                                    else{
-                                        alert(response["msg"]);
-                                        window.location.reload();
-                                    }
-                                }
-                        })
+                    if (dbRemain != null){
+                        if(confirm(dbRemain + "\n남기려하는 날짜가 맞습니까?")==true){
+                            $.ajax({
+                                    type: "POST",
+                                    url: "/dbReset",
+                                    data: {dbRemain : dbRemain},
+                                    success: function (response) {
+                                            if(response['False'] == 'False'){
+                                                alert("로그인이 필요한 서비스입니다.");
+                                                document.getElementById('result').innerText = ""
+                                                result = ""
+                                            }
+                                            else if(response['False'] == 'Auth'){
+                                                alert("로그인된 계정의 권한이 없습니다.\nadmin권한의 계정을 사용해주세요.");
+                                                document.getElementById('result').innerText = ""
+                                                result = ""
+                                            }
+                                            else{
+                                                alert(response["msg"]);
+                                                window.location.reload();
+                                            }
+                                        }
+                                })
+                        }
+                        else{
+                            alert("초기화가 취소되었습니다.")
+                        }
+
+                    }
+                    else{
+                        alert("초기화가 취소되었습니다.")
+                    }
                 }
             }
             else{
