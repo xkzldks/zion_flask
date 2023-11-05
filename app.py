@@ -195,20 +195,19 @@ def dbReset():
             dateList.append(i['title'])
 
         dbRemain = request.form['dbRemain'].strip().split(' ') # 유저가 설정한 날짜데이터 받아오기
-        dbBackup = []
-
+                    
         if not dbRemain: #dbRemain이 빈칸일 경우
             db.chulseck.drop()
             db.create_collection("chulseck")
         else:
-            for i in dbRemain:
-                if str(i) in dateList:
-                    dbBackup.insert(0, list(db.chulseck.find({"title": str(i)})))
-                    print(list(db.chulseck.find({"title": str(i)})))
-            print(dbBackup)
+            for i in range(len(dbRemain) - 1, 0, -1):
+                for j in range(i):
+                    if dbRemain[j] < dbRemain[j + 1]:
+                        dbRemain[j], dbRemain[j + 1] = dbRemain[j + 1], dbRemain[j]
+
             db.chulseck.drop()
             db.create_collection("chulseck")
-            for i in dbBackup:
+            for i in dbRemain:
                 db.chulseck.insert_one(i[0])
     return jsonify({"msg":"출석명단 삭제완료!!"})
 
