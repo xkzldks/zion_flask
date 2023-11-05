@@ -947,9 +947,9 @@ def getAttendanceGraph():
     str = ""
     chul = {}
     chu = []
-    f = dayBound[0]['startDay'].replace('-', '')
-    e = dayBound[0]['endDay'].replace('-', '')
-    print(f, e)
+    # f = dayBound[0]['startDay'].replace('-', '')
+    # e = dayBound[0]['endDay'].replace('-', '')
+    # print(f, e)
     # print(f, e)
     # print(int(e[0:4]), int(e[4:6]), int(e[6:8]))
     # print(datetime(int(f[0:4]), int(f[4:6]), int(f[6:8])).isocalendar()[1]) #startDay 주차
