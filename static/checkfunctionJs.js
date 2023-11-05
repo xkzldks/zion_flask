@@ -308,8 +308,8 @@
                 else{
                     if(confirm(title + " 해당 인원의 출석기록을 추가하시겠습니까?") == true){
                         let review = document.getElementById('result').innerText
+                        document.body.style.opacity = "60%";
                                $.ajax({
-                                        document.body.style.opacity = "60%";
                                         type: "POST",
                                         url: "/personAdd",
                                         data: {title_give:title, new_give:review},
