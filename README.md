@@ -2,7 +2,7 @@
 <br/>
 
 <p align="center">
-<img src="https://files.cloudtype.io/logo/cloudtype-logo-horizontal-black.png" width="50%" alt="Cloudtype"/>
+<img src="https://port-0-zion-flask-k19y2kljzuim4t.sel4.cloudtype.app/static/image/04.jpg" width="50%" alt="Cloudtype"/>
 </p>
 
 <br/>
