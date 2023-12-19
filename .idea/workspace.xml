@@ -1,46 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3c880873-a87d-4367-b640-c136984b7f47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/zion_0609.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/zion_flask.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/notitest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/notitest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request.txt" beforeDir="false" afterPath="$PROJECT_DIR$/request.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/check.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/check.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/checkfunctionJs.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/checkfunctionJs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/exporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/exporting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/graph.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/graph.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/graphFJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/graphFJS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/highcharts-more.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/highcharts-more.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/highstock.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/highstock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/indexFJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/indexFJS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/indexq.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/indexq.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/jquery-1.8.3.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery-1.8.3.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/jquery.touchSlider.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery.touchSlider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js-snackbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/js-snackbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js-snackbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js-snackbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/jsQR.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jsQR.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/qrcode.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/qrcode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base3.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/datePicker.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/datePicker.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login_error.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_error.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,15 +26,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "E:/backuppppppp/web/zion/zion_flask"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/backuppppppp/web/zion/zion_flask&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="zion_flask" />
