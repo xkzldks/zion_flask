@@ -1,3 +1,10 @@
+let today = new Date();
+
+let year = today.getFullYear(); // 년도
+let month = today.getMonth() + 1;  // 월
+let date = today.getDate();  // 날짜
+let day = year + '/' + month + '/' + date
+
 askNotificationPermission();
 
 function makeNoti() {
@@ -7,13 +14,13 @@ function makeNoti() {
   } else {
 
     let notification = new Notification("test", { // "test" => 제목
-      body: "웹 알림 입니다.", // 메세지
+      body: day +'일자 출석이 기록되었습니다. 확인해주세요', // 메세지, ####-##-##일자 출석이 기록되었습니다. ####-##-##일자 출석인원이 추가되었습니다.
       icon: `/lib/img/novalogo_copy.png`, // 아이콘
     });
 
     //알림 클릭 시 이벤트
     notification.addEventListener("click", () => {
-      window.open('https://www.zion2024.site/');
+      window.open('zion2024.site');
     });
 
   }
