@@ -21,3 +21,6 @@ Python_Flask기반 출석체크 사이트입니다.
 
 ## 📄 Runningweb Site
 [zion](https://port-0-zion-flask-k19y2kljzuim4t.sel4.cloudtype.app/)
+
+## 📄 Server
+[cloudType](https://app.cloudtype.io/@naochugu/ziona)
