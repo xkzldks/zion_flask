@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3c880873-a87d-4367-b640-c136984b7f47" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/zion_0609.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/zion_flask.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/notitest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/notitest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/request.txt" beforeDir="false" afterPath="$PROJECT_DIR$/request.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/check.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/check.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/checkfunctionJs.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/checkfunctionJs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/exporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/exporting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/graph.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/graph.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/graphFJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/graphFJS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/highcharts-more.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/highcharts-more.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/highstock.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/highstock.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/indexFJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/indexFJS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/indexq.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/indexq.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/jquery-1.8.3.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery-1.8.3.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/jquery.touchSlider.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jquery.touchSlider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js-snackbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/js-snackbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js-snackbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js-snackbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/jsQR.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/jsQR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/qrcode.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/qrcode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base3.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/datePicker.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/datePicker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login_error.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ZkMiUjNPsgO7fdBv4lSP4hFdEq" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "E:/backuppppppp/web/zion/zion_flask"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="zion_flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.app" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c880873-a87d-4367-b640-c136984b7f47" name="Changes" comment="" />
+      <created>1702961750949</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702961750949</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
