@@ -44,6 +44,11 @@ def home():
     print('##home##')
     return render_template('index.html')
 
+@app.route('/notitest')
+def notitest():
+    print('##notitest##')
+    return render_template('notitest.html')
+
 
 @app.route('/development')
 def development():
