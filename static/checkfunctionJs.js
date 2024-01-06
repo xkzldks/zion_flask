@@ -32,7 +32,7 @@
                 let group = Object.values(getGroupList);;
                 console.log(group);
                 for(let i = 0; i < group.length; i++){
-                    let c = 'input[name='+ getGroupList[i]['조 이름']+']:checked';
+                    let c = "input[name='"+ getGroupList[i]["조 이름"]+"']:checked";
                     const s = document.querySelectorAll(c);
 
                     s.forEach((el) => {
