@@ -23,41 +23,51 @@ app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
+user_ip = request.remote_addr
+
+
 @app.route('/kakao')
 def kakao():
+    print('ip - ',user_ip)
     return render_template('kaka.html')
 
 
 @app.route('/indexC')
 def indexC():
+    print('ip - ',user_ip)
     return render_template('indexC.html')
 
 
 @app.route('/kakao2')
 def kakao2():
+    print('ip - ',user_ip)
     return render_template('kaka2.html')
 
 
 # H T M L을 주는 부분
 @app.route('/')
 def home():
+    print('ip - ',user_ip)
     print('##home##')
     return render_template('index.html')
 
 @app.route('/notitest')
 def notitest():
+    print('ip - ',user_ip)
     print('##notitest##')
     return render_template('notitest.html')
 
 
 @app.route('/development')
 def development():
+    print('ip - ',user_ip)
     print('##development##')
     return render_template('development.html')
 
 
 @app.route('/missions')
 def missions():
+    print('ip - ',user_ip)
     print('##missions##')
     return render_template('missions.html')
 
@@ -70,6 +80,7 @@ def checkq():
 
 @app.route('/check')
 def check():
+    print('ip - ',user_ip)
     print("##check사이트##")
     print('/check')
     return render_template('check.html')
@@ -79,6 +90,7 @@ def check():
 
 @app.route('/mission')
 def mission():
+    print('ip - ',user_ip)
     print("##mission##")
     peopleList = list(db.peopleList.find({}, {'_id': False}))
     global missionList
@@ -118,6 +130,7 @@ def mission():
 
 @app.route('/missionM', methods=["POST"])
 def missionM():
+    print('ip - ',user_ip)
     print("##missionM")
     print(request.form['mis'])
     a = request.form['mis'].strip().split(' ')
@@ -156,6 +169,7 @@ def missionM():
 
 @app.route('/dateLoad', methods=['GET'])
 def dateLoad():
+    print('ip - ',user_ip)
     print('/dateLoad')
     dayLoad = list(db.graphDate.find({}, {'_id': False}))
     print(dayLoad)
@@ -164,6 +178,7 @@ def dateLoad():
 
 @app.route('/dateSave', methods=["POST"])
 def dateSave():
+    print('ip - ',user_ip)
     print("/dateSave")
     startDay, endDay = request.form['from'], request.form['to']
     print(startDay, endDay)
@@ -186,6 +201,7 @@ def dateSave():
 
 @app.route('/dbReset', methods=["POST"])
 def dbReset():
+    print('ip - ',user_ip)
     print('/dbReset')
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
