@@ -911,7 +911,7 @@ def getAgeGraph():
                     m += _['review']
                     month2[month.index(i)] += 1
         chu.append(m)
-        print(m)
+        #print(m)
 
     for _ in chu:
         a += 1
@@ -1064,8 +1064,8 @@ def readPeopleDB():
             n.append(_)
     chulseck.bubble_sort(n)
     print("n ",len(n))
-    print("소속 x ", n)
-    print("소속 o ", l)
+    #print("소속 x ", n)
+    #print("소속 o ", l)
     return jsonify({'dbP': l, 'dbG': dbGroup})
 
 
