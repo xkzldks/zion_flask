@@ -23,7 +23,9 @@ app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
-user_ip = request.remote_addr
+@app.route('/ip', methods=['GET'])
+def ip():
+    return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 @app.route('/kakao')
 def kakao():
