@@ -23,7 +23,7 @@ app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
-user_ip = flask.request.remote_addr
+user_ip = Flask.request.remote_addr
 
 @app.route('/kakao')
 def kakao():
