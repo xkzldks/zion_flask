@@ -16,14 +16,14 @@ import smtplib
 from email.message import EmailMessage
 
 now = datetime.now()
-app = flask.Flask(__name__)
+app = Flask(__name__)
 # account app import
 app.register_blueprint(account.blue_account)
 app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
-user_ip = Flask.request.remote_addr
+user_ip = request.remote_addr
 
 @app.route('/kakao')
 def kakao():
