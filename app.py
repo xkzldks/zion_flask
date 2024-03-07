@@ -49,7 +49,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/notitest')
-def notitest()
+def notitest():
     print('##notitest##')
     return render_template('notitest.html')
 
