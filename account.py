@@ -6,7 +6,6 @@ app = Flask(__name__)
 app.secret_key = '123'
 
 blue_account = Blueprint("account", __name__, url_prefix="/account")
-client_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 @blue_account.route("/register", methods=('GET', 'POST'))
 def register():
@@ -54,7 +53,7 @@ def login():
         check_user = db.user.find_one({"username": username})
         if check_user:
             if check_password_hash(check_user.get("password"), password):
-                flash(username+"님 환영합니다.\n접속 ip :",client_ip)
+                flash(username+"님 환영합니다.\n접속 ip :")
                 session['username'] = username
                 return redirect("/")
             else:
