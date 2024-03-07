@@ -29,46 +29,39 @@ def ip():
 
 @app.route('/kakao')
 def kakao():
-    print('ip - ',user_ip)
     return render_template('kaka.html')
 
 
 @app.route('/indexC')
 def indexC():
-    print('ip - ',user_ip)
     return render_template('indexC.html')
 
 
 @app.route('/kakao2')
 def kakao2():
-    print('ip - ',user_ip)
     return render_template('kaka2.html')
 
 
 # H T M L을 주는 부분
 @app.route('/')
 def home():
-    print('ip - ',user_ip)
     print('##home##')
     return render_template('index.html')
 
 @app.route('/notitest')
-def notitest():
-    print('ip - ',user_ip)
+def notitest()
     print('##notitest##')
     return render_template('notitest.html')
 
 
 @app.route('/development')
 def development():
-    print('ip - ',user_ip)
     print('##development##')
     return render_template('development.html')
 
 
 @app.route('/missions')
 def missions():
-    print('ip - ',user_ip)
     print('##missions##')
     return render_template('missions.html')
 
