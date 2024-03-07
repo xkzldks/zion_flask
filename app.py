@@ -16,7 +16,7 @@ import smtplib
 from email.message import EmailMessage
 
 now = datetime.now()
-app = Flask(__name__)
+app = flask.Flask(__name__)
 # account app import
 app.register_blueprint(account.blue_account)
 app.secret_key = model2.appSecret
