@@ -83,7 +83,6 @@ def check():
 
 @app.route('/mission')
 def mission():
-    print('ip - ',user_ip)
     print("##mission##")
     peopleList = list(db.peopleList.find({}, {'_id': False}))
     global missionList
@@ -123,7 +122,6 @@ def mission():
 
 @app.route('/missionM', methods=["POST"])
 def missionM():
-    print('ip - ',user_ip)
     print("##missionM")
     print(request.form['mis'])
     a = request.form['mis'].strip().split(' ')
@@ -162,7 +160,6 @@ def missionM():
 
 @app.route('/dateLoad', methods=['GET'])
 def dateLoad():
-    print('ip - ',user_ip)
     print('/dateLoad')
     dayLoad = list(db.graphDate.find({}, {'_id': False}))
     print(dayLoad)
@@ -171,7 +168,6 @@ def dateLoad():
 
 @app.route('/dateSave', methods=["POST"])
 def dateSave():
-    print('ip - ',user_ip)
     print("/dateSave")
     startDay, endDay = request.form['from'], request.form['to']
     print(startDay, endDay)
@@ -194,7 +190,6 @@ def dateSave():
 
 @app.route('/dbReset', methods=["POST"])
 def dbReset():
-    print('ip - ',user_ip)
     print('/dbReset')
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
