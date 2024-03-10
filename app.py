@@ -74,7 +74,6 @@ def checkq():
 
 @app.route('/check')
 def check():
-    print('ip - ',user_ip)
     print("##check사이트##")
     print('/check')
     return render_template('check.html')
