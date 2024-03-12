@@ -61,7 +61,7 @@ def login():
 													s.connect(("34.64.56.232",5000))
 													ip = s.getsockname()[0]
 													mac = ':'.join(re.findall('..','%012x'%getnode()))
-                flash(ip)
+                flash("환영합니다.")
                 session['username'] = username
 													s.close()
                 return redirect("/")
