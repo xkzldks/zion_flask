@@ -60,7 +60,8 @@ def login():
 													s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 													s.connect(("34.64.56.232",5000))
 													ip = s.getsockname()[0]
-                flash(username+"님 환영합니다.\n접속 ip :"+ip+"\nMAC : ",':'.join(re.findall('..','%012x'%getnode())))
+													mac = ':'.join(re.findall('..','%012x'%getnode()))
+                flash(ip)
                 session['username'] = username
 													s.close()
                 return redirect("/")
