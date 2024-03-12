@@ -57,7 +57,7 @@ def login():
         check_user = db.user.find_one({"username": username})
         if check_user:
             if check_password_hash(check_user.get("password"), password):
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		s.connect(("34.64.56.232",5000))
 		ip = s.getsockname()[0]
 		mac = ':'.join(re.findall('..','%012x'%getnode()))
