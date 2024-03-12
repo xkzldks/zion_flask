@@ -50,27 +50,28 @@ def register():
 
 @blue_account.route("/login", methods=('GET', 'POST'))
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        check_user = db.user.find_one({"username": username})
-        if check_user:
-            if check_password_hash(check_user.get("password"), password):
-		    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		    s.connect(("34.64.56.232",5000))
-		    ip = s.getsockname()[0]
-		    mac = ':'.join(re.findall('..','%012x'%getnode()))
-		    print(username+"님 환영합니다./nip : " + ip + "/nmac : " + mac)
-		    flash(username+"님 환영합니다./nip : " + ip+"/nmac : "+mac)
-		    session['username'] = username
-		    s.close()
-		    return redirect("/")
-	    else:
-		    flash("아이디 또는 비밀번호를 확인해주세요.")
+	if request.method == 'POST':
+		username = request.form['username']
+		password = request.form['password']
+	
+	check_user = db.user.find_one({"username": username})
+        
+	if check_user:
+		if check_password_hash(check_user.get("password"), password):
+			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			s.connect(("34.64.56.232",5000))
+			ip = s.getsockname()[0]
+			mac = ':'.join(re.findall('..','%012x'%getnode()))
+			print(username+"님 환영합니다./nip : " + ip + "/nmac : " + mac)
+			flash(username+"님 환영합니다./nip : " + ip+"/nmac : "+mac)
+			session['username'] = username
+			s.close()
+			return redirect("/")
+		else:
+			flash("아이디 또는 비밀번호를 확인해주세요.")
 	else:
 		flash("아이디 또는 비밀번호를 확인해주세요.")
-    return render_template("login.html")
+	return render_template("login.html")
 
 
 @blue_account.route("/logout")
