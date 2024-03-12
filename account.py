@@ -62,7 +62,7 @@ def login():
 				ip = s.getsockname()[0]
 				mac = ':'.join(re.findall('..','%012x'%getnode()))
 				print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
-				flash(username+"님 환영합니다.<br>접근 ip : " + ip + "<br>nMAC : " + mac)
+				flash(username+"님 환영합니다. 접근 ip : " + ip + " MAC : " + mac)
 				session['username'] = username
 				s.close()
 				return redirect("/")
