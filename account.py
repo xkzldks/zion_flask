@@ -2,6 +2,10 @@ from flask import Flask, Blueprint, flash, url_for
 from flask import render_template, request, redirect, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from model2 import db
+from uuid import getnode
+import socket
+import re
+
 app = Flask(__name__)
 app.secret_key = '123'
 
@@ -53,8 +57,12 @@ def login():
         check_user = db.user.find_one({"username": username})
         if check_user:
             if check_password_hash(check_user.get("password"), password):
-                flash(username+"님 환영합니다.\n접속 ip :")
+													s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+													s.connect(("34.64.56.232",5000))
+													ip = s.getsockname()[0]
+                flash(username+"님 환영합니다.\n접속 ip :"+ip+"\nMAC : ",':'.join(re.findall('..','%012x'%getnode())))
                 session['username'] = username
+													s.close()
                 return redirect("/")
             else:
                 flash("아이디 또는 비밀번호를 확인해주세요.")
