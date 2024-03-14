@@ -65,7 +65,7 @@ def login():
 				#print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
 				client_ip = request.remote_addr
 				client_mac = chulseck.mac_for_ip(client_ip)
-				flash(username+"님 환영합니다. 접근 ip : " + client_ip + " MAC : " + client_mac)
+				flash(username+"님 환영합니다. 접근 ip : " + client_ip)
 				session['username'] = username
 				s.close()
 				return redirect("/")
