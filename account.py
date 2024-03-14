@@ -67,7 +67,7 @@ def login():
 				client_mac = chulseck.mac_for_ip(client_ip)
 				flash(username+"님 환영합니다. 접근 ip : " + client_ip)
 				session['username'] = username
-				s.close()
+				#s.close()
 				return redirect("/")
 			else:
 				flash("아이디 또는 비밀번호를 확인해주세요.")
