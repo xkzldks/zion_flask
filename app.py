@@ -14,7 +14,7 @@ from bson.objectid import ObjectId
 import chulseck
 import smtplib
 from email.message import EmailMessage
-from python_arptable import get_arp_table
+#from python_arptable import get_arp_table
 
 
 now = datetime.now()
@@ -48,9 +48,9 @@ def kakao2():
 @app.route('/')
 def home():
     print('##home##')
-    client_ip = request.remote_addr
-    client_mac = chulseck.mac_for_ip(client_ip)
-    print('client_ip',client_ip,'client_mac', client_mac)
+    #client_ip = request.remote_addr
+    #client_mac = chulseck.mac_for_ip(client_ip)
+    #print('client_ip',client_ip,'client_mac', client_mac)
     return render_template('index.html')
 
 @app.route('/notitest')
