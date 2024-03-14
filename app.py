@@ -14,6 +14,8 @@ from bson.objectid import ObjectId
 import chulseck
 import smtplib
 from email.message import EmailMessage
+from python_arptable import get_arp_table
+
 
 now = datetime.now()
 app = Flask(__name__)
@@ -46,6 +48,9 @@ def kakao2():
 @app.route('/')
 def home():
     print('##home##')
+    Global client_ip
+    client_ip = request.remote_addr
+    client_mac = mac_for_ip(client_ip)
     return render_template('index.html')
 
 @app.route('/notitest')
