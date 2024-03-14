@@ -75,3 +75,12 @@ def bubble_sort_chul(arr):
             if arr[j][1] < arr[j + 1][1]:
                 arr[j][0], arr[j + 1][0] = arr[j + 1][0], arr[j][0]
                 arr[j][1], arr[j + 1][1] = arr[j + 1][1], arr[j][1]
+
+
+def mac_from_ip(ip):
+    arp_table = get_arp_table()
+    
+    for entry in arp_table:
+        if entry['IP address'] == ip:
+            return entry['HW address']
+    return None
