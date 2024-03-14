@@ -5,6 +5,7 @@ from model2 import db
 from uuid import getnode
 import socket
 import re
+import chulseck
 
 app = Flask(__name__)
 app.secret_key = '123'
@@ -57,12 +58,14 @@ def login():
 		
 		if check_user:
 			if check_password_hash(check_user.get("password"), password):
-				s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-				s.connect(("34.64.56.232",5000))
-				ip = s.getsockname()[0]
-				mac = ':'.join(re.findall('..','%012x'%getnode()))
-				print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
-				flash(username+"님 환영합니다. 접근 ip : " + ip + " MAC : " + mac)
+				#s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+				#s.connect(("34.64.56.232",5000))
+				#ip = s.getsockname()[0]
+				#mac = ':'.join(re.findall('..','%012x'%getnode()))
+				#print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
+				client_ip = request.remote_addr
+				client_mac = chulseck.mac_for_ip(client_ip)
+				flash(username+"님 환영합니다. 접근 ip : " + client_ip + " MAC : " + client_mac)
 				session['username'] = username
 				s.close()
 				return redirect("/")
