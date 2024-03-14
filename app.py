@@ -14,7 +14,7 @@ from bson.objectid import ObjectId
 import chulseck
 import smtplib
 from email.message import EmailMessage
-#from python_arptable import get_arp_table
+from python_arptable import get_arp_table
 
 
 now = datetime.now()
