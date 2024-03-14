@@ -66,6 +66,7 @@ def login():
 				#print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
 				inner_ip = request.remote_addr
 				#client_mac = chulseck.mac_for_ip(client_ip)
+				outter_ip = '0.0.0.0'
 				flash(username+"님 환영합니다. 내부 ip : " + inner_ip + "외부 ip" + outter_ip)
 				session['username'] = username
 				#s.close()
