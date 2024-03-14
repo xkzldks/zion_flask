@@ -63,9 +63,11 @@ def login():
 				#ip = s.getsockname()[0]
 				#mac = ':'.join(re.findall('..','%012x'%getnode()))
 				#print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
-				client_ip = request.remote_addr
-				client_mac = chulseck.mac_for_ip(client_ip)
-				flash(username+"님 환영합니다. 접근 ip : " + client_ip)
+				inner_ip = request.remote_addr
+				#client_mac = chulseck.mac_for_ip(client_ip)
+				req = request.get("http://ipconfig.kr")
+				outter_ip = re.search(r'IP Address : (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1.3})', req.text)[1]) 
+				flash(username+"님 환영합니다. 접근 ip : " + client_ip + "외부 ip" + outter_ip)
 				session['username'] = username
 				#s.close()
 				return redirect("/")
