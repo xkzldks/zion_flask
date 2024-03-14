@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, flash, url_for
 from flask import render_template, request, redirect, session, jsonify
+import requests
 from werkzeug.security import generate_password_hash, check_password_hash
 from model2 import db
 from uuid import getnode
