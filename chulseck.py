@@ -77,7 +77,7 @@ def bubble_sort_chul(arr):
                 arr[j][1], arr[j + 1][1] = arr[j + 1][1], arr[j][1]
 
 
-def mac_from_ip(ip):
+def mac_for_ip(ip):
     arp_table = get_arp_table()
     
     for entry in arp_table:
