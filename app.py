@@ -48,9 +48,10 @@ def kakao2():
 @app.route('/')
 def home():
     print('##home##')
+    global client_ip
     client_ip = request.remote_addr
     client_mac = chulseck.mac_for_ip(client_ip)
-    print('client_ip',client_ip,'client_mac', client_mac)
+    print('client_ip',client_ip)
     return render_template('index.html')
 
 @app.route('/notitest')
@@ -80,7 +81,7 @@ def checkq():
 @app.route('/check')
 def check():
     print("##check사이트##")
-    print('/check')
+    print('/check', client_ip)
     return render_template('check.html')
 
 
