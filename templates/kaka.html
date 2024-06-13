@@ -79,7 +79,7 @@
                             if (response['msg'] != "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."){
                                 var qr = response['msg'];
                                 var qr2 = response['qr2'];
-                                alert(name+"님 환영합니다")
+                                alert(name+"님 환영합니다");
 				alert("해당 qr코드를 단말기가 인식할 수 있도록 해주세요.");
 
                                 TimerStart();
@@ -89,7 +89,7 @@
                                 });
                                 }
                             else{
-                                alert("명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다.")
+                                alert(name,"님은 명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다.")
                                 window.location.reload();
                             }
                             }
