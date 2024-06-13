@@ -31,7 +31,7 @@
 
 </script>
 <script>
-    window.Kakao.init('72db65b6d86e4425a2df57b5168cf24a');
+    window.Kakao.init('787e9edc533e7322469604e928a14208');
     function requestUserInfo() {
         Kakao.API.request({
           url: '/v2/user/me',
@@ -47,7 +47,7 @@
       }
     function kakaoLogin() {
         window.Kakao.Auth.login({
-            scope: 'profile_nickname, gender, birthday', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+            scope: 'name, gender, birthday', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
             success: function(response) {
                 console.log(response) // 로그인 성공하면 받아오는 데이터
                 window.Kakao.API.request({ // 사용자 정보 가져오기
@@ -56,7 +56,7 @@
                         document.querySelector("#kakaoBtn").removeAttribute('href');
                         const kakao_account = res.kakao_account;
 
-                        var name = kakao_account['profile']['nickname']
+                        var name = kakao_account['profile']['name']
                         var gender = kakao_account['gender']
                         var birthday = kakao_account['birthday']
 
