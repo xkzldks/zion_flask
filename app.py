@@ -47,7 +47,7 @@ def kakao2():
 # H T M L을 주는 부분
 @app.route('/')
 def home():
-    print('##home##')
+    print('## home ##')
     global client_ip
     client_ip = request.remote_addr
     client_mac = chulseck.mac_for_ip(client_ip)
@@ -55,37 +55,41 @@ def home():
     if not username:
         print('client_ip',client_ip)
     else:
-        print("ID : ",username, 'client_ip',client_ip)
+        print("ID : ", username, ' Client_ip : ',client_ip)
     return render_template('index.html')
 
 @app.route('/notitest')
 def notitest():
-    print('##notitest##')
+    username = session.get("username")
+    print('## notitest ##', " ID : ", username, ' Client_ip : ',client_ip)
     return render_template('notitest.html')
 
 
 @app.route('/development')
 def development():
-    print('##development##')
+    username = session.get("username")
+    print('## development ##', " ID : ", username, ' Client_ip : ',client_ip)
     return render_template('development.html')
 
 
 @app.route('/missions')
 def missions():
-    print('##missions##')
+    username = session.get("username")
+    print('## missions ##', " ID : ", username, ' Client_ip : ',client_ip)
     return render_template('missions.html')
 
 
 @app.route('/checkq')
 def checkq():
-    print('/print("##checkQ사이트##")')
+    username = session.get("username")
+    print('## checkQR ##', " ID : ", username, ' Client_ip : ',client_ip)
     return render_template('checkq.html')
 
 
 @app.route('/check')
 def check():
-    print("##check사이트##")
-    print('/check', client_ip)
+    username = session.get("username")
+    print("## check사이트 ## ", "ID : ", username, ' Client_ip : ',client_ip)
     return render_template('check.html')
 
 
@@ -93,7 +97,8 @@ def check():
 
 @app.route('/mission')
 def mission():
-    print("##mission##")
+    username = session.get("username")
+    print("## mission ##", " ID : ", username, ' Client_ip : ',client_ip)
     peopleList = list(db.peopleList.find({}, {'_id': False}))
     global missionList
     missionList = []
@@ -132,7 +137,8 @@ def mission():
 
 @app.route('/missionM', methods=["POST"])
 def missionM():
-    print("##missionM")
+    username = session.get("username")
+    print("## missionM ##", " ID : ", username, ' Client_ip : ',client_ip)
     print(request.form['mis'])
     a = request.form['mis'].strip().split(' ')
     print(a)
@@ -170,7 +176,8 @@ def missionM():
 
 @app.route('/dateLoad', methods=['GET'])
 def dateLoad():
-    print('/dateLoad')
+    username = session.get("username")
+    print('## dateLoad ##', " ID : ", username, ' Client_ip : ',client_ip)
     dayLoad = list(db.graphDate.find({}, {'_id': False}))
     print(dayLoad)
     return jsonify({'startDay': dayLoad[0]['startDay'], 'endDay': dayLoad[0]['endDay'], 'weekCompare': dayLoad[0]['weekCompare']})
@@ -178,7 +185,8 @@ def dateLoad():
 
 @app.route('/dateSave', methods=["POST"])
 def dateSave():
-    print("/dateSave")
+    username = session.get("username")
+    print("## dateSave ##", " ID : ", username, ' Client_ip : ',client_ip)
     startDay, endDay = request.form['from'], request.form['to']
     print(startDay, endDay)
     f = startDay.replace('-', '')
@@ -200,7 +208,8 @@ def dateSave():
 
 @app.route('/dbReset', methods=["POST"])
 def dbReset():
-    print('/dbReset')
+    username = session.get("username")
+    print('## dbReset## ', " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
         return jsonify({"False": "False"})
@@ -260,7 +269,8 @@ def dbReset():
 
 @app.route('/missionSave', methods=["POST"])
 def missionSave():
-    print("##missionSave##")
+    username = session.get("username")
+    print("##  missionSave  ##", " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
         return jsonify({"False": "False"})
@@ -275,7 +285,8 @@ def missionSave():
 
 @app.route('/getInfo', methods=["POST"])
 def info():
-    print("##info##")
+    username = session.get("username")
+    print("##  info  ##", " ID : ", username, ' Client_ip : ',client_ip)
     url = request.form['url']
     yt = music.info(url)
     print("title : ", yt.title)
@@ -291,7 +302,8 @@ def info():
 
 @app.route('/downList', methods=["POST"])
 def convert():
-    print('/downList')
+    username = session.get("username")
+    print('##  downList  ##', " ID : ", username, ' Client_ip : ',client_ip)
     url = request.form['url']
     mp = request.form['v']
     yt = music.cvt(url, mp)
@@ -305,8 +317,8 @@ def convert():
 
 @app.route('/chulCheck', methods=['POST'])
 def chulCheck():
-    print("##출석날짜존재확인##")
-    print("/chulCheck")
+    username = session.get("username")
+    print("##  chulCheck  ##", " ID : ", username, ' Client_ip : ',client_ip)
     title_receive = request.form['title_give']
     print(title_receive)
     i = list(db.chulseck.find({'title': title_receive}, {'_id': False}))
@@ -335,7 +347,8 @@ def chulCheck():
 #  저장된전체명단
 @app.route('/review', methods=['GET'])
 def readReviews():
-    print("/review_GET")
+    username = session.get("username")
+    print("##  review_GET  ##", " ID : ", username, ' Client_ip : ',client_ip)
     reviews = list(db.chulseck.find({}, {'_id': False}))
     re = []
     for _ in range(len(reviews) - 1, -1, -1):
@@ -346,7 +359,8 @@ def readReviews():
 # API 역할을 하는 부분
 @app.route('/review', methods=['POST'])
 def writeReview():
-    print("/review_POST")
+    username = session.get("username")
+    print("##  review_POST  ##", " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
         return jsonify({"False": "False"})
@@ -392,7 +406,8 @@ def writeReview():
 #  명단삭제
 @app.route('/dbDel', methods=['POST'])
 def delReviews():
-    print("/dbDel")
+    username = session.get("username")
+    print("##  dbDel  ##", " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
         return jsonify({"False": "False"})
@@ -414,7 +429,8 @@ def delReviews():
 #db 인원수정
 @app.route('/dbPersonChange', methods = ['POST'])
 def changeDbPerson():
-    print('/dbPersonChange')
+    username = session.get("username")
+    print('##  dbPersonChange  ##', " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     try:
         print(userAuthCheck[0])
@@ -444,7 +460,8 @@ def changeDbPerson():
 #  db 인원추가
 @app.route('/dbPersonAdd', methods=['POST'])
 def addDbPerson():
-    print('/dbPersonAdd')
+    username = session.get("username")
+    print('##  dbPersonAdd  ##', " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     try:
         print(userAuthCheck[0])
@@ -479,7 +496,8 @@ def addDbPerson():
 # db 다중인원삭제
 @app.route('/delMultiPeople', methods=['POST'])
 def delMultiPeople():
-    print('/delMultiPeople')
+    username = session.get("username")
+    print('##  delMultiPeople  ##', " ID : ", username, ' Client_ip : ',client_ip)
     userAuthCheck = list(db.user.find({'username': session.get("username")}, {'_id': False}))
     if not session.get("username"):
         return jsonify({"False": "False"})
