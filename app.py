@@ -1554,46 +1554,52 @@ def bad(board_id):
 
 @app.route('/qr', methods=["POST"])
 def qrCode():
+    print('## qr ##')
     name = request.form['name']
     gender = request.form['gender']
     birthday = request.form['birthday']
+    birthyear = request.form['birthyear']
+    phone_number = request.form['phone_number']
+
     peopleList2 = list(db.peopleList.find({}, {'_id': False}))
     person = ""
+    print("이름 :", name, ", 성별 :", gender, ", 생일 : ", birthday, ", 생년월일 : ", birthyear, ", 전화번호 : ", phone_number)
 
-    if len(name) > 3:# 이름이 네글자 이상인 경우
-        print(name)
-        if name[:3] in peopleList2:
-            print()
+    # if len(name) > 3:# 이름이 네글자 이상인 경우
+    #     print(name)
+    #     if name[:3] in peopleList2:
+    #         print()
+    # else:
+
+    person = list(db.peopleList.find({"이름": name}, {'_id': False}))
+    print(person)
+    if peopleList2.count(name) >= 2:#이름 중복
+        print(len(person))
     else:
+        print(person)
+        dM = str(datetime.today().month)
+        dD = str(datetime.today().day)
+        if int(dM) < 10:
+            dM = "0" + str(datetime.today().month)
 
-        person = list(db.peopleList.find({"이름": name}, {'_id': False}))
-        if peopleList2.count(name[:3]) >= 2:#이름 중복
-            print(len(person))
-        else:
-            print(person)
-            dM = str(datetime.today().month)
-            dD = str(datetime.today().day)
-            if int(dM) < 10:
-                dM = "0" + str(datetime.today().month)
+        if int(dD) < 10:
+            dD = "0" + str(datetime.today().day)
+        try:
+            r = randint(1,100)
+            qr = {
+                "year": now.date().strftime("%Y"),
+                "title": dM+dD,
+                "이름": name,
+                "조": person[0]['조'][0],
+                "r": r
+            }
+            qr2 = "year : " + str(now.date().strftime("%Y")) + "\ntitle : " + dM+dD + "\n이름 : " + name + "\n조 : " + person[0]['조'][0] + "\nr : " + str(randint(1, 100))
+            db.peopleList.update_one({'이름': name}, {"$set": {'r': r}})
+            print("qr", qr, "qr2", qr2)
+        except IndexError:
+            return jsonify({"msg": "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."})
 
-            if int(dD) < 10:
-                dD = "0" + str(datetime.today().day)
-            try:
-                r = randint(1,100)
-                qr = {
-                    "year": now.date().strftime("%Y"),
-                    "title": dM+dD,
-                    "이름": name,
-                    "조": person[0]['조'][0],
-                    "r": r
-                }
-                qr2 = "year : " + str(now.date().strftime("%Y")) + "\ntitle : " + dM+dD + "\n이름 : " + name + "\n조 : " + person[0]['조'][0] + "\nr : " + str(randint(1, 100))
-                db.peopleList.update_one({'이름': name}, {"$set": {'r': r}})
-                print("qr", qr, "qr2", qr2)
-            except IndexError:
-                return jsonify({"msg": "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."})
-
-            return jsonify({"msg": qr, "qr2": str(qr2)})
+        return jsonify({"msg": qr, "qr2": str(qr2)})
 
 
 @app.route('/qrChul', methods= ["POST"])
