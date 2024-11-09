@@ -47,7 +47,7 @@
       }
     function kakaoLogin() {
         window.Kakao.Auth.login({
-            scope: 'name, gender, birthday', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+            scope: 'name, gender, birthday, birthyear, phone_number, talk_message', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
             success: function(response) {
                 console.log(response) // 로그인 성공하면 받아오는 데이터
                 window.Kakao.API.request({ // 사용자 정보 가져오기
@@ -60,7 +60,10 @@
                         var name = kakao_account['name']
                         var gender = kakao_account['gender']
                         var birthday = kakao_account['birthday']
-			
+			            var birthyear = kakao_account['birthyear']
+			            var phone_number = kakao_account['phone_number']
+			            var talk_message = kakao_account['talk_message']
+
                         /*if(confirm(name + "\n본명이 맞습니까?") == false){
                            name = prompt("본명을 적어주세요"+""); 이제 이름불러옴!
                         }*/
@@ -70,11 +73,10 @@
                         document.getElementById("test").innerHTML += "해당접속 : " + name;
 <!--                        console.log(name, gender, birthday)-->
                         console.log(kakao_account);
-
                         $.ajax({
                             type: "POST",
                             url: "/qr",
-                            data: {name : name, gender : gender, birthday : birthday},
+                            data: {name : name, gender : gender, birthday : birthday, birthyear : birthyear, phone_number : phone_number, talk_message : talk_message},
                             success: function (response) {
                             if (response['msg'] != "명단에 이름이 없습니다. 서기나 임원들에게 문의부탁드립니다."){
                                 var qr = response['msg'];
