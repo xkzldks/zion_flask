@@ -16,6 +16,7 @@ import smtplib
 from email.message import EmailMessage
 
 
+
 now = datetime.now()
 app = Flask(__name__)
 # account app import
@@ -24,9 +25,11 @@ app.secret_key = model2.appSecret
 # 파일 업로드 위치
 app.config['UPLOAD_FOLDER'] = 'static/upload/'
 
+
 @app.route('/ip', methods=['GET'])
 def ip():
     return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
 
 @app.route('/kakao')
 def kakao():
@@ -43,6 +46,9 @@ def kakao2():
     return render_template('kaka2.html')
 
 
+client_ip = ''
+
+
 # H T M L을 주는 부분
 @app.route('/')
 def home():
@@ -51,11 +57,13 @@ def home():
     client_ip = request.remote_addr
     client_mac = chulseck.mac_for_ip(client_ip)
     username = session.get("username")
+    user_Info = chulseck.user_info()
     if not username:
-        print('client_ip',client_ip)
+        print('Client_ip : ', client_ip, 'User_info : ', user_Info[1])
     else:
-        print("ID : ", username, ' Client_ip : ', client_ip)
+        print("ID : ", username, ' Client_ip : ', client_ip, 'User_Info : ', user_Info[1])
     return render_template('index.html')
+
 
 @app.route('/notitest')
 def notitest():
@@ -92,6 +100,11 @@ def check():
     return render_template('check.html')
 
 
+@app.route('/allYear')
+def allyear():
+    username = session.get("username")
+    print("## allyear ## ", "ID : ", username)
+    return render_template('allyear.html')
 
 
 @app.route('/mission')
@@ -1647,8 +1660,6 @@ def qrChul():
             print("리스트 결과" + list_result)
         db.chulseck.update_one({'title': dic['title']}, {"$set": {'review': list_people, 'count': list_result}})
         return jsonify({"msg": "good"})
-
-
 
 
 if __name__ == '__main__':
