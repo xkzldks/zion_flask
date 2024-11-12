@@ -1,9 +1,25 @@
 from flask import Flask, url_for, render_template, request, redirect, session, jsonify, flash, send_file
 from datetime import datetime
 from model2 import db
-from python_arptable import get_arp_table
+# from python_arptable import get_arp_table
 
 now = datetime.now()
+
+
+def user_info():
+    user_agent = request.user_agent.string
+    user_agent = user_agent.replace('(', '')
+    user_agent = user_agent.replace(')', '')
+    user_agent = user_agent.split(';')
+    user_agent[2] = user_agent[2].split(",")
+    # print(user_agent)
+    # print(type(user_agent_nama))
+    # print('브라우저',user_agent_nama.browser)
+    # print('플랫폼',user_agent_nama.platform)
+    # print('버전',user_agent_nama.version)
+    # print('언어', user_agent_nama.language)
+    return user_agent
+
 
 def people_calc(n):
     print("#####people_calc#####")
@@ -79,9 +95,9 @@ def bubble_sort_chul(arr):
 
 
 def mac_for_ip(ip):
-    arp_table = get_arp_table()
-    
-    for entry in arp_table:
-        if entry['IP address'] == ip:
-            return entry['HW address']
+    # arp_table = get_arp_table()
+    #
+    # for entry in arp_table:
+    #     if entry['IP address'] == ip:
+    #         return entry['HW address']
     return None
