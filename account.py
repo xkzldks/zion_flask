@@ -13,6 +13,7 @@ app.secret_key = '123'
 
 blue_account = Blueprint("account", __name__, url_prefix="/account")
 
+
 @blue_account.route("/register", methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
@@ -52,30 +53,30 @@ def register():
 
 @blue_account.route("/login", methods=('GET', 'POST'))
 def login():
-	if request.method == 'POST':
-		username = request.form['username']
-		password = request.form['password']
-		check_user = db.user.find_one({"username": username})
-		
-		if check_user:
-			if check_password_hash(check_user.get("password"), password):
-				#s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-				#s.connect(("34.64.56.232",5000))
-				#ip = s.getsockname()[0]
-				#mac = ':'.join(re.findall('..','%012x'%getnode()))
-				#print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
-				inner_ip = request.remote_addr
-				#client_mac = chulseck.mac_for_ip(client_ip)
-				outter_ip = '0.0.0.0'
-				flash(username+"님 환영합니다. 내부 ip : " + inner_ip + " 외부 ip : " + outter_ip)
-				session['username'] = username
-				#s.close()
-				return redirect("/")
-			else:
-				flash("아이디 또는 비밀번호를 확인해주세요.")
-		else:
-			flash("아이디 또는 비밀번호를 확인해주세요.")
-	return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        check_user = db.user.find_one({"username": username})
+        user_Info = chulseck.user_info()
+        if check_user:
+            if check_password_hash(check_user.get("password"), password):
+                #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                #s.connect(("34.64.56.232",5000))
+                #ip = s.getsockname()[0]
+                #mac = ':'.join(re.findall('..','%012x'%getnode()))
+                #print(username+"님 환영합니다.\n접근 ip : " + ip + "\nMAC : " + mac)
+                inner_ip = request.remote_addr
+                #client_mac = chulseck.mac_for_ip(client_ip)
+                # flash(username+"님 환영합니다. 내부 ip : " + inner_ip )
+                session['username'] = username
+                flash("ID : " + username + '\\nClient_ip : ' + inner_ip + '\\nUser_Info : ' + user_Info[1])
+                #s.close()
+                return redirect("/")
+            else:
+                flash("아이디 또는 비밀번호를 확인해주세요.")
+        else:
+            flash("아이디 또는 비밀번호를 확인해주세요.")
+    return render_template("login.html")
 
 
 @blue_account.route("/logout")
