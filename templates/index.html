@@ -30,9 +30,10 @@
         <br>
             <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('check') }}" >>> 출석체크 <<</a></div>
             <div style="display : none; text-align: center;"><a class = "snip1535" href="{{ url_for('board') }}" >>> 자유게시판 <<</a></div>
-            <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('missions') }}" >>> 선교팀 <<</a></div>
+            <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('graph') }}" >>> &nbsp&nbsp&nbsp 그래프 &nbsp&nbsp&nbsp <<</a></div>
+<!--            <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('missions') }}" >>> 선교팀 <<</a></div>-->
         {% if session['username'] == 'test' %}
-            <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('development') }}" >>> 유튜브 <<</a></div>
+<!--            <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('development') }}" >>> 유튜브 <<</a></div>-->
         {% endif %}
         <p style="text-align : center; font-size : 8px; color : #a9a9a9">환영합니다</p>
         <p style="text-align : center; font-size : 8px; color : #a9a9a9"> made by ksh </p>
