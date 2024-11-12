@@ -141,7 +141,7 @@ input[id="menuicon"]:checked + ul + div {left:0;}
                       시온 청년부
                   </a>
                 <br>
-                  <p style="color : #e9e9e9;"> 로그인계정 : {{ session['username'] }} </p>
+                  <p style="color : #e9e9e9;"> ID : {{ session['username'] }} </p>
                 <br>
                 <a href="{{ url_for('account.logout' )}}" style="text-align : right;" class="nav-link">로그아웃</a>
                 <br>
@@ -162,9 +162,9 @@ input[id="menuicon"]:checked + ul + div {left:0;}
               {% endif %}
                 <p style="text-align : center; color: antiquewhite;" >Quick Menu</p>
                 <a style="color : #e9e9e9;" href="/"><img style="background: antiquewhite;" src="/static/image/home.png" width="20px" height ="20px" alt="">&nbsp홈 </a><br>
-                <a style="color : #e9e9e9;" href="/board"><img style="background: antiquewhite;" src="/static/image/board.png" width="20px" height ="20px" alt=""> 게시판</a><br>
-                <a style="color : #e9e9e9;" href="/check"><img style="background: antiquewhite;" src="/static/image/chul.png" width="20px" height ="20px" alt=""> 출석체크</a><br>
-                <a style="color : #e9e9e9;" href="/graph"><img style="background: antiquewhite;" src="/static/image/graph.png" width="20px" height ="20px" alt=""> 그래프</a><br>
+                <a style="color : #e9e9e9;" href="/board"><img style="background: antiquewhite;" src="/static/image/board.png" width="20px" height ="20px" alt="">&nbsp게시판</a><br>
+                <a style="color : #e9e9e9;" href="/check"><img style="background: antiquewhite;" src="/static/image/chul.png" width="20px" height ="20px" alt="">&nbsp출석체크</a><br>
+                <a style="color : #e9e9e9;" href="/graph"><img style="background: antiquewhite;" src="/static/image/graph.png" width="20px" height ="20px" alt="">&nbsp그래프</a><br>
                 <br>
                 <br>
             </div>
