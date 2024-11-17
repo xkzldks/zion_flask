@@ -57,7 +57,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         check_user = db.user.find_one({"username": username})
-        user_Info = chulseck.user_info()
+        # user_Info = chulseck.user_info()
         if check_user:
             if check_password_hash(check_user.get("password"), password):
                 #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
