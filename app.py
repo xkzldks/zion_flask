@@ -57,12 +57,15 @@ def home():
     client_ip = request.remote_addr
     client_mac = chulseck.mac_for_ip(client_ip)
     username = session.get("username")
-    user_Info = chulseck.user_info()
-    if not username:
-        print('Client_ip : ', client_ip, 'User_info : ', user_Info[1])
-    else:
-        print("ID : ", username, ' Client_ip : ', client_ip, 'User_Info : ', user_Info[1])
-    return render_template('index.html')
+    try:
+        user_Info = chulseck.user_info()
+        if not username:
+            print('Client_ip : ', client_ip, 'User_info : ', user_Info[1])
+        else:
+            print("ID : ", username, ' Client_ip : ', client_ip, 'User_Info : ', user_Info[1])
+        return render_template('index.html')
+    except:
+        return render_template('index.html')
 
 
 @app.route('/notitest')
