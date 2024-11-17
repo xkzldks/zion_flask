@@ -53,11 +53,11 @@ client_ip = ''
 @app.route('/')
 def home():
     print('## home ##')
-    global client_ip
-    client_ip = request.remote_addr
-    client_mac = chulseck.mac_for_ip(client_ip)
     username = session.get("username")
     try:
+        global client_ip
+        client_ip = request.remote_addr
+        client_mac = chulseck.mac_for_ip(client_ip)
         user_Info = chulseck.user_info()
         if not username:
             print('Client_ip : ', client_ip, 'User_info : ', user_Info[1])
