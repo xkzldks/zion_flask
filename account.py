@@ -69,7 +69,7 @@ def login():
                 #client_mac = chulseck.mac_for_ip(client_ip)
                 # flash(username+"님 환영합니다. 내부 ip : " + inner_ip )
                 session['username'] = username
-                flash("ID : " + username + '\\nClient_ip : ' + inner_ip + '\\nUser_Info : ' + user_Info[1])
+                # flash("ID : " + username + '\\nClient_ip : ' + inner_ip + '\\nUser_Info : ' + user_Info[1])
                 #s.close()
                 return redirect("/")
             else:
