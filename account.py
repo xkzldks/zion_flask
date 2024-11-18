@@ -33,6 +33,7 @@ def register():
                         "password": generate_password_hash(password),
                         "auth": 2
                     }
+
                 else:
                     user = {
                         "username": username,
@@ -57,7 +58,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         check_user = db.user.find_one({"username": username})
-        # user_Info = chulseck.user_info()
+        user_Info = chulseck.user_info()
         if check_user:
             if check_password_hash(check_user.get("password"), password):
                 #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -69,7 +70,7 @@ def login():
                 #client_mac = chulseck.mac_for_ip(client_ip)
                 # flash(username+"님 환영합니다. 내부 ip : " + inner_ip )
                 session['username'] = username
-                # flash("ID : " + username + '\\nClient_ip : ' + inner_ip + '\\nUser_Info : ' + user_Info[1])
+                flash("ID : " + username + '\\nClient_ip : ' + inner_ip + '\\nUser_Info : ' + user_Info)
                 #s.close()
                 return redirect("/")
             else:
