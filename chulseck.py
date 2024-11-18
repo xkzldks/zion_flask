@@ -8,17 +8,23 @@ now = datetime.now()
 
 def user_info():
     user_agent = request.user_agent.string
-    user_agent = user_agent.replace('(', '')
-    user_agent = user_agent.replace(')', '')
-    user_agent = user_agent.split(';')
-    user_agent[2] = user_agent[2].split(",")
+    # if "Linux" in user_agent:
+    #     user_agent = user_agent.replace('(', '')
+    #     user_agent = user_agent.replace(')', '')
+    #     user_agent = user_agent.split(';')
+    #     print(user_agent)
+    #     user_agent[2] = user_agent[2].split(",")
+    # else:
+    #     user_agent = user_agent.replace('(', '')
+    #     user_agent = user_agent.replace(')', '')
+    #     print(user_agent)
     # print(user_agent)
     # print(type(user_agent_nama))
     # print('브라우저',user_agent_nama.browser)
     # print('플랫폼',user_agent_nama.platform)
     # print('버전',user_agent_nama.version)
     # print('언어', user_agent_nama.language)
-    return user_agent
+    return user_agent[user_agent.find("(")+1:user_agent.find(")")]
 
 
 def people_calc(n):
