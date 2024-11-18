@@ -46,26 +46,24 @@ def kakao2():
     return render_template('kaka2.html')
 
 
-client_ip = ''
+def get_addr():
+    client_ip = request.remote_addr
+    return client_ip
 
 
-# H T M L을 주는 부분
-@app.route('/')
+@app.route('/')  # HTML을 주는 부분
 def home():
     print('## home ##')
+    # client_ip = request.remote_addr
+    # client_mac = chulseck.mac_for_ip(client_ip)
     username = session.get("username")
-    try:
-        global client_ip
-        client_ip = request.remote_addr
-        client_mac = chulseck.mac_for_ip(client_ip)
-        user_Info = chulseck.user_info()
-        if not username:
-            print('Client_ip : ', client_ip, 'User_info : ', user_Info[1])
-        else:
-            print("ID : ", username, ' Client_ip : ', client_ip, 'User_Info : ', user_Info[1])
-        return render_template('index.html')
-    except:
-        return render_template('index.html')
+    client_ip = get_addr()
+    user_Info = chulseck.user_info()
+    if not username:
+        print('Client_ip : ', client_ip, 'User_info : ', user_Info)
+    else:
+        print("ID : ", username, ' Client_ip : ', client_ip, 'User_Info : ', user_Info)
+    return render_template('index.html')
 
 
 @app.route('/notitest')
@@ -101,6 +99,13 @@ def check():
     username = session.get("username")
     print("## check사이트 ## ", "ID : ", username)
     return render_template('check.html')
+
+
+@app.route('/check_ys')
+def check_ys():
+    username = session.get("username")
+    print("## check_ys사이트 ## ", "ID : ", username)
+    return render_template('check_ys.html')
 
 
 @app.route('/allYear')
@@ -192,6 +197,7 @@ def missionM():
 @app.route('/dateLoad', methods=['GET'])
 def dateLoad():
     username = session.get("username")
+    client_ip = get_addr()
     print('## dateLoad ##', " ID : ", username, ' Client_ip : ', client_ip)
     dayLoad = list(db.graphDate.find({}, {'_id': False}))
     print(dayLoad)
@@ -338,10 +344,10 @@ def readReviews():
     reviews = list(db.chulseck.find({}, {'_id': False}))
     re = []
     for _ in range(len(reviews) - 1, -1, -1):
-        # if reviews[_]['title'] < reviews[_-1]['title']:
-        #     temp_re = reviews[_]
-        #     reviews[_] = reviews[_-1]
-        #     reviews[_-1] = temp_re
+        if reviews[_]['title'] < reviews[_-1]['title']:
+            temp_re = reviews[_]
+            reviews[_] = reviews[_-1]
+            reviews[_-1] = temp_re
         re.append(reviews[_])
     return jsonify({'all_reviews': re})
 
@@ -505,6 +511,7 @@ def delMultiPeople():
             if not i1:
                 return jsonify({'no': '인원을 확인해주세요'})
             else:
+                db.peopleList_ex.insert_one({'이름': i})
                 db.peopleList.delete_one({'이름': i})
         print(str(len(name)) + "명 삭제성공")
         return jsonify({'msg': str(len(name)) + "명 삭제성공"})
@@ -531,6 +538,7 @@ def delDbPerson():
     else:
         print(i1)
         print(i1[0]['조'][0])
+        db.peopleList_ex.insert_one({'이름': name, '조': group})
         db.peopleList.delete_one({'이름': name, '조': group})
         print("msg: " + name + i1[0]['조'][0] + " " + ' 삭제성공!')
         return jsonify({'msg': name + " " + i1[0]['조'][0] + " " + '삭제성공!'})
@@ -974,7 +982,7 @@ def getAgeGraph():
 def getAttendanceGraph():
     print('/getAttendanceGraph')
     dayBound = list(db.graphDate.find({}, {'_id': False}))
-    reviews = list(db.chulseck.find({}, {'_id': False}))
+    reviews = list(db.allYear.find({}, {'_id': False}))
     people = list(db.peopleList.find({}, {'_id': False}))
     str = ""
     chul = {}
