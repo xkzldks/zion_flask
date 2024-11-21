@@ -345,10 +345,10 @@ def readReviews():
     re = []
     for _ in range(len(reviews) - 1, -1, -1):
         if reviews[_]['title'] < reviews[_-1]['title']:
-            temp_re = reviews[_]
-            reviews[_] = reviews[_-1]
-            reviews[_-1] = temp_re
-        re.append(reviews[_])
+        #    temp_re = reviews[_]
+        #    reviews[_] = reviews[_-1]
+        #    reviews[_-1] = temp_re
+        #re.append(reviews[_])
     return jsonify({'all_reviews': re})
 
 
