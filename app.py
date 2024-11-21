@@ -982,7 +982,7 @@ def getAgeGraph():
 def getAttendanceGraph():
     print('/getAttendanceGraph')
     dayBound = list(db.graphDate.find({}, {'_id': False}))
-    reviews = list(db.allYear.find({}, {'_id': False}))
+    reviews = list(db.chulseck.find({}, {'_id': False}))
     people = list(db.peopleList.find({}, {'_id': False}))
     str = ""
     chul = {}
